@@ -7,7 +7,6 @@ import { KeyRound, Monitor, Users, Smartphone } from "lucide-react";
 const ProductDetail = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-
   const product = {
     id: 1,
     name: "Netflix Premium Account",
@@ -26,6 +25,7 @@ const ProductDetail = () => {
       "https://1000logos.net/wp-content/uploads/2017/05/Netflix-Logo-2006.png",
     ],
   };
+
   const addToCart = () => {
     alert("Added to cart!");
   };
