@@ -233,6 +233,5 @@ const cartSlice = createSlice({
       });
   },
 });
-
 export default cartSlice.reducer;
 export const { updateCartQuantityLocally } = cartSlice.actions;
