@@ -1,8 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ShoppingCart, CheckCircle, ShieldCheck, Zap, X, ShoppingBag } from "lucide-react";
+import {
+  ShoppingCart,
+  CheckCircle,
+  ShieldCheck,
+  Zap,
+  X,
+  ShoppingBag,
+} from "lucide-react";
 import Image from "next/image";
 import { KeyRound, Monitor, Users, Smartphone } from "lucide-react";
 import { Product } from "@/lib/types";
@@ -26,8 +33,10 @@ const ProductDetail = ({
   const [selectedImage, setSelectedImage] = useState(0);
   const [isAdding, setIsAdding] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [subscriptionPlan, setSubscriptionPlan] = useState<"monthly" | "yearly">("monthly");
-
+  const [subscriptionPlan, setSubscriptionPlan] = useState<
+    "monthly" | "yearly"
+  >("monthly");
+  const posRef = useRef<HTMLDivElement>(null);
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center text-white text-2xl">
@@ -35,31 +44,37 @@ const ProductDetail = ({
       </div>
     );
   }
-
+  useEffect(() => {
+    if (isDetailOpen) {
+      setSelectedImage(0);
+      // Scroll into view or focus
+      posRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [isDetailOpen]);
   const handleAddToCart = async () => {
     if (!product) return;
-    
+
     setIsAdding(true);
     const toastId = toast.loading("Adding to cart...");
-    
+
     try {
       await dispatch(
         addToCart({
           product: product.id,
           quantity: quantity,
           price: product.price,
-          subscriptionPlan: subscriptionPlan
+          subscriptionPlan: subscriptionPlan,
         })
       ).unwrap();
-      
+
       toast.success(`${quantity} ${product.title} added to cart!`, {
         id: toastId,
         duration: 3000,
         position: "bottom-right",
         style: {
-          background: '#0C1B44',
-          color: '#fff',
-          border: '1px solid #A92EDF',
+          background: "#0C1B44",
+          color: "#fff",
+          border: "1px solid #A92EDF",
         },
       });
     } catch (error: any) {
@@ -68,9 +83,9 @@ const ProductDetail = ({
         duration: 3000,
         position: "bottom-right",
         style: {
-          background: '#0C1B44',
-          color: '#fff',
-          border: '1px solid #ff4d4f',
+          background: "#0C1B44",
+          color: "#fff",
+          border: "1px solid #ff4d4f",
         },
       });
       console.error("Add to cart error:", error);
@@ -92,12 +107,12 @@ const ProductDetail = ({
             size={24}
             className="hover:text-[#A92EDF]  cursor-pointer lg:hidden absolute right-4 top-2 z-10"
           />
-          <div className="lg:w-1/2 lg:pr-4 p-2">
+          <div ref={posRef} className="lg:w-1/2 lg:pr-4 p-2">
             <motion.div
               whileHover={{ scale: 1.02 }}
               className="relative overflow-hidden rounded-2xl"
             >
-              <div className="aspect-w-1 aspect-h-1 w-full">
+              <div  className="aspect-w-1 aspect-h-1 w-full">
                 <Image
                   src={product.images[selectedImage]}
                   alt={product.title}

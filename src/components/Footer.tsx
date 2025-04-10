@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import {
   Linkedin,
   Twitter,
-  Facebook,
+  Youtube,
   Instagram,
   Github,
   LogOut,
@@ -61,10 +61,10 @@ const Footer = () => {
             <h3 className="text-white font-semibold mb-4">Follow Us</h3>
             <div className="flex space-x-4">
               {[
-                { icon: Linkedin, color: "hover:text-blue-400" },
+                { icon: Youtube, color: "hover:text-red-500" },
                 { icon: Twitter, color: "hover:text-blue-500" },
                 { icon: Instagram, color: "hover:text-pink-500" },
-                { icon: Github, color: "hover:text-gray-300" },
+                // { icon: Github, color: "hover:text-gray-300" },
               ].map((SocialIcon, index) => (
                 <SocialIcon.icon
                   key={index}

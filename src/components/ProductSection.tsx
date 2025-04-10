@@ -1,137 +1,146 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { getProduct } from "@/app/actions/product.actions";
 import { Product } from "@/lib/types";
 import ProductDetail from "./ProductDetail";
+import { getProduct } from "@/app/actions/product.actions";
+import { FiArrowRight } from "react-icons/fi";
+
 const ProductSection = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
   const [sendDetail, setSendDetail] = useState<Product | null>(null);
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [status, setStatus] = useState({ message: "", error: "" });
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await getProduct();
         if (!res.success) {
-          setError(res.message || "Error in fetcing the data");
-          setMessage("");
-          setTimeout(() => {
-            setError("");
-          }, 2000);
-          return;
+          setStatus({
+            error: res.message || "Error fetching data",
+            message: "",
+          });
         } else {
-          setMessage(res.message || "Data fetched Successfully");
+          setStatus({ message: res.message || "Success", error: "" });
           setProducts(res.data || []);
-          setError("");
-          setTimeout(() => {
-            setMessage("");
-          }, 2000);
         }
       } catch (error: any) {
-        setError(error.message || "Error in fetcing the data");
-        setMessage("");
-        setTimeout(() => {
-          setError("");
-        }, 2000);
+        setStatus({
+          error: error.message || "Error fetching data",
+          message: "",
+        });
       }
+      setTimeout(() => setStatus({ message: "", error: "" }), 2000);
     };
     fetchData();
   }, []);
+
   const handleDetail = (data: Product) => {
     setSendDetail(data);
     setIsDetailOpen(true);
   };
 
+  if (isDetailOpen && sendDetail) {
+    return (
+      <ProductDetail
+        {...{ setIsDetailOpen, isDetailOpen, product: sendDetail }}
+      />
+    );
+  }
+
   return (
-    <>
-      {!isDetailOpen ? (
-        <section className="flex w-full justify-center items-center py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex w-full flex-col items-center px-8 sm:px-6 lg:px-8"
-          >
-            <h2 className="text-4xl font-bold text-center mb-24 bg-white bg-clip-text text-transparent">
-              Discover Trending Subscriptions
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8  xl:grid-cols-3">
-              {products.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  className="relative w-full max-w-sm mb-12"
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <motion.div
-                    className="absolute -top-16 left-1/2 -translate-x-1/2 z-10"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                  >
-                    <div className="rounded-full w-32 h-32  bg-gradient-to-tr from-[#500150] via-[#42026d] to-[#031877] border-8 border-blue-100 shadow-lg">
-                      <img
-                        src={product.logoImage}
-                        alt={`${product.logoImage} Logo`}
-                        className="w-full h-full  object-cover rounded-full"
-                      />
-                    </div>
-                  </motion.div>
-                  <motion.div
-                    className="bg-[#0C1B44] w-full flex flex-col justify-center items-center hover:border-2 border-[#A92EDF] rounded-3xl px-8 pb-8 shadow-xl hover:shadow-2xl transition-shadow"
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <div className="mt-20 text-center text-white">
-                      <h3 className="text-2xl font-bold mb-4">
-                        {product.title}
-                      </h3>
-                      <p className="text-gray-300 text-base max-sm:text-md  leading-relaxed">
-                        {product.description.length > 80
-                          ? product.description.substring(0, 80)
-                          : product.description}
-                      </p>
-
-                      <div className="flex items-center justify-center gap-4">
-                        <span className="text-xl max-lg:text-xl font-semibold line-through">
-                          ₹{product.originalPrice}/month
-                        </span>
-                        <span className="text-gray-400">|</span>
-                        <span className="text-green-400 text-xl max-lg:text-xl">
-                          {product.discount} %
-                        </span>
-                      </div>
-                      <div>
-                        <h2 className="text-2xl max-lg:text-xl mt-4">
-                          ₹{product.price}/month
-                        </h2>
-                      </div>
-
-                      <motion.button
-                        onClick={() => handleDetail(product)}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="mt-8 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full transition-colors duration-300 transform"
-                      >
-                        Purchase Now
-                      </motion.button>
-                    </div>
-                  </motion.div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </section>
-      ) : (
-        <ProductDetail
-          setIsDetailOpen={setIsDetailOpen}
-          isDetailOpen={isDetailOpen}
-          product={sendDetail}
-        />
+    <section className="w-full py-12 md:py-20 px-4 sm:px-6 lg:px-8">
+      {status.message && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="fixed top-4 left-1/2 -translate-x-1/2 bg-green-100 text-green-800 px-4 py-2 rounded-md shadow-md z-50"
+        >
+          {status.message}
+        </motion.div>
       )}
-    </>
+      {status.error && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="fixed top-4 left-1/2 -translate-x-1/2 bg-red-100 text-red-800 px-4 py-2 rounded-md shadow-md z-50"
+        >
+          {status.error}
+        </motion.div>
+      )}
+
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="max-w-7xl mx-auto"
+      >
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 md:mb-20 bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
+          Discover Trending Subscriptions
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-sm:gap-20 mb-12">
+          {products.map((product, index) => (
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ scale: 1.02 }}
+              className="relative group"
+            >
+              <motion.div
+                className="absolute -top-6 left-1/2 -translate-x-1/2 z-10"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+              >
+                <div className="rounded-full w-32 h-32  bg-gradient-to-tr from-[#500150] via-[#42026d] to-[#031877] border-8 border-blue-100 shadow-lg">
+                  <img
+                    src={product.logoImage}
+                    alt={`${product.logoImage} Logo`}
+                    className="w-full h-full  object-cover rounded-full"
+                  />
+                </div>
+              </motion.div>
+              <div className="bg-[#0C1B44] mt-6 rounded-2xl p-6 pt-24 h-full flex flex-col border border-gray-700/50 hover:border-purple-500/50 transition-all shadow-lg hover:shadow-xl">
+                <div className="flex-grow">
+                  <h3 className="text-xl font-bold text-white mb-3 line-clamp-2">
+                    {product.title}
+                  </h3>
+                  <p className="text-gray-300 text-sm mb-5 line-clamp-3">
+                    {product.description}
+                  </p>
+                </div>
+                <div className="mt-auto">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-400 text-sm line-through">
+                        ₹{product.originalPrice}
+                      </span>
+                      <span className="bg-green-900/30 text-green-400 text-xs px-2 py-1 rounded-full">
+                        {product.discount}% OFF
+                      </span>
+                    </div>
+                    <span className="text-white font-semibold">
+                      ₹{product.price}/mo
+                    </span>
+                  </div>
+                  <motion.button
+                    onClick={() => handleDetail(product)}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full flex items-center cursor-pointer justify-center gap-2 bg-[#A92EDF] hover:bg-[#8e5ea3] text-white font-medium py-3 px-6 rounded-lg transition-all"
+                  >
+                    Purchase Now{" "}
+                    <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+    </section>
   );
 };
 

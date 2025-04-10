@@ -106,7 +106,7 @@ export const addItemToCart = async (
     return {
       success: true,
       message: "Cart updated successfully",
-      data: populatedCart,
+      data: sanitizeCart(populatedCart), 
       status: 200,
     };
   } catch (error) {

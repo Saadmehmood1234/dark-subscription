@@ -105,7 +105,7 @@ const Faq = () => {
                     </p>
                     <button
                       onClick={() => setIsOpen((prev) => !prev)}
-                      className="bg-[#A92EDF] cursor-p hover:bg-[#70328b] text-white font-semibold py-3 px-8 rounded-full transition-colors duration-300 flex items-center gap-2"
+                      className="bg-[#A92EDF] cursor-pointer hover:bg-[#70328b] text-white font-semibold py-3 px-8 rounded-full transition-colors duration-300 flex items-center gap-2"
                     >
                       <Mail className="size-5" />
                       Contact Support

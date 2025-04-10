@@ -54,12 +54,12 @@ const ContactSupportForm = ({ setIsOpen }: ContactPropType) => {
         onClick={() => setIsOpen(false)}
         className="absolute top-4 right-4 text-gray-300 hover:text-red-400 transition"
       >
-        <X size={24} />
+        <X size={24} className="cursor-pointer"/>
       </button>
 
       <div className="mb-8 text-center">
         <h2 className="text-3xl font-bold bg-gradient-to-r from-[#A92EDF] to-[#A92EDF] bg-clip-text text-transparent">
-          Contact Support
+          Request a service
         </h2>
         <p className="text-gray-400 mt-2">
           We'll get back to you within 24 hours

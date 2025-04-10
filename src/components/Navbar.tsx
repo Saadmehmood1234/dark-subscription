@@ -5,6 +5,8 @@ import MobileMenu from "./MobileMenu";
 import { Home, Search, ShoppingCart, User } from "lucide-react";
 import SignOutButton from "./SignOutButton";
 import MobileMenuAfterSignIn from "./MobileMenuAfterSignIn";
+import CartIcon from "./CartIcon";
+
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
 
@@ -29,10 +31,13 @@ const Navbar = async () => {
         </div>
 
         <div className="hidden md:flex items-center gap-6">
-         
           {session ? (
             <Link href="/profile">
-              <img src={session.user.image} className="w-12 h-12" />
+              <img
+                src={session.user.image}
+                className="w-12 h-12 rounded-full"
+                alt="Profile"
+              />
             </Link>
           ) : (
             <Link href="/auth/signin">
@@ -41,12 +46,9 @@ const Navbar = async () => {
               </button>
             </Link>
           )}
-           <Link href="/cart">
-            <ShoppingCart
-              className="text-white cursor-pointer hover:text-[#C27AFF] transition-all"
-              size={24}
-            />
-          </Link>
+
+          <CartIcon />
+
           {session && <SignOutButton />}
         </div>
         {session ? <MobileMenuAfterSignIn /> : <MobileMenu />}
@@ -56,10 +58,7 @@ const Navbar = async () => {
           <Home className="text-[#C27AFF]" size={24} />
           <span>Home</span>
         </Link>
-        <Link href="/cart" className="flex flex-col items-center">
-          <ShoppingCart className="text-[#C27AFF]" size={24} />
-          <span>Cart</span>
-        </Link>
+
         <Link
           href={session ? "/account" : "/auth/signin"}
           className="flex flex-col items-center"

@@ -122,7 +122,7 @@ export const addToCart = createAsyncThunk(
     try {
       const response = await addItemToCart({
         product,
-        quantity: operation ? 1 : quantity, // Send 1 for increment/decrement
+        quantity: operation ? 1 : quantity,
         price,
         subscriptionPlan,
         operation,
@@ -131,8 +131,6 @@ export const addToCart = createAsyncThunk(
       if (!response.success) {
         return rejectWithValue(response.message);
       }
-
-      // Add type assertion or proper type checking here
       const cartData = response.data as SanitizedCart | undefined;
 
       return {
@@ -180,7 +178,21 @@ export const removeFromCart = createAsyncThunk(
 const cartSlice = createSlice({
   name: "cart",
   initialState,
-  reducers: {},
+  reducers: {
+    updateCartQuantityLocally: (state, action) => {
+      const { productId, newQuantity } = action.payload;
+      const item = state.cart.items.find((i) => i.product._id === productId);
+      if (item) {
+        const unitPrice = item.price / item.quantity;
+        item.quantity = newQuantity;
+        item.price = unitPrice * newQuantity;
+        state.cart.totalPrice = state.cart.items.reduce(
+          (acc, item) => acc + item.price,
+          0
+        );
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCart.pending, (state) => {
@@ -223,3 +235,4 @@ const cartSlice = createSlice({
 });
 
 export default cartSlice.reducer;
+export const { updateCartQuantityLocally } = cartSlice.actions;
