@@ -7,7 +7,6 @@ const AuthErrorPageClient = dynamic(
     ssr: false,
   }
 );
-
 export default function AuthErrorPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
