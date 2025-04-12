@@ -1,16 +1,15 @@
 "use client";
-import dynamic from "next/dynamic";
+
 import { Suspense } from "react";
-const AuthErrorPageClient = dynamic(
-  () => import("@/components/AuthErrorPage"),
-  {
-    ssr: false,
-  }
-);
+import dynamic from "next/dynamic";
+
+// Correct dynamic import without the suspense option
+const ErrorContent = dynamic(() => import("@/components/AuthErrorPage"));
+
 export default function AuthErrorPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <AuthErrorPageClient />
+    <Suspense fallback={<div>Loading error details...</div>}>
+      <ErrorContent />
     </Suspense>
   );
 }
