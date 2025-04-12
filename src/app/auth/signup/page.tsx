@@ -112,6 +112,7 @@ export default function SignUpPage() {
                 <span className="text-gray-400 text-sm">OR</span>
                 <div className="flex-1 h-px bg-[#A92EDF]/20" />
               </div>
+              
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 onClick={() => signIn("google", { callbackUrl: "/" })}
