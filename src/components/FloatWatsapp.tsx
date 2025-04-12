@@ -23,7 +23,7 @@ const FloatWhatsapp = () => {
       whileTap={{ scale: 0.9 }}
     >
       <Link href={whatsappUrl} target="_blank" passHref legacyBehavior>
-        <motion.a
+        <motion.p
           className="bg-[#25D366] cursor-pointer hover:bg-[#128C7E] text-white rounded-full p-4 shadow-lg flex items-center justify-center"
           aria-label="Chat on WhatsApp"
           whileHover={{
@@ -41,7 +41,7 @@ const FloatWhatsapp = () => {
           }}
         >
           <FaWhatsapp className="w-6 h-6" />
-        </motion.a>
+        </motion.p>
       </Link>
     </motion.div>
   );

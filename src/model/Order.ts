@@ -3,7 +3,7 @@ import { dbConnect } from "@/lib/dbConnect";
 
 export const orderSchema = new Schema(
   {
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    userId: { type: Schema.Types.ObjectId, ref: "DarkUser", required: true },
     products: [
       {
         productId: {

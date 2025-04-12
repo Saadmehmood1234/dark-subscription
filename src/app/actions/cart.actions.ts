@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
 import { Product } from "@/model/Product";
 import { sanitizeCart, SanitizedCart } from "@/utils/sanitize";
+import { DarkUser } from "@/model/User";
 
 interface CartItemInput {
   product: string | mongoose.Types.ObjectId;
@@ -17,17 +18,22 @@ export const addItemToCart = async (
   data: CartItemInput & { operation?: string }
 ) => {
   await dbConnect();
+
   const session = await getServerSession(authOptions);
-  if (!session?.user?.id) {
+  console.log("Session in Cart:", session);
+
+  if (!session?.user?.email) {
     return {
       success: false,
-      message: "User not authenticated",
+      message: "Signin to continue",
       status: 401,
     };
   }
+
   try {
     const productId = new mongoose.Types.ObjectId(data.product);
     const product = await Product.findById(productId).lean();
+
     if (!product) {
       return {
         success: false,
@@ -35,10 +41,24 @@ export const addItemToCart = async (
         status: 404,
       };
     }
-    let cart = await Cart.findOne({ customer: session.user.id }).populate(
+
+    const userData = await DarkUser.findOne({ email: session.user.email });
+    if (!userData) {
+      return {
+        success: false,
+        message: "User not found",
+        status: 404,
+      };
+    }
+
+    console.log("User Data:", userData);
+
+    let cart = await Cart.findOne({ customer: userData._id }).populate(
       "items.product"
     );
+
     if (!cart) {
+      // Cart doesn't exist yet
       if (data.operation === "increment") {
         return {
           success: false,
@@ -48,7 +68,7 @@ export const addItemToCart = async (
       }
 
       cart = new Cart({
-        customer: session.user.id,
+        customer: userData._id,
         items: [
           {
             product: productId,
@@ -67,17 +87,25 @@ export const addItemToCart = async (
       );
 
       if (existingItemIndex >= 0) {
+        // Update quantity based on operation
         if (data.operation === "increment") {
           cart.items[existingItemIndex].quantity += 1;
         } else if (data.operation === "decrement") {
           cart.items[existingItemIndex].quantity -= 1;
+
+          if (cart.items[existingItemIndex].quantity <= 0) {
+            cart.items.splice(existingItemIndex, 1); // Remove item if quantity goes to 0
+          }
         } else {
           cart.items[existingItemIndex].quantity = data.quantity;
         }
 
-        cart.items[existingItemIndex].price =
-          cart.items[existingItemIndex].quantity * data.price;
+        if (cart.items[existingItemIndex]) {
+          cart.items[existingItemIndex].price =
+            cart.items[existingItemIndex].quantity * data.price;
+        }
       } else {
+        // Item not in cart
         if (data.operation === "increment") {
           return {
             success: false,
@@ -85,6 +113,7 @@ export const addItemToCart = async (
             status: 404,
           };
         }
+
         cart.items.push({
           product: productId,
           quantity: data.quantity,
@@ -98,7 +127,9 @@ export const addItemToCart = async (
         0
       );
     }
+
     await cart.save();
+
     const populatedCart = await Cart.findById(cart._id)
       .populate("items.product")
       .lean();
@@ -106,11 +137,11 @@ export const addItemToCart = async (
     return {
       success: true,
       message: "Cart updated successfully",
-      data: sanitizeCart(populatedCart), 
+      data: sanitizeCart(populatedCart),
       status: 200,
     };
   } catch (error) {
-    console.error("Error Adding to Cart:", error);
+    console.error("❌ Error Adding to Cart:", error);
     return {
       success: false,
       message: "Server Error in Adding to Cart",
@@ -131,13 +162,23 @@ export const getCartByCustomer = async (): Promise<{
   if (!session?.user?.id) {
     return {
       success: false,
-      message: "User not authenticated",
+      message: "Signin to continue",
       status: 401,
     };
   }
 
   try {
-    const cart = await Cart.findOne({ customer: session.user.id }).populate(
+    const userData = await DarkUser.findOne({ email: session.user.email });
+    if (!userData) {
+      return {
+        success: false,
+        message: "User not found",
+        status: 404,
+      };
+    }
+
+    console.log("User Data:", userData);
+    let cart = await Cart.findOne({ customer: userData._id }).populate(
       "items.product"
     );
 
@@ -180,18 +221,29 @@ export const deleteCartItem = async (
   status: number;
 }> => {
   await dbConnect();
+
   const session = await getServerSession(authOptions);
 
-  if (!session?.user?.id) {
+  if (!session?.user?.email) {
     return {
       success: false,
-      message: "User not authenticated",
+      message: "Signin to continue",
       status: 401,
     };
   }
 
   try {
-    const cart = await Cart.findOne({ customer: session.user.id }).populate(
+    // FIX: Use email to find the user instead of user.id
+    const userData = await DarkUser.findOne({ email: session.user.email });
+    if (!userData) {
+      return {
+        success: false,
+        message: "User not found",
+        status: 404,
+      };
+    }
+
+    const cart = await Cart.findOne({ customer: userData._id }).populate(
       "items.product"
     );
 
@@ -202,6 +254,7 @@ export const deleteCartItem = async (
         status: 404,
       };
     }
+
     const itemToRemove = cart.items.find(
       (item: any) => item.product._id.toString() === productId
     );
@@ -214,16 +267,21 @@ export const deleteCartItem = async (
       };
     }
 
+    // Remove item from cart
     cart.items = cart.items.filter(
       (item: any) => item.product._id.toString() !== productId
     );
 
+    // Recalculate the total price
     cart.totalPrice = cart.items.reduce(
       (sum: any, item: any) => sum + item.price,
       0
     );
 
+    // Save the updated cart
     await cart.save();
+
+    // Fetch the updated cart with populated items
     const updatedCart = await Cart.findById(cart._id).populate("items.product");
 
     return {
@@ -233,7 +291,7 @@ export const deleteCartItem = async (
       status: 200,
     };
   } catch (error) {
-    console.error("Error deleting cart item:", error);
+    console.error("❌ Error deleting cart item:", error);
     return {
       success: false,
       message: "Internal Server Error",

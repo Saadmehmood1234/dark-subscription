@@ -30,11 +30,18 @@ const ContactSupportForm = ({ setIsOpen }: ContactPropType) => {
       console.log(data);
       const res = await contactUs(data);
       if (!res.success) {
-        setError("Error in Sending The message");
+        setError(res.message || "Error in Sending The message");
+        setTimeout(() => {
+          setError("");
+        }, 2000);
         setMessage("");
         return;
       }
       setMessage("Message Sent Successfully");
+      setTimeout(() => {
+        setMessage("");
+        setIsOpen(false);
+      }, 2000);
       setError("");
       reset();
     } catch (error: any) {
@@ -54,7 +61,7 @@ const ContactSupportForm = ({ setIsOpen }: ContactPropType) => {
         onClick={() => setIsOpen(false)}
         className="absolute top-4 right-4 text-gray-300 hover:text-red-400 transition"
       >
-        <X size={24} className="cursor-pointer"/>
+        <X size={24} className="cursor-pointer" />
       </button>
 
       <div className="mb-8 text-center">
@@ -70,7 +77,7 @@ const ContactSupportForm = ({ setIsOpen }: ContactPropType) => {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="relative">
             <label className="block text-gray-300 mb-2">Your Name</label>
             <div className="relative">
@@ -113,7 +120,7 @@ const ContactSupportForm = ({ setIsOpen }: ContactPropType) => {
               </p>
             )}
           </div>
-        </div>
+        </div> */}
         <div className="relative">
           <label className="block text-gray-300 mb-2">Subject</label>
           <div className="relative">

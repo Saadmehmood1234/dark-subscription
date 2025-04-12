@@ -3,14 +3,17 @@ declare module "next-auth"{
     interface User{
         id?:string;
         role?:string
-        emailVerified?:Date | null
+        emailVerified?:Boolean | null
     }
+    interface Profile {
+        picture?: string; 
+      }
     interface Session{
         user:{
             id?:string;
             email?:string;
             role?:string;
-            emailVerified?:Date | null
+            emailVerified?:Boolean | null
         } & DefaultSession["user"]
     }
 }

@@ -78,7 +78,7 @@ const ProductDetail = ({
         },
       });
     } catch (error: any) {
-      toast.error(error.message || "Failed to add product to cart", {
+      toast.error(error || "Failed to add product to cart", {
         id: toastId,
         duration: 3000,
         position: "bottom-right",
@@ -229,7 +229,7 @@ const ProductDetail = ({
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="w-full bg-[#A92EDF] hover:bg-[#8e5ea3] text-white font-bold rounded-xl flex items-center justify-center space-x-2"
+                    className="w-full bg-[#A92EDF] cursor-pointer hover:bg-[#8e5ea3] text-white font-bold rounded-xl flex items-center justify-center space-x-2"
                     // onClick={}
                   >
                     <ShoppingBag className="text-white" size={20} />
@@ -239,7 +239,7 @@ const ProductDetail = ({
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-full bg-[#A92EDF] hover:bg-[#8e5ea3] text-white font-bold py-2 px-4 rounded-xl flex items-center justify-center space-x-2"
+                  className="w-full cursor-pointer bg-[#A92EDF] hover:bg-[#8e5ea3] text-white font-bold py-2 px-4 rounded-xl flex items-center justify-center space-x-2"
                   onClick={handleAddToCart}
                 >
                   <ShoppingCart className="text-white" size={20} />
@@ -247,7 +247,7 @@ const ProductDetail = ({
                 </motion.button>
               </div>
               <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-gray-400 text-sm sm:text-base">
-                <div className="flex items-center space-x-1 sm:space-x-2">
+                <div className="flex  items-center space-x-1 sm:space-x-2">
                   <ShieldCheck className="text-green-400" size={18} />
                   <span>7-Day Warranty</span>
                 </div>

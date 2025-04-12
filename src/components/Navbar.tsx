@@ -6,6 +6,7 @@ import { Home, Search, ShoppingCart, User } from "lucide-react";
 import SignOutButton from "./SignOutButton";
 import MobileMenuAfterSignIn from "./MobileMenuAfterSignIn";
 import CartIcon from "./CartIcon";
+import SearchInput from "./SearchInput";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
@@ -21,20 +22,13 @@ const Navbar = async () => {
           </div>
         </Link>
 
-        <div className="hidden md:flex items-center relative w-[400px]">
-          <Search className="absolute left-3 text-gray-400" size={20} />
-          <input
-            type="text"
-            placeholder="Tinder, Amazon Prime, etc.."
-            className="w-full h-10 bg-[#310557] text-white rounded-lg pl-10 pr-4 outline-none focus:ring-2 focus:ring-[#A92EDF]"
-          />
-        </div>
+        <SearchInput />
 
         <div className="hidden md:flex items-center gap-6">
           {session ? (
             <Link href="/profile">
               <img
-                src={session.user.image}
+                src={`${session.user.image} `}
                 className="w-12 h-12 rounded-full"
                 alt="Profile"
               />
@@ -47,7 +41,7 @@ const Navbar = async () => {
             </Link>
           )}
 
-          <CartIcon />
+          {session && <CartIcon />}
 
           {session && <SignOutButton />}
         </div>

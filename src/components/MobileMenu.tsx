@@ -56,7 +56,6 @@ const MobileMenu = () => {
         </div>
       </div>
 
-      {/* Bottom Navigation Bar */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-[#1F133D] text-white p-4 shadow-lg flex justify-around">
         <Link href="/" className="flex flex-col items-center">
           <Home className="text-[#C27AFF]" size={24} />

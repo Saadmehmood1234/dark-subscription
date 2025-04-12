@@ -86,7 +86,7 @@ export default function CartPage() {
     });
     return Array.from(uniqueItemsMap.values());
   };
-console.log("Test data",cart.items)
+  console.log("Test data", cart.items);
   const uniqueCartItems = getUniqueCartItems();
 
   // if (status === "loading") return <p className="text-center py-12">Loading...</p>;
@@ -130,7 +130,7 @@ console.log("Test data",cart.items)
                           {item.product?.title || "Unnamed Product"}
                         </h4>
                         <p className="text-[#C27AFF] text-sm">
-                          ${(item.price / item.quantity).toFixed(2)}
+                          ₹{(item.price / item.quantity).toFixed(2)}
                           {item.subscriptionPlan
                             ? `/${item.subscriptionPlan}`
                             : ""}
@@ -176,7 +176,7 @@ console.log("Test data",cart.items)
 
                         <div className="w-20 sm:w-24 text-right">
                           <span className="text-[#C27AFF] font-medium">
-                            ${item.price.toFixed(2)}
+                            ₹{item.price.toFixed(2)}
                           </span>
                         </div>
 
@@ -208,7 +208,7 @@ console.log("Test data",cart.items)
             <div className="flex justify-between items-center mb-6">
               <div className="text-lg font-semibold">Total:</div>
               <div className="text-xl font-bold text-[#C27AFF]">
-                ${cart.totalPrice.toFixed(2)}
+                ₹{cart.totalPrice.toFixed(2)}
               </div>
             </div>
 

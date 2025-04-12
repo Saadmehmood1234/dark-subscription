@@ -8,9 +8,8 @@ import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Mail, Lock } from "lucide-react";
 import { FaGoogle } from "react-icons/fa";
-
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -44,7 +43,6 @@ export default function SignInPage() {
         email: values.email,
         password: values.password,
         redirect: false,
-        
       });
       if (result?.error) {
         setError("Invalid email or password");
@@ -73,16 +71,11 @@ export default function SignInPage() {
             whileHover={{ scale: 1.02 }}
           >
             <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-96 h-96 bg-gradient-to-tr from-[#500150] via-[#42026d] to-[#031877] rounded-full blur-2xl opacity-20" />
-
             <div className="flex flex-col items-center space-y-8">
-              <div className="w-full flex flex-col justify-center items-center gap-2">
-                <h2 className="text-4xl font-bold bg-gradient-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
-                  Sign In
-                </h2>
-                <h2 className="text-3xl text-white text-center">
-                  Welcome Back
-                </h2>
-              </div>
+              <h2 className="text-4xl font-bold bg-gradient-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
+                Sign In
+              </h2>
+              <h2 className="text-3xl text-white text-center">Welcome Back</h2>
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="w-full space-y-6"
@@ -95,7 +88,6 @@ export default function SignInPage() {
                     errors.email ? { message: errors.email.message } : undefined
                   }
                 />
-
                 <Input
                   label="Password"
                   type="password"
@@ -107,34 +99,31 @@ export default function SignInPage() {
                       : undefined
                   }
                 />
-
                 {error && (
                   <p className="text-red-500 text-sm text-center">{error}</p>
                 )}
-
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <Button
                     type="submit"
-                    className="w-full bg-[#A92EDF] hover:bg-[#8e5ea3] text-white font-semibold py-4 rounded-xl transition-all"
+                    className="w-full cursor-pointer bg-[#A92EDF] hover:bg-[#8e5ea3] text-white font-semibold py-4 rounded-xl transition-all"
                     disabled={loading}
                   >
                     {loading ? "Signing in..." : "Sign In"}
                   </Button>
                 </motion.div>
               </form>
-
               <div className="w-full flex items-center space-x-4">
                 <div className="flex-1 h-px bg-[#A92EDF]/20" />
                 <span className="text-gray-400 text-sm">OR</span>
                 <div className="flex-1 h-px bg-[#A92EDF]/20" />
               </div>
-
               <motion.button
                 whileHover={{ scale: 1.05 }}
-                className="w-full flex items-center justify-center space-x-2 bg-[#0C1B44] border-2 border-[#A92EDF]/20 text-white py-4 rounded-xl transition-all"
+                onClick={() => signIn("google", { callbackUrl: "/" })}
+                className="w-full cursor-pointer flex items-center justify-center space-x-2 bg-[#0C1B44] border-2 border-[#A92EDF]/20 text-white py-4 rounded-xl transition-all"
               >
                 <FaGoogle className="text-xl" />
                 <span>Google</span>

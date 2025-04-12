@@ -37,15 +37,23 @@ const MobileMenu = () => {
             className="text-white hover:text-[#C27AFF] transition-all"
             onClick={() => setMobileMenuOpen(false)}
           >
-            Home
+            <div className="flex justify-center items-center gap-2">
+              {" "}
+              <Home size={20} />
+              <span>Home</span>
+            </div>
           </Link>
           <Link
             href="/cart"
             className="text-white hover:text-[#C27AFF] transition-all"
             onClick={() => setMobileMenuOpen(false)}
           >
-            Cart
-          </Link> 
+            <div className="flex justify-center items-center gap-2">
+              {" "}
+              <ShoppingCart size={20} />
+              <span>Cart</span>
+            </div>
+          </Link>
           <SignOutButton />
         </div>
       </div>
@@ -59,7 +67,7 @@ const MobileMenu = () => {
           <ShoppingCart className="text-[#C27AFF]" size={24} />
           <span>Cart</span>
         </Link>
-        <Link href="/account" className="flex flex-col items-center">
+        <Link href="/profile" className="flex flex-col items-center">
           <User className="text-[#C27AFF]" size={24} />
           <span>Account</span>
         </Link>
