@@ -2,24 +2,24 @@ import { CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { stripe } from "@/lib/stripe";
 import { Order } from "@/model/Order";
-import { sendConfirmationEmail } from "../actions/sendMail.actions";
 
-interface SuccessPageProps {
-  searchParams: {
-    session_id?: string;
-    order_id?: string;
-  };
-}
-
-export default async function SuccessPage({ searchParams }: SuccessPageProps) {
+export default async function SuccessPage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   let orderVerified = false;
-  let orderId = searchParams.order_id || "";
+  let orderId = Array.isArray(searchParams.order_id)
+    ? searchParams.order_id[0] || ""
+    : searchParams.order_id || "";
 
-  if (searchParams.session_id) {
+  const sessionId = Array.isArray(searchParams.session_id)
+    ? searchParams.session_id[0]
+    : searchParams.session_id;
+
+  if (sessionId) {
     try {
-      const session = await stripe.checkout.sessions.retrieve(
-        searchParams.session_id
-      );
+      const session = await stripe.checkout.sessions.retrieve(sessionId);
 
       if (session.payment_status === "paid") {
         const updatedOrder = await Order.findByIdAndUpdate(
@@ -36,14 +36,6 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
         if (updatedOrder) {
           orderVerified = true;
           orderId = session.metadata?.orderId || "";
-          await sendConfirmationEmail({
-            email: updatedOrder.userId.email,
-            productName:
-              updatedOrder.products[0]?.productId?.title || "Subscription",
-            userName: updatedOrder.userId.name || "Customer",
-            orderId: updatedOrder._id.toString(),
-            websiteName: process.env.WEBSITE_NAME,
-          });
         }
       }
     } catch (error) {
