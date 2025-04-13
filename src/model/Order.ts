@@ -1,6 +1,5 @@
 import mongoose, { Schema, model, models } from "mongoose";
 import { dbConnect } from "@/lib/dbConnect";
-
 export const orderSchema = new Schema(
   {
     userId: { type: Schema.Types.ObjectId, ref: "DarkUser", required: true },

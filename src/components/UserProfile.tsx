@@ -57,9 +57,9 @@ export default function UserProfile({ user }: UserProfileProps) {
                 whileHover={{ scale: 1.05 }}
               >
                 <div className="rounded-full w-32 h-32 bg-gradient-to-tr from-[#500150] via-[#42026d] to-[#031877] border-4 border-blue-100 shadow-lg overflow-hidden">
-                  {user.image ? (
+                  {user?.image ? (
                     <img
-                      src={user.image}
+                      src={`${user?.image}`}
                       alt="Profile"
                       className="w-full h-full object-cover"
                     />
