@@ -18,6 +18,7 @@ export default async function SuccessPage({
     : searchParams.session_id;
 
   if (sessionId) {
+    "use server"
     try {
       const session = await stripe.checkout.sessions.retrieve(sessionId);
 
