@@ -2,14 +2,18 @@ import { CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { stripe } from "@/lib/stripe";
 import { Order } from "@/model/Order";
+import { sendConfirmationEmail } from "../actions/sendMail.actions";
 
-export default async function SuccessPage({
-  searchParams,
-}: {
-  searchParams: { session_id?: string };
-}) {
+interface SuccessPageProps {
+  searchParams: {
+    session_id?: string;
+    order_id?: string;
+  };
+}
+
+export default async function SuccessPage({ searchParams }: SuccessPageProps) {
   let orderVerified = false;
-  let orderId = "";
+  let orderId = searchParams.order_id || "";
 
   if (searchParams.session_id) {
     try {
@@ -18,12 +22,29 @@ export default async function SuccessPage({
       );
 
       if (session.payment_status === "paid") {
-        await Order.findByIdAndUpdate(session.metadata?.orderId, {
-          paymentStatus: "paid",
-          status: "completed",
-        });
-        orderVerified = true;
-        orderId = session.metadata?.orderId || "";
+        const updatedOrder = await Order.findByIdAndUpdate(
+          session.metadata?.orderId,
+          {
+            paymentStatus: "paid",
+            status: "completed",
+          },
+          { new: true }
+        )
+          .populate("userId")
+          .populate("products.productId");
+
+        if (updatedOrder) {
+          orderVerified = true;
+          orderId = session.metadata?.orderId || "";
+          await sendConfirmationEmail({
+            email: updatedOrder.userId.email,
+            productName:
+              updatedOrder.products[0]?.productId?.title || "Subscription",
+            userName: updatedOrder.userId.name || "Customer",
+            orderId: updatedOrder._id.toString(),
+            websiteName: process.env.WEBSITE_NAME,
+          });
+        }
       }
     } catch (error) {
       console.error("Error verifying payment:", error);
@@ -38,7 +59,8 @@ export default async function SuccessPage({
             Payment Verification Failed
           </h1>
           <p className="mt-2 text-gray-300">
-            We couldn't verify your payment. Please check your orders or contact support.
+            We couldn't verify your payment. Please check your orders or contact
+            support.
           </p>
           <Link
             href="/orders"
@@ -62,6 +84,9 @@ export default async function SuccessPage({
         </h1>
         <p className="mt-2 text-gray-300">
           Thank you for your purchase. Your order is being processed.
+        </p>
+        <p className="mt-4 text-gray-300">
+          A confirmation email has been sent to your registered email address.
         </p>
 
         {orderId && (

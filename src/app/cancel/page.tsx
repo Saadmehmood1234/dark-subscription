@@ -3,40 +3,47 @@ import Link from "next/link";
 
 export default function CancelPage() {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
-      <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full text-center">
-        <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
-          <AlertTriangle className="h-6 w-6 text-red-600" />
+    <div className="min-h-screen bg-gradient-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
+      <div className="bg-[#0C1B44]/80 backdrop-blur-sm border-2 border-red-500/30 rounded-2xl p-8 max-w-md w-full text-center">
+        <div className="flex justify-center">
+          <AlertTriangle className="w-16 h-16 text-red-400" />
         </div>
-        <h1 className="mt-3 text-2xl font-bold text-gray-900">
+        <h1 className="text-3xl font-bold mt-4 bg-gradient-to-r from-red-500 to-orange-400 bg-clip-text text-transparent">
           Payment Not Completed
         </h1>
-        <p className="mt-2 text-gray-600">
-          Your payment was canceled or failed to process. Please try again.
+        <p className="mt-2 text-gray-300">
+          Your payment was canceled or failed to process. Don't worry - your
+          cart has been saved.
         </p>
-        <div className="mt-6 space-x-4">
+
+        <div className="mt-6 flex flex-col sm:flex-row justify-center gap-4">
           <Link
-            href="/" // Home page
-            className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            href="/"
+            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#A92EDF] hover:bg-[#8e5ea3] transition-colors"
           >
             Return Home
           </Link>
           <Link
-            href="/checkout" // Your checkout page
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            href="/checkout"
+            className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-white bg-transparent hover:bg-[#0C1B44] transition-colors"
           >
             Try Again
           </Link>
         </div>
-        <p className="mt-4 text-sm text-gray-500">
+
+        <p className="mt-6 text-sm text-gray-400">
           Need help?{" "}
           <a
             href="mailto:support@yourdomain.com"
-            className="text-blue-600 hover:text-blue-500"
+            className="text-[#A92EDF] hover:text-[#C27AFF] transition-colors"
           >
-            Contact support
+            Contact our support team
           </a>
-          .
+        </p>
+
+        <p className="mt-4 text-xs text-gray-500">
+          If this was a mistake, you might want to check your payment method
+          details.
         </p>
       </div>
     </div>
