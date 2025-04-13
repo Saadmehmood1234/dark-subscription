@@ -3,7 +3,6 @@
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 
-// Correct dynamic import without the suspense option
 const ErrorContent = dynamic(() => import("@/components/AuthErrorPage"));
 
 export default function AuthErrorPage() {

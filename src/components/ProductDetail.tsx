@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import {
@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/slices/cartSlice";
 import { AppDispatch } from "@/lib/store";
 import toast from "react-hot-toast";
+import CheckoutModal from "./CheckoutModalForCart";
 
 type ProductDetailPropType = {
   setIsDetailOpen: (value: boolean) => void;
@@ -32,6 +33,8 @@ const ProductDetail = ({
   const dispatch = useDispatch<AppDispatch>();
   const [selectedImage, setSelectedImage] = useState(0);
   const [isAdding, setIsAdding] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [cartItems, setCartItems] = useState<any[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [subscriptionPlan, setSubscriptionPlan] = useState<
     "monthly" | "yearly"
@@ -47,7 +50,6 @@ const ProductDetail = ({
   useEffect(() => {
     if (isDetailOpen) {
       setSelectedImage(0);
-      // Scroll into view or focus
       posRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [isDetailOpen]);
@@ -93,9 +95,33 @@ const ProductDetail = ({
       setIsAdding(false);
     }
   };
+  const handleBuyNow = () => {
+    if (!product) return;
+
+    const tempCartItem = {
+      product: {
+        id: product.id,
+        title: product.title,
+        images: product.images,
+        price: product.price,
+      },
+      quantity: quantity,
+      price: product.price,
+    };
+
+    setCartItems([tempCartItem]);
+    setShowCheckout(true);
+  };
   return (
     <div className="min-h-screen bg-gradient-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] py-8 sm:py-12 md:py-16 lg:py-20">
       <div className="container mx-auto px-4 sm:px-6">
+        {showCheckout && (
+          <CheckoutModal
+            cartItems={cartItems}
+            isOpen={showCheckout}
+            onClose={() => setShowCheckout(false)}
+          />
+        )}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -112,7 +138,7 @@ const ProductDetail = ({
               whileHover={{ scale: 1.02 }}
               className="relative overflow-hidden rounded-2xl"
             >
-              <div  className="aspect-w-1 aspect-h-1 w-full">
+              <div className="aspect-w-1 aspect-h-1 w-full">
                 <Image
                   src={product.images[selectedImage]}
                   alt={product.title}
@@ -222,20 +248,16 @@ const ProductDetail = ({
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 justify-between w-full ">
-                <Link
-                  href={"/payment"}
-                  className="w-full bg-[#A92EDF] hover:bg-[#8e5ea3] text-white font-bold py-2 px-4 rounded-xl flex items-center justify-center space-x-2"
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full bg-[#A92EDF] cursor-pointer hover:bg-[#8e5ea3] text-white font-bold rounded-xl flex items-center justify-center space-x-2"
+                  onClick={handleBuyNow}
                 >
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full bg-[#A92EDF] cursor-pointer hover:bg-[#8e5ea3] text-white font-bold rounded-xl flex items-center justify-center space-x-2"
-                    // onClick={}
-                  >
-                    <ShoppingBag className="text-white" size={20} />
-                    <span>Buy Now</span>
-                  </motion.button>
-                </Link>
+                  <ShoppingBag className="text-white" size={20} />
+                  <span>Buy Now</span>
+                </motion.button>
+
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}

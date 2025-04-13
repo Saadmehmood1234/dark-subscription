@@ -87,14 +87,13 @@ export const addItemToCart = async (
       );
 
       if (existingItemIndex >= 0) {
-        // Update quantity based on operation
         if (data.operation === "increment") {
           cart.items[existingItemIndex].quantity += 1;
         } else if (data.operation === "decrement") {
           cart.items[existingItemIndex].quantity -= 1;
 
           if (cart.items[existingItemIndex].quantity <= 0) {
-            cart.items.splice(existingItemIndex, 1); // Remove item if quantity goes to 0
+            cart.items.splice(existingItemIndex, 1);
           }
         } else {
           cart.items[existingItemIndex].quantity = data.quantity;
@@ -105,7 +104,6 @@ export const addItemToCart = async (
             cart.items[existingItemIndex].quantity * data.price;
         }
       } else {
-        // Item not in cart
         if (data.operation === "increment") {
           return {
             success: false,
@@ -233,7 +231,6 @@ export const deleteCartItem = async (
   }
 
   try {
-    // FIX: Use email to find the user instead of user.id
     const userData = await DarkUser.findOne({ email: session.user.email });
     if (!userData) {
       return {
@@ -267,21 +264,17 @@ export const deleteCartItem = async (
       };
     }
 
-    // Remove item from cart
     cart.items = cart.items.filter(
       (item: any) => item.product._id.toString() !== productId
     );
 
-    // Recalculate the total price
     cart.totalPrice = cart.items.reduce(
       (sum: any, item: any) => sum + item.price,
       0
     );
 
-    // Save the updated cart
     await cart.save();
 
-    // Fetch the updated cart with populated items
     const updatedCart = await Cart.findById(cart._id).populate("items.product");
 
     return {

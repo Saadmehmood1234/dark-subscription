@@ -1,6 +1,30 @@
 import mongoose, { Schema, model, models } from "mongoose";
-import { dbConnect } from "@/lib/dbConnect";
-export const orderSchema = new Schema(
+
+interface IOrderItem {
+  productId: mongoose.Types.ObjectId;
+  quantity: number;
+}
+
+interface IOrder {
+  userId: mongoose.Types.ObjectId;
+  products: IOrderItem[];
+  totalAmount: number;
+  status: "pending" | "delivered" | "cancelled";
+  paymentStatus: "pending" | "paid" | "failed";
+  paymentMethod: string;
+  paymentId?: string;
+  orderEmail?: string;
+  credentials?: Array<{
+    product: string;
+    email: string;
+    password: string;
+    text: string;
+  }>;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+const orderSchema = new Schema<IOrder>(
   {
     userId: { type: Schema.Types.ObjectId, ref: "DarkUser", required: true },
     products: [
@@ -25,8 +49,18 @@ export const orderSchema = new Schema(
       default: "pending",
     },
     paymentMethod: { type: String, required: true },
+    orderEmail: String,
+    paymentId: String,
+    credentials: [
+      {
+        product: String,
+        email: String,
+        password: String,
+        text: String,
+      },
+    ],
   },
   { timestamps: true }
 );
 
-export const Order = models?.Order || model("Order", orderSchema);
+export const Order = models?.Order || model<IOrder>("Order", orderSchema);

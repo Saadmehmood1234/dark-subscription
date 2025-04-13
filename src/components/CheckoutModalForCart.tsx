@@ -2,10 +2,15 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { motion } from "framer-motion";
-import { orderProduct } from "@/app/actions/order.actions";
+import { orderProduct } from "@/app/actions/stripe.actions"
+import { loadStripe } from "@stripe/stripe-js";
+import { useRouter } from "next/navigation";
 
 const CheckoutModal = ({ cartItems, isOpen, onClose }: any) => {
+  const router = useRouter();
   const [paymentMethod, setPaymentMethod] = useState("card");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const total = cartItems.reduce(
     (sum: any, item: any) => sum + item.price * item.quantity,
     0
@@ -13,9 +18,41 @@ const CheckoutModal = ({ cartItems, isOpen, onClose }: any) => {
 
   if (!isOpen) return null;
   const handleOrder = async () => {
-    const res = await orderProduct(cartItems, paymentMethod);
-    alert("Integrate payment gateway here");
+    if (paymentMethod !== "card") {
+      alert(`Payment method "${paymentMethod}" would be integrated here`);
+      return;
+    }
+    setIsProcessing(true);
+    setError(null);
+    try {
+      const orderResult: any = await orderProduct(cartItems, paymentMethod);
+
+      if (!orderResult.success || !orderResult.id) {
+        throw new Error(orderResult.message);
+      }
+      const stripe = await loadStripe(
+        process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+      );
+
+      if (!stripe) throw new Error("Stripe failed to initialize");
+      const sessionResponse = await fetch(
+        `/api/get-session?orderId=${orderResult.id}`
+      );
+      const { sessionId } = await sessionResponse.json();
+
+      if (!sessionId) throw new Error("Missing session ID");
+
+      const { error } = await stripe.redirectToCheckout({ sessionId });
+
+      if (error) throw error;
+    } catch (err: any) {
+      console.error("Checkout error:", err);
+      setError(err.message || "Payment failed. Please try again.");
+    } finally {
+      setIsProcessing(false);
+    }
   };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -39,6 +76,17 @@ const CheckoutModal = ({ cartItems, isOpen, onClose }: any) => {
             Review your order and make payment
           </p>
         </div>
+
+        {error && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mb-4 p-3 bg-red-900/30 border border-red-500 rounded-lg text-red-200"
+          >
+            {error}
+          </motion.div>
+        )}
+
         {cartItems.map((item: any, index: number) => (
           <motion.div
             key={item.id || `${item.product.name}-${index}`}
@@ -70,6 +118,7 @@ const CheckoutModal = ({ cartItems, isOpen, onClose }: any) => {
             ${total.toFixed(2)}
           </span>
         </div>
+
         <div className="mt-6">
           <h3 className="text-md font-semibold mb-3 text-gray-300">
             Select Payment Method
@@ -107,13 +156,41 @@ const CheckoutModal = ({ cartItems, isOpen, onClose }: any) => {
             </label>
           </div>
         </div>
+
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={handleOrder}
-          className="w-full mt-6 bg-[#A92EDF] hover:bg-[#8e5ea3] text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all"
+          disabled={isProcessing}
+          className="w-full mt-6 bg-[#A92EDF] hover:bg-[#8e5ea3] text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all disabled:opacity-70"
         >
-          Pay Now
+          {isProcessing ? (
+            <>
+              <svg
+                className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              Processing...
+            </>
+          ) : (
+            "Pay Now"
+          )}
         </motion.button>
       </motion.div>
     </motion.div>

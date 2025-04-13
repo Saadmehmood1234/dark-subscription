@@ -37,3 +37,4 @@ export interface User {
     paymentStatus: "pending" | "paid" | "failed";
     createdAt: string;
   }
+  
