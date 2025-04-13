@@ -21,7 +21,6 @@ export const addItemToCart = async (
 
   const session = await getServerSession(authOptions);
   console.log("Session in Cart:", session);
-
   if (!session?.user?.email) {
     return {
       success: false,
