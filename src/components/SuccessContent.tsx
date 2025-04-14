@@ -3,7 +3,7 @@
 import { CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
+import { sendConfirmationEmail } from "@/app/actions/sendMail.actions";
 export default function SuccessContent({
   sessionId,
   orderId,
@@ -17,33 +17,41 @@ export default function SuccessContent({
   useEffect(() => {
     const verifyPayment = async () => {
       if (!sessionId || !orderId) {
+        console.warn("Missing sessionId or orderId");
         setLoading(false);
         return;
       }
 
       try {
+        console.log("Starting verification...");
         const response = await fetch(
           `/api/verify-payment?session_id=${sessionId}&order_id=${orderId}`
         );
+
         const data = await response.json();
+        console.log("Verification result:", data);
 
         if (data.success) {
           setOrderVerified(true);
-          // Optionally send confirmation email via API route
-          await fetch('/api/send-confirmation', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              orderId,
+          try {
+            await sendConfirmationEmail({
               email: data.email,
-              productName: data.productName
-            })
-          });
+              productName: data.productName,
+              userName: data.userName || "Customer",
+              orderId: orderId,
+              websiteName: process.env.NEXT_PUBLIC_WEBSITE_NAME || "Our Site",
+            });
+          } catch (emailError) {
+            console.error("Email failed:", emailError);
+          }
         }
       } catch (error) {
-        console.error("Error verifying payment:", error);
+        console.error("Verification failed:", {
+          error,
+          sessionId,
+          orderId,
+          time: new Date().toISOString(),
+        });
       } finally {
         setLoading(false);
       }

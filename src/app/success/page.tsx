@@ -7,14 +7,14 @@ export default function SuccessPage() {
   const [orderId, setOrderId] = useState<string | null>();
   const searchParams = useSearchParams();
   useEffect(() => {
-  
     setSessionId(searchParams.get("session_id"));
     setOrderId(searchParams.get("order_id"));
-
   }, []);
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <SuccessContent sessionId={sessionId!} orderId={orderId!} />
+      {sessionId && orderId && (
+        <SuccessContent sessionId={sessionId} orderId={orderId} />
+      )}
     </Suspense>
   );
 }
