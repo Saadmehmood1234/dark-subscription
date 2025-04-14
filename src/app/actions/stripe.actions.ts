@@ -87,16 +87,6 @@ export async function orderProduct(
 
     savedOrder.paymentId = stripeSession.id;
     await savedOrder.save({ session });
-
-
-    await sendConfirmationEmail({
-      email: findUser.email,
-      productName: items[0]?.product?.title || "Subscription",
-      userName: findUser.name || "Customer",
-      orderId: savedOrder._id.toString(),
-      websiteName: process.env.WEBSITE_NAME,
-    });
-
     await session.commitTransaction();
 
     return {
