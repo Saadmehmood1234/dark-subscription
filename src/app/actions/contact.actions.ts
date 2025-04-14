@@ -17,7 +17,6 @@ export const contactUs = async (data: ContactData) => {
   }
   try {
     await dbConnect();
-    console.log("Received Contact Data:", data);
     const newData = {
       message: data.message,
       subject: data.subject,
@@ -25,7 +24,7 @@ export const contactUs = async (data: ContactData) => {
       name: sension.user.name,
     };
     const contactModel = await Contact.create(newData);
-    console.log("After Creation", contactModel);
+
     return {
       success: true,
       message: "Contact data saved successfully",

@@ -59,15 +59,7 @@ const ProductSection = () => {
 
   return (
     <section className="w-full py-12 md:py-20 px-4 sm:px-6 lg:px-8">
-      {status.message && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="fixed top-4 left-1/2 -translate-x-1/2 bg-green-100 text-green-800 px-4 py-2 rounded-md shadow-md z-50"
-        >
-          {status.message}
-        </motion.div>
-      )}
+    
       {status.error && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}

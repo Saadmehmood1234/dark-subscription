@@ -18,9 +18,7 @@ export const addItemToCart = async (
   data: CartItemInput & { operation?: string }
 ) => {
   await dbConnect();
-
   const session = await getServerSession(authOptions);
-  console.log("Session in Cart:", session);
   if (!session?.user?.email) {
     return {
       success: false,
@@ -49,9 +47,6 @@ export const addItemToCart = async (
         status: 404,
       };
     }
-
-    console.log("User Data:", userData);
-
     let cart = await Cart.findOne({ customer: userData._id }).populate(
       "items.product"
     );
@@ -173,8 +168,6 @@ export const getCartByCustomer = async (): Promise<{
         status: 404,
       };
     }
-
-    console.log("User Data:", userData);
     let cart = await Cart.findOne({ customer: userData._id }).populate(
       "items.product"
     );

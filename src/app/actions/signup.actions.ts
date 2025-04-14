@@ -181,21 +181,10 @@ export const signup = async (data: {
   password: string;
 }) => {
   try {
-    console.log("Received signup data:", data);
     const headersList = await headers();
     const ip = (headersList.get("x-forwarded-for") ?? "127.0.0.1").split(
       ","
     )[0];
-    console.log("Client IP:", ip);
-    // const isRateLimited = await signupRateLimiter.limit(ip);
-
-    // if (isRateLimited) {
-    //   return {
-    //     success: false,
-    //     message: "Too many signup attempts. Please try again later.",
-    //   };
-    // }
-
     await dbConnect();
 
     const validationResult = signupSchema.safeParse(data);

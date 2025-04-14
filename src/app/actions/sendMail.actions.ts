@@ -12,7 +12,6 @@ interface EmailParams {
 
 export async function sendConfirmationEmail(params: EmailParams) {
   try {
-    console.log("params first", params);
     const transporter = nodemailer.createTransport({
       service: process.env.EMAIL_SERVICE || "gmail",
       auth: {
@@ -20,7 +19,6 @@ export async function sendConfirmationEmail(params: EmailParams) {
         pass: process.env.SMTP_PASSWORD,
       },
     });
-    console.log("params", params);
     const mailOptions = {
       from: `"${params.websiteName || "Your Website"}" <${
         process.env.EMAIL_USER

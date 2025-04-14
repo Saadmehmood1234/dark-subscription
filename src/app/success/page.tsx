@@ -7,11 +7,10 @@ export default function SuccessPage() {
   const [orderId, setOrderId] = useState<string | null>();
   const searchParams = useSearchParams();
   useEffect(() => {
-   
-    console.log("Pathname:", searchParams);
+  
     setSessionId(searchParams.get("session_id"));
     setOrderId(searchParams.get("order_id"));
-    console.log("Search Params:", searchParams);
+
   }, []);
   return (
     <Suspense fallback={<div>Loading...</div>}>

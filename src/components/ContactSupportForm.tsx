@@ -27,7 +27,6 @@ const ContactSupportForm = ({ setIsOpen }: ContactPropType) => {
   const [error, setError] = useState("");
   const onSubmit = async (data: any) => {
     try {
-      console.log(data);
       const res = await contactUs(data);
       if (!res.success) {
         setError(res.message || "Error in Sending The message");

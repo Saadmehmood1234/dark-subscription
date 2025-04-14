@@ -32,7 +32,6 @@ export default function SignUpPage() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true);
-    console.log("SignUp", values);
     const res = await signup(values);
 
     if (!res.success) {

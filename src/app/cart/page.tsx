@@ -86,7 +86,6 @@ export default function CartPage() {
     });
     return Array.from(uniqueItemsMap.values());
   };
-  console.log("Test data", cart.items);
   const uniqueCartItems = getUniqueCartItems();
 
   // if (status === "loading") return <p className="text-center py-12">Loading...</p>;

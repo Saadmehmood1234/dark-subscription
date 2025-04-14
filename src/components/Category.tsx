@@ -13,22 +13,13 @@ type CategoryType = {
 const Category = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [categories, setCategories] = useState<CategoryType[]>([]);
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
-  const [isHovered, setIsHovered] = useState(false);
-
   useEffect(() => {
     const fetchCategory = async () => {
       try {
         const res = await getCategory();
         setCategories(res.data || []);
-        setMessage("Category data fetched successfully");
-        setTimeout(() => {
-          setMessage("");
-        }, 1000);
-        setError("");
       } catch (err) {
-        setError("Server error in fetching categories");
+        console.log(err);
       }
     };
 
@@ -82,10 +73,6 @@ const Category = () => {
       <h1 className="text-center font-bold text-4xl max-md:text-3xl text-white mb-8">
         Popular <span className="text-[#C27AFF]">Categories</span>
       </h1>
-
-      {error && <p className="text-red-500 text-center">{error}</p>}
-      {message && <p className="text-green-500 text-center">{message}</p>}
-
       <div className="w-full flex items-center overflow-hidden">
         <div
           ref={sliderRef}

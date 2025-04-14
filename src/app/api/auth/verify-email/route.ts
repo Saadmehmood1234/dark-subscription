@@ -4,7 +4,6 @@ import { DarkUser } from "@/model/User";
 
 export async function POST(req: Request) {
   const { token } = await req.json();
-  console.log("Token received:", token);
   if (!token) {
     return NextResponse.json({ error: "Token is required" }, { status: 400 });
   }

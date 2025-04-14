@@ -9,7 +9,6 @@ export default async function ProfilePage() {
   if (!session?.user) {
     redirect("/signup");
   }
-  console.log("Session:", session);
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0C1120] to-[#0C1B44] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">

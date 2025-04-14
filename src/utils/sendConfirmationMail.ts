@@ -60,7 +60,6 @@ export async function sendConfirmationEmail({
     };
 
     await transporter.sendMail(mailOptions);
-    console.log("Confirmation email sent successfully");
   } catch (error) {
     console.error("Error sending confirmation email:", error);
     throw new Error("Failed to send confirmation email");
