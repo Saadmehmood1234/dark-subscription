@@ -131,9 +131,10 @@ const ProductDetail = ({
           <X
             onClick={() => setIsDetailOpen(!isDetailOpen)}
             size={24}
+            ref={posRef}
             className="hover:text-[#A92EDF]  cursor-pointer lg:hidden absolute right-4 top-2 z-10"
           />
-          <div ref={posRef} className="lg:w-1/2 lg:pr-4 p-2">
+          <div  className="lg:w-1/2 lg:pr-4 p-2">
             <motion.div
               whileHover={{ scale: 1.02 }}
               className="relative overflow-hidden rounded-2xl"
