@@ -3,6 +3,7 @@ import { stripe } from "@/lib/stripe";
 import { Order } from "@/model/Order";
 import { dbConnect } from "@/lib/dbConnect";
 export async function POST(request: NextRequest) {
+
   await dbConnect();
   const { sessionId, orderId } = await request.json();
   console.log({ sessionId, orderId });
@@ -12,12 +13,13 @@ export async function POST(request: NextRequest) {
       { status: 400 }
     );
   }
+
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
     if (session.payment_status === "paid") {
       const order = await Order.findById(orderId)
-        .populate("userId")
-        .populate("products.productId");
+        // .populate("userId")
+        // .populate("products.productId");
 
       if (!order) {
         return NextResponse.json(
@@ -31,9 +33,9 @@ export async function POST(request: NextRequest) {
       await order.save();
       return NextResponse.json({
         success: true,
-        email: order.userId.email,
-        productName:
-        order.products[0]?.productId?.title || "Subscription",
+        // email: order.userId.email,
+        // productName:
+        // order.products[0]?.productId?.title || "Subscription",
       });
     }
     return NextResponse.json(
