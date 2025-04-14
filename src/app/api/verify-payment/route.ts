@@ -16,8 +16,9 @@ export async function GET(request: Request) {
 
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
-
+    console.log(session,"session")
     if (session.payment_status === "paid") {
+      console.log("check point")
       const updatedOrder = await Order.findByIdAndUpdate(
         orderId,
         { paymentStatus: "paid", status: "completed" },
@@ -38,9 +39,9 @@ export async function GET(request: Request) {
       { success: false, error: "Payment not verified" },
       { status: 400 }
     );
-  } catch (error) {
+  } catch (error:any) {
     return NextResponse.json(
-      { success: false, error: "Server error" },
+      { success: false, error:error.message || "Server error"  },
       { status: 500 }
     );
   }

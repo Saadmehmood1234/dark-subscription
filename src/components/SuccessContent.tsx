@@ -16,18 +16,18 @@ export default function SuccessContent({
 
   useEffect(() => {
     const verifyPayment = async () => {
+
       if (!sessionId || !orderId) {
         console.warn("Missing sessionId or orderId");
         setLoading(false);
         return;
       }
-
+      
       try {
         console.log("Starting verification...");
         const response = await fetch(
           `/api/verify-payment?session_id=${sessionId}&order_id=${orderId}`
         );
-
         const data = await response.json();
         console.log("Verification result:", data);
 
