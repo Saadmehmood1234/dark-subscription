@@ -59,7 +59,6 @@ export default function SuccessContent({
       </div>
     );
   }
-
   if (!orderVerified) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
