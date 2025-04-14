@@ -23,27 +23,14 @@ export default function SuccessContent({
         setLoading(false);
         return;
       }
-
       try {
-        console.log("Starting verification...");
-        // const response = await fetch(
-        //   `/api/verify-payment?session_id=${sessionId}&order_id=${orderId}`,
-    
-        // );
-
-
         const {data} = await axios.post("api/verify-payment",{sessionId,orderId});
-        console.log(data,"data")
-        // const data = await response.json();
-        console.log("Verification result:", data);
 
         if (data.success) {
           setOrderVerified(true);
           try {
             await sendConfirmationEmail({
-              email: data.email,
-              productName: data.productName,
-              userName: data.userName || "Customer",
+              productName: data?.product?.title,
               orderId: orderId,
               websiteName: process.env.NEXT_PUBLIC_WEBSITE_NAME || "Our Site",
             });

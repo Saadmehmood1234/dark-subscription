@@ -1,16 +1,16 @@
 "use server";
 
 import nodemailer from "nodemailer";
-
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth";
 interface EmailParams {
-  email: string;
   productName: string;
-  userName: string;
   orderId: string;
   websiteName?: string;
 }
 
 export async function sendConfirmationEmail(params: EmailParams) {
+  const session = await getServerSession(authOptions);
   try {
     const transporter = nodemailer.createTransport({
       service: process.env.EMAIL_SERVICE || "gmail",
@@ -19,16 +19,18 @@ export async function sendConfirmationEmail(params: EmailParams) {
         pass: process.env.SMTP_PASSWORD,
       },
     });
+    const email = session?.user?.email;
+    const name  = session?.user?.name;
     const mailOptions = {
       from: `"${params.websiteName || "Your Website"}" <${
         process.env.EMAIL_USER
       }>`,
-      to: params.email,
+      to:email,
       subject: `Payment Successful - Your ${params.productName} Subscription is Confirmed!`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0;">
           <h2 style="color: #4CAF50;">Payment Successful!</h2>
-          <p>Dear ${params.userName},</p>
+          <p>Dear ${name},</p>
           
           <p>Thank you for subscribing to <strong>${
             params.productName

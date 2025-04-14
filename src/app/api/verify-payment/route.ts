@@ -2,11 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { Order } from "@/model/Order";
 import { dbConnect } from "@/lib/dbConnect";
+import { DarkUser } from "@/model/User";
+import { Product } from "@/model/Product";
 export async function POST(request: NextRequest) {
 
   await dbConnect();
   const { sessionId, orderId } = await request.json();
-  console.log({ sessionId, orderId });
   if (!sessionId || !orderId) {
     return NextResponse.json(
       { success: false, error: "Missing parameters" },
@@ -17,7 +18,10 @@ export async function POST(request: NextRequest) {
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
     if (session.payment_status === "paid") {
-      const order = await Order.findById(orderId)
+      const order = await Order.findById(orderId);
+      const productId  = order?.products[0]?.productId;
+      const product = await Product.findById(productId).select("title");
+
         // .populate("userId")
         // .populate("products.productId");
 
@@ -33,9 +37,7 @@ export async function POST(request: NextRequest) {
       await order.save();
       return NextResponse.json({
         success: true,
-        // email: order.userId.email,
-        // productName:
-        // order.products[0]?.productId?.title || "Subscription",
+       product
       });
     }
     return NextResponse.json(
