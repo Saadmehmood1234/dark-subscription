@@ -126,12 +126,13 @@ const ProductDetail = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          ref={posRef}
           className="flex flex-col lg:flex-row gap-6 xl:gap-8 bg-[#0C1B44] backdrop-blur-sm rounded-3xl p-4 sm:p-6 md:p-8 border border-[#A92EDF]/20 shadow-2xl"
         >
           <X
             onClick={() => setIsDetailOpen(!isDetailOpen)}
             size={24}
-            ref={posRef}
+            
             className="hover:text-[#A92EDF]  cursor-pointer lg:hidden absolute right-4 top-2 z-10"
           />
           <div  className="lg:w-1/2 lg:pr-4 p-2">
