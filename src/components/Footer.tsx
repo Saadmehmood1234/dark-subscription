@@ -91,7 +91,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 pt-8 mt-8">
           <p className="text-gray-400 text-sm text-center">
-            © 2025 DarkSale. All rights reserved.
+            © 2025 PrimeFlix. All rights reserved.
           </p>
         </div>
       </div>

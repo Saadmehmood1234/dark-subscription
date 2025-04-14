@@ -14,7 +14,7 @@ export default async function ProfilePage() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#A92EDF] to-[#3B82F6]">
-            DarkSale Profile
+            Prime Flix Profile
           </h1>
           <p className="mt-3 text-lg text-[#B4C7F8]">
             Navigate your stellar account information
