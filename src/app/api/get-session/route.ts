@@ -11,7 +11,6 @@ export async function GET(request: Request) {
       { status: 400 }
     );
   }
-
   try {
     const sessions = await stripe.checkout.sessions.list({
       limit: 1,
