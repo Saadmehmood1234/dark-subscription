@@ -1,10 +1,10 @@
 "use client";
 import { Suspense } from "react";
 import SuccessContent from "@/components/SuccessContent";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 export default function SuccessPage() {
   // const pathname = useSearchParams();
- 
+
   const searchParams = useSearchParams();
   console.log("Pathname:", searchParams);
   const sessionId = searchParams.get("session_id");
