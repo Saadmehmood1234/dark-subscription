@@ -72,7 +72,7 @@ export default function SuccessContent({
             support.
           </p>
           <Link
-            href="/orders"
+            href="/profile"
             className="mt-6 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#A92EDF] hover:bg-[#8e5ea3] transition-colors"
           >
             View Your Orders
