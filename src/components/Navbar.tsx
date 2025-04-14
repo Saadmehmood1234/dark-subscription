@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { authOptions } from "@/auth";
 import MobileMenu from "./MobileMenu";
-import { Home, Search, ShoppingCart, User } from "lucide-react";
+import { Home ,User } from "lucide-react";
 import SignOutButton from "./SignOutButton";
 import MobileMenuAfterSignIn from "./MobileMenuAfterSignIn";
 import CartIcon from "./CartIcon";
@@ -17,7 +17,7 @@ const Navbar = async () => {
         <Link href="/">
           <div className="text-2xl font-bold cursor-pointer">
             <h1 className="text-[#C27AFF] text-3xl">
-              Dark<span className="text-white">Sale</span>
+              Prime<span className="text-white">Flix</span>
             </h1>
           </div>
         </Link>
