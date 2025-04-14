@@ -36,7 +36,8 @@ const CheckoutModal = ({ cartItems, isOpen, onClose }: any) => {
 
       if (!stripe) throw new Error("Stripe failed to initialize");
       const sessionResponse = await fetch(
-        `/api/get-session?orderId=${orderResult.id}`
+        `/api/get-session?orderId=${orderResult.id}`,
+        
       );
       const { sessionId } = await sessionResponse.json();
 

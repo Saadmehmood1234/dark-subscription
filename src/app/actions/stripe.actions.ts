@@ -45,6 +45,7 @@ export async function orderProduct(
       throw new Error("User not found");
     }
 
+    
     const newOrder = new Order({
       userId: findUser._id,
       products: items.map((item) => ({

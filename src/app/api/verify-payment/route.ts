@@ -21,7 +21,7 @@ export async function GET(request: Request) {
       console.log("check point")
       const updatedOrder = await Order.findByIdAndUpdate(
         orderId,
-        { paymentStatus: "paid", status: "completed" },
+        { paymentStatus: "paid", status: "delivered" },
         { new: true }
       )
         .populate("userId")
