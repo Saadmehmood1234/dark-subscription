@@ -20,7 +20,6 @@ export async function GET(request: Request) {
     if (sessions.data.length === 0 || !sessions.data[0].id) {
       throw new Error("Session not found");
     }
-
     return NextResponse.json({
       sessionId: sessions.data[0].id,
     });
