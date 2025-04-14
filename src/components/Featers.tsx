@@ -1,72 +1,98 @@
 import React from "react";
 import { UserRound, ShoppingCart, Package } from "lucide-react";
 import { ShieldCheck, BadgeCheck, Tags, ArrowRight } from "lucide-react";
-const Featers = () => {
+
+const Features = () => {
   const features = [
     {
       icon: ShieldCheck,
       title: "Secure Transactions",
       description:
-        "Bank-grade security for all your purchases with end-to-end encryption",
+        "All payments are encrypted with 256-bit SSL protection. Your data is never stored or shared with third parties.",
       color: "from-[#500150] via-[#42026d] to-[#031877]",
     },
     {
       icon: BadgeCheck,
-      title: "Verified Services",
-      description: "Authentic subscriptions verified by our expert team",
+      title: "Verified Accounts",
+      description: "Every subscription is manually checked for validity before delivery. 100% genuine access guaranteed.",
       color: "from-[#03464d] via-[#025d42] to-[#024d6d]",
     },
     {
       icon: Tags,
-      title: "Best Discounts",
+      title: "Unbeatable Prices",
       description:
-        "Get exclusive deals and save up to 70% on premium subscriptions",
+        "Save 60-80% compared to official prices. We negotiate bulk discounts directly with providers.",
       color: "from-[#5d0101] via-[#6d0242] to-[#4d026d]",
     },
   ];
+
+  const steps = [
+    {
+      icon: UserRound,
+      title: "Create Account",
+      description: "Sign up in 30 seconds to access exclusive member pricing."
+    },
+    {
+      icon: ShoppingCart,
+      title: "Choose Subscription",
+      description: "Select from Netflix, Prime Video, Spotify, and 20+ other services."
+    },
+    {
+      icon: Package,
+      title: "Instant Delivery",
+      description: "Receive login credentials immediately after payment confirmation."
+    }
+  ];
+
   return (
     <div className="w-full flex justify-center items-center flex-col bg-gradient-to-tr from-[#160A25] via-[#180A25] to-[#0D0F29] pt-12">
+      {/* How It Works Section */}
       <div className="flex mx-1 justify-center items-center flex-col">
         <div className="max-w-4xl text-center w-full">
           <h1 className="text-5xl max-lg:text-4xl max-md:text-3xl mb-8">
-            How to purchase
+            Get Premium Accounts in 3 Easy Steps
           </h1>
           <p className="text-xl font-mono text-gray-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-            distinctio porro et molestiae quaerat laboriosam saepe ut nesciunt,
+            Join 50,000+ satisfied customers who enjoy premium services at wholesale prices. 
+            Our process takes less than 2 minutes from start to finish.
           </p>
         </div>
-        <div className="relative  flex w-full justify-between items-center my-12 gap-4">
-          <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-300"></div>
-          <div className="relative w-32 h-32 max-lg:w-24 max-lg:h-24 max-md:w-20 max-md:h-20 max-sm:w-16 max-sm:h-16 bg-gradient-to-tr from-[#500150] via-[#42026d] to-[#031877] rounded-full flex justify-center items-center z-10">
-            <UserRound className="text-white size-12 max-lg:size-10 max:md-size-8 max-sm:size-6" />
-          </div>
-          <div className="relative w-32 h-32 max-lg:w-24 max-lg:h-24 max-md:w-20 max-md:h-20 max-sm:w-16 max-sm:h-16  bg-gradient-to-tr from-[#500150] via-[#42026d] to-[#031877] rounded-full flex justify-center items-center z-10">
-            <ShoppingCart className="text-white size-12 max-lg:size-10 max:md-size-8 max-sm:size-6" />
-          </div>
 
-          <div className="relative w-32 h-32 max-lg:w-24 max-lg:h-24 max-md:w-20 max-md:h-20 max-sm:w-16 max-sm:h-16 bg-gradient-to-tr from-[#500150] via-[#42026d] to-[#031877] rounded-full flex justify-center items-center z-10">
-            <Package className="text-white size-12 max-lg:size-10 max:md-size-8 max-sm:size-6" />
-          </div>
+        <div className="relative flex w-full justify-between items-center my-12 gap-4">
+          <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-300"></div>
+          
+          {steps.map((step, index) => (
+            <div key={index} className="relative group">
+              <div className="relative w-32 h-32 max-lg:w-24 max-lg:h-24 max-md:w-20 max-md:h-20 max-sm:w-16 max-sm:h-16 bg-gradient-to-tr from-[#500150] via-[#42026d] to-[#031877] rounded-full flex justify-center items-center z-10 transition-transform duration-300 group-hover:scale-110">
+                <step.icon className="text-white size-12 max-lg:size-10 max:md-size-8 max-sm:size-6" />
+              </div>
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 w-40 text-center">
+                <h3 className="text-white font-semibold">{step.title}</h3>
+                <p className="text-gray-400 text-sm mt-1">{step.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-      <div className="flex justify-center items-center w-full my-10 max-md:my-4">
-        <div className="w-full  max-w-7xl mx-auto px-4">
+
+      {/* Value Proposition Section */}
+      <div className="flex justify-center items-center w-full my-10 max-md:my-4 mt-30">
+        <div className="w-full max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 gap-8 xl:gap-12">
             <div className="flex flex-col gap-4 lg:gap-6 text-center lg:text-left">
               <h2 className="text-2xl sm:text-3xl text-[#A92EDF] font-semibold">
-                Why Choose Us
+                Why Customers Choose Us
               </h2>
               <h2 className="text-3xl sm:text-4xl xl:text-5xl font-bold text-white">
-                The Most Trusted Subscription Platform
+                The Safe & Smart Way to Buy Premium Accounts
               </h2>
               <p className="text-base sm:text-lg text-gray-400 max-w-2xl lg:pr-8 mx-auto lg:mx-0">
-                Discover why thousands of users trust us for their subscription
-                needs. Get instant access to premium services at unbeatable
-                prices.
+                Since 2020, we've helped over 50,000 users access premium services 
+                at prices they can actually afford. Here's what makes us different:
               </p>
             </div>
-            <div className="w-full">
+
+            <div className="w-full mb-2">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-3 gap-6">
                 {features.map((feature, index) => (
                   <div
@@ -84,7 +110,6 @@ const Featers = () => {
                     <p className="text-sm sm:text-base text-gray-400 mb-4 sm:mb-6">
                       {feature.description}
                     </p>
-                  
                   </div>
                 ))}
               </div>
@@ -93,20 +118,26 @@ const Featers = () => {
         </div>
       </div>
 
-      <div className="flex w-full sm:p-12 p-4 py-8 justify-center items-center flex-col">
+      {/* CTA Section */}
+      <div className="flex w-full sm:p-12 p-4 py-8 justify-center items-center flex-col mt-10">
         <div className="max-w-4xl text-center w-full">
           <h1 className="text-5xl w-full max-lg:text-4xl max-md:text-3xl mb-8">
-            The Best Subscription at Lowest Price
+            Premium Access at Wholesale Prices
           </h1>
           <p className="text-xl font-mono text-gray-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-            distinctio porro et molestiae quaerat laboriosam saepe ut nesciunt,
+            Why pay full price when you can get the same premium experience for 
+            less? Our customers save an average of $300/year on subscriptions.
           </p>
-          <button className="w-64 mt-12 rounded-2xl text-2xl h-16 hover:scale-[1.02] cursor-pointer bg-gradient-to-tr from-[#500150] via-[#42026d] to-[#031877] px-6">Get Subscriptions</button>
+          <button 
+            className="w-64 mt-12 rounded-2xl text-2xl h-16 hover:scale-[1.02] cursor-pointer bg-gradient-to-tr from-[#500150] via-[#42026d] to-[#031877] px-6 transition-transform duration-300"
+            aria-label="Browse available subscriptions"
+          >
+            Browse Plans
+          </button>
         </div>
       </div>
     </div>
   );
 };
 
-export default Featers;
+export default Features;

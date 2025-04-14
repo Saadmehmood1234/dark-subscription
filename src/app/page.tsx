@@ -1,5 +1,5 @@
 import Category from '@/components/Category'
-import Faq from '@/components/Faq'
+import Faq from '@/components/faq/Faq'
 import Featers from '@/components/Featers'
 import CategoryLabels from '@/components/FilterCategory'
 import FloatWhatsapp from '@/components/FloatWatsapp'
