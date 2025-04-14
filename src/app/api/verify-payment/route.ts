@@ -1,12 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { Order } from "@/model/Order";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const sessionId = searchParams.get("session_id");
-  const orderId = searchParams.get("order_id");
+export async function POST(request:NextRequest) {
 
+  const {sessionId,orderId} = await request.json();
+  // const { searchParams } = new URL(request.url);
+  // const sessionId = searchParams.get("session_id");
+  // const orderId = searchParams.get("order_id");
+console.log({sessionId,orderId})
   if (!sessionId || !orderId) {
     return NextResponse.json(
       { success: false, error: "Missing parameters" },

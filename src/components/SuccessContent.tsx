@@ -4,6 +4,7 @@ import { CheckCircle } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { sendConfirmationEmail } from "@/app/actions/sendMail.actions";
+import axios from "axios";
 export default function SuccessContent({
   sessionId,
   orderId,
@@ -25,10 +26,15 @@ export default function SuccessContent({
 
       try {
         console.log("Starting verification...");
-        const response = await fetch(
-          `/api/verify-payment?session_id=${sessionId}&order_id=${orderId}`
-        );
-        const data = await response.json();
+        // const response = await fetch(
+        //   `/api/verify-payment?session_id=${sessionId}&order_id=${orderId}`,
+    
+        // );
+
+
+        const {data} = await axios.post("api/verify-payment",{sessionId,orderId});
+        console.log(data,"data")
+        // const data = await response.json();
         console.log("Verification result:", data);
 
         if (data.success) {
