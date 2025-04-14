@@ -5,8 +5,9 @@ import { useSearchParams } from "next/navigation";
 export default function SuccessPage() {
   const [sessionId, setSessionId] = useState<string | null>();
   const [orderId, setOrderId] = useState<string | null>();
+  const searchParams = useSearchParams();
   useEffect(() => {
-    const searchParams = useSearchParams();
+   
     console.log("Pathname:", searchParams);
     setSessionId(searchParams.get("session_id"));
     setOrderId(searchParams.get("order_id"));
