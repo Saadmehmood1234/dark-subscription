@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import SuccessContent from "@/components/SuccessContent";
 import { useSearchParams } from "next/navigation";
 export default function SuccessPage() {
-  // const pathname = useSearchParams();
+
 
   const searchParams = useSearchParams();
   console.log("Pathname:", searchParams);
