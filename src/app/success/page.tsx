@@ -1,17 +1,18 @@
+"use client";
 import { Suspense } from "react";
 import SuccessContent from "@/components/SuccessContent";
-
-export default function SuccessPage({
-  searchParams,
-}: {
-  searchParams: { session_id?: string; order_id?: string };
-}) {
+import { usePathname, useSearchParams } from "next/navigation";
+export default function SuccessPage() {
+  // const pathname = useSearchParams();
+ 
+  const searchParams = useSearchParams();
+  console.log("Pathname:", searchParams);
+  const sessionId = searchParams.get("session_id");
+  const orderId = searchParams.get("order_id");
+  console.log("Search Params:", searchParams);
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <SuccessContent 
-        sessionId={searchParams.session_id} 
-        orderId={searchParams.order_id} 
-      />
+      <SuccessContent sessionId={sessionId!} orderId={orderId!} />
     </Suspense>
   );
 }
