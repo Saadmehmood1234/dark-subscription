@@ -3,11 +3,10 @@ import { stripe } from "@/lib/stripe";
 import { Order } from "@/model/Order";
 
 export async function GET(request: Request) {
-  // const { searchParams } = new URL(request.url);
-  // const sessionId = searchParams.get("session_id");
-  // const orderId = searchParams.get("order_id");
-  const orderId="test"
-  const sessionId="tejds"
+  const { searchParams } = new URL(request.url);
+  const sessionId = searchParams.get("session_id");
+  const orderId = searchParams.get("order_id");
+
   if (!sessionId || !orderId) {
     return NextResponse.json(
       { success: false, error: "Missing parameters" },
