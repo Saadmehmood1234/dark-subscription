@@ -22,7 +22,7 @@ export default function SuccessContent({
         setLoading(false);
         return;
       }
-      
+
       try {
         console.log("Starting verification...");
         const response = await fetch(
@@ -45,13 +45,14 @@ export default function SuccessContent({
             console.error("Email failed:", emailError);
           }
         }
-      } catch (error) {
+      } catch (error:any) {
         console.error("Verification failed:", {
           error,
           sessionId,
           orderId,
           time: new Date().toISOString(),
         });
+        console.log(error.message,"err")
       } finally {
         setLoading(false);
       }
