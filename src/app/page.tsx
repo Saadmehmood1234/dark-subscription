@@ -10,14 +10,19 @@ import React from 'react'
 
 const Home = () => {
   return (
-    <div className='text-white flex flex-col flex-1  bg-gradient-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] w-full h-full'>
+    <div className='text-white flex flex-col flex-1  bg-gradient-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] w-full h-screen'>
       <Header />
+      
       <Category />
       <CategoryLabels/>
       <ProductSection />
+     
       <Featers />
+       
       <FloatWhatsapp/>
+     
       <Review />
+       
       <Faq />
     </div>
   )

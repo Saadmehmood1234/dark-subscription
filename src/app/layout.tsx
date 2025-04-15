@@ -74,7 +74,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="bg-gradient-to-tr from-[#0E091C] via-[#1F133D] min-h-screen to-[#0B1027] flex flex-col justify-between w-full pt-20">
+        <div className="bg-gradient-to-tr from-[#0E091C] via-[#1F133D] min-h-screen to-[#0B1027] overflow-x-hidden flex flex-col justify-between w-full pt-20">
           <ReduxProvider>
             <Navbar />
             {children}
