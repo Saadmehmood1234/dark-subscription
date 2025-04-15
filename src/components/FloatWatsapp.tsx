@@ -22,6 +22,7 @@ const FloatWhatsapp = () => {
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
     >
+      
       <Link href={whatsappUrl} target="_blank" passHref legacyBehavior>
         <motion.p
           className="bg-[#25D366] cursor-pointer hover:bg-[#128C7E] text-white rounded-full p-4 shadow-lg flex items-center justify-center"
