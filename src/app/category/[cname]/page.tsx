@@ -63,7 +63,6 @@ const CategoryPage = () => {
       product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
   if (isDetailOpen && sendDetail) {
     return (
       <ProductDetail
@@ -71,6 +70,7 @@ const CategoryPage = () => {
       />
     );
   }
+  
   return (
     <section className="w-full py-12 md:py-20 px-4 sm:px-6 lg:px-8">
       {status.error && (
