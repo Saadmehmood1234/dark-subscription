@@ -45,8 +45,10 @@ const ProductSection = () => {
     setIsDetailOpen(true);
   };
 
-  const filteredProducts = products.filter((product) =>
-    product.title.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredProducts = products.filter(
+    (product) =>
+      product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   if (isDetailOpen && sendDetail) {
@@ -59,7 +61,6 @@ const ProductSection = () => {
 
   return (
     <section className="w-full py-12 md:py-20 px-4 sm:px-6 lg:px-8">
-    
       {status.error && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -83,7 +84,7 @@ const ProductSection = () => {
         {filteredProducts.length === 0 ? (
           <NoProductAvailable />
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-sm:gap-20 mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16 max-sm:gap-20 mb-12">
             {filteredProducts.map((product, index) => (
               <motion.div
                 key={product.id}

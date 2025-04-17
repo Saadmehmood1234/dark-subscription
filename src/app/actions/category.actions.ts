@@ -1,6 +1,7 @@
-"use server"
+"use server";
 import { dbConnect } from "@/lib/dbConnect";
 import { Category } from "@/model/Category";
+import { Product } from "@/model/Product";
 
 export const getCategory = async () => {
   try {

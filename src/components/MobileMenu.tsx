@@ -38,13 +38,13 @@ const MobileMenu = () => {
           >
             Home
           </Link>
-          <Link
+          {/* <Link
             href="/cart"
             className="text-white hover:text-[#C27AFF] transition-all"
             onClick={() => setMobileMenuOpen(false)}
           >
             Cart
-          </Link>
+          </Link> */}
           <Link href="/auth/signin">
             <button
               className="text-white font-bold bg-[#C27AFF] px-5 py-2 rounded-lg hover:bg-[#9C5EC3] transition-all"

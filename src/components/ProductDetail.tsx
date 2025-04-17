@@ -112,6 +112,7 @@ const ProductDetail = ({
     setCartItems([tempCartItem]);
     setShowCheckout(true);
   };
+  console.log("My Data", product);
   return (
     <div className="min-h-screen bg-gradient-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] py-8 sm:py-12 md:py-16 lg:py-20">
       <div className="container mx-auto px-4 sm:px-6">
@@ -122,7 +123,7 @@ const ProductDetail = ({
             onClose={() => setShowCheckout(false)}
           />
         )}
-        
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -133,10 +134,9 @@ const ProductDetail = ({
           <X
             onClick={() => setIsDetailOpen(!isDetailOpen)}
             size={24}
-            
             className="hover:text-[#A92EDF]  cursor-pointer lg:hidden absolute right-4 top-2 z-10"
           />
-          <div  className="lg:w-1/2 lg:pr-4 p-2">
+          <div className="lg:w-1/2 lg:pr-4 p-2">
             <motion.div
               whileHover={{ scale: 1.02 }}
               className="relative overflow-hidden rounded-2xl"
@@ -210,10 +210,10 @@ const ProductDetail = ({
                   ₹{product.price}
                 </div>
                 <span className="text-gray-400 line-through text-sm sm:text-base">
-                  ₹599/month
+                  ₹{product.originalPrice}
                 </span>
                 <span className="text-green-400 font-semibold text-sm sm:text-base">
-                  50% OFF
+                  {product.discount}% OFF
                 </span>
               </div>
             </motion.div>

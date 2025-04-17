@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { authOptions } from "@/auth";
 import MobileMenu from "./MobileMenu";
-import { Home ,User } from "lucide-react";
+import { Home, ShoppingCart, User } from "lucide-react";
 import SignOutButton from "./SignOutButton";
 import MobileMenuAfterSignIn from "./MobileMenuAfterSignIn";
 import CartIcon from "./CartIcon";
@@ -52,7 +52,19 @@ const Navbar = async () => {
           <Home className="text-[#C27AFF]" size={24} />
           <span>Home</span>
         </Link>
-
+          {/* {session && (
+            <Link
+              href="/cart"
+              className="text-white hover:text-[#C27AFF] transition-all"
+              // onClick={() => setMobileMenuOpen(false)}
+            >
+              <div className="flex justify-center items-center gap-2">
+                {" "}
+                <ShoppingCart size={20} />
+                <span>Cart</span>
+              </div>
+            </Link>
+          )} */}
         <Link
           href={session ? "/account" : "/auth/signin"}
           className="flex flex-col items-center"

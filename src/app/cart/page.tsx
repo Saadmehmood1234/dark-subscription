@@ -9,7 +9,7 @@ import { RootState, AppDispatch } from "@/lib/store";
 import { fetchCart, removeFromCart, addToCart } from "@/redux/slices/cartSlice";
 import toast from "react-hot-toast";
 import CheckoutModal from "@/components/CheckoutModalForCart";
-
+import { useRouter } from "next/navigation";
 export default function CartPage() {
   const dispatch = useDispatch<AppDispatch>();
   const { cart, status, error } = useSelector((state: RootState) => state.cart);
@@ -24,7 +24,7 @@ export default function CartPage() {
   useEffect(() => {
     dispatch(fetchCart());
   }, [dispatch]);
-
+  const router = useRouter();
   useEffect(() => {
     const initialQuantities: Record<string, number> = {};
     cart.items.forEach((item) => {
@@ -89,8 +89,16 @@ export default function CartPage() {
   const uniqueCartItems = getUniqueCartItems();
 
   // if (status === "loading") return <p className="text-center py-12">Loading...</p>;
-  if (status === "failed")
-    return <p className="text-center py-12 text-red-500">Error: {error}</p>;
+  if (status === "failed") {
+    setTimeout(() => {
+      router.push("/");
+    }, 2000);
+    return (
+      <p className="text-center py-12 text-3xl max-lg:text-2xl max-md:text-xl text-red-500">
+        {error}
+      </p>
+    );
+  }
 
   return (
     <motion.div

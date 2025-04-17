@@ -125,7 +125,7 @@ export default function OrderHistory({
                     </p>
                   </div>
                   <div className="text-white">
-                  ₹{item.product.price.toFixed(2)}
+                    ₹{item.product.price.toFixed(2)}
                   </div>
                 </div>
               ))}
@@ -133,7 +133,7 @@ export default function OrderHistory({
           </div>
 
           <div className="flex justify-end">
-            <DownloadOrderInvoice order={selectedOrder} user={user}/>
+            <DownloadOrderInvoice order={selectedOrder} user={user} />
           </div>
         </div>
       ) : (
@@ -193,7 +193,7 @@ export default function OrderHistory({
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-white">
-                  ₹{order.totalAmount.toFixed(2)}
+                    ₹{order.totalAmount.toFixed(2)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button
