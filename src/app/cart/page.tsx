@@ -93,11 +93,13 @@ export default function CartPage() {
     setTimeout(() => {
       router.push("/");
     }, 2000);
-    return (
-      <p className="text-center py-12 text-3xl max-lg:text-2xl max-md:text-xl text-red-500">
-        {error}
-      </p>
-    );
+    if (error === "Signin to continue") {
+      return (
+        <p className="text-center py-12 text-3xl max-lg:text-2xl max-md:text-xl text-red-500">
+          {error}
+        </p>
+      );
+    }
   }
 
   return (
