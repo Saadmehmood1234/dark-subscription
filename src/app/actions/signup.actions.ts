@@ -145,7 +145,7 @@ const emailSchema = z
 
 const passwordSchema = z
   .string()
-  .min(12, "Password must be at least 12 characters long")
+  .min(8, "Password must be at least 8 characters long")
   .refine((password) => /[A-Z]/.test(password), {
     message: "Password must contain at least one uppercase letter",
   })

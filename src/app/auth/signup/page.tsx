@@ -12,10 +12,11 @@ import { signup } from "../../actions/signup.actions";
 import { motion } from "framer-motion";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
+
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
 export default function SignUpPage() {
@@ -36,6 +37,7 @@ export default function SignUpPage() {
 
     if (!res.success) {
       toast.error(res.message || "Error in SignUp");
+      setLoading(false); 
       return;
     }
     toast.success("SignUp Successfully");
@@ -70,32 +72,33 @@ export default function SignUpPage() {
                   label="Full Name"
                   icon={<User className="h-5 w-5 text-[#A92EDF]" />}
                   {...register("name")}
-                  error={
-                    errors.name ? { message: errors.name.message } : undefined
-                  }
+                  error={errors.name && { message: errors.name.message }}
                   placeholder="sourav sec"
                 />
+                {errors.name && (
+                  <span className="text-red-500 text-sm">{errors.name.message}</span>
+                )}
                 <Input
                   label="Email"
                   icon={<Mail className="h-5 w-5 text-[#A92EDF]" />}
                   {...register("email")}
-                  error={
-                    errors.email ? { message: errors.email.message } : undefined
-                  }
+                  error={errors.email && { message: errors.email.message }}
                   placeholder="example@gmail.com"
                 />
+                {errors.email && (
+                  <span className="text-red-500 text-sm">{errors.email.message}</span>
+                )}
                 <Input
                   label="Password"
                   type="password"
                   icon={<Lock className="h-5 w-5 text-[#A92EDF]" />}
                   {...register("password")}
-                  error={
-                    errors.password
-                      ? { message: errors.password.message }
-                      : undefined
-                  }
+                  error={errors.password && { message: errors.password.message }}
                   placeholder="*****"
                 />
+                {errors.password && (
+                  <span className="text-red-500 text-sm">{errors.password.message}</span>
+                )}
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -103,6 +106,7 @@ export default function SignUpPage() {
                   <Button
                     type="submit"
                     className="w-full cursor-pointer bg-[#A92EDF] hover:bg-[#8e5ea3] text-white font-semibold py-4 rounded-xl transition-all"
+                    disabled={loading}
                   >
                     {loading ? "SignUp..." : "Sign Up"}
                   </Button>
