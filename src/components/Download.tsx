@@ -122,7 +122,7 @@ const OrderInvoicePDF = ({ invoice }: { invoice: InvoiceData }) => (
               {invoice.order.totalAmount.toFixed(2)}
             </Text>
 
-            <Text style={styles.value}>$0.00</Text>
+            <Text style={styles.value}>₹0.00</Text>
           </View>
         </View>
 

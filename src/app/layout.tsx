@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import SessionProviderWrapper from "@/components/SessionProviderWrapper";
+import { getServerSession } from "next-auth";
 import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ReduxProvider } from "./StoreProvider";
+import { authOptions } from "@/auth";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -64,22 +67,25 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://yourwebsite.com"),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div className="bg-gradient-to-tr from-[#0E091C] via-[#1F133D] min-h-screen to-[#0B1027] overflow-x-hidden flex flex-col justify-between w-full pt-20">
-          <ReduxProvider>
-            <Navbar />
-            {children}
-            <Footer />
-          </ReduxProvider>
+          <SessionProviderWrapper session={session}>
+            <ReduxProvider>
+              <Navbar />
+              {children}
+              <Footer />
+            </ReduxProvider>
+          </SessionProviderWrapper>
         </div>
         <Toaster
           position="bottom-right"

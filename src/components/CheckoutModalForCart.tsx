@@ -154,7 +154,7 @@ const CheckoutModal = ({ cartItems, isOpen, onClose }: any) => {
                 </div>
               </div>
               <p className="font-medium text-[#C27AFF]">
-                ${(item.price * item.quantity).toFixed(2)}
+              ₹{(item.price * item.quantity).toFixed(2)}
               </p>
             </motion.div>
           ))}
@@ -162,7 +162,7 @@ const CheckoutModal = ({ cartItems, isOpen, onClose }: any) => {
           <div className="flex justify-between items-center py-4 border-t border-b border-[#A92EDF]/30">
             <span className="text-lg font-semibold text-gray-300">Total</span>
             <span className="text-xl font-bold text-[#A92EDF]">
-              ${total.toFixed(2)}
+            ₹{total.toFixed(2)}
             </span>
           </div>
 
