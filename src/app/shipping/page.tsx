@@ -89,7 +89,6 @@ export default function ShippingPolicy() {
             </div>
           </div>
         </section>
-
         <section className="mt-12 text-center text-[#B4ACD9]">
           <p>
             For technical requirements, visit our{" "}
