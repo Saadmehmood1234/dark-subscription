@@ -80,7 +80,7 @@ const Faq = () => {
     >
       {!isFormOpen ? (
         <div className="flex justify-center items-center w-full my-20">
-          <div className="w-full max-w-7xl mx-auto px-4">
+          <div className="w-full max-w-7xl mx-auto px-4" id="faq">
             {/* Header */}
             <div className="flex flex-col items-center text-center mb-16">
               <div className="inline-flex items-center gap-2 text-[#A92EDF] mb-4">
