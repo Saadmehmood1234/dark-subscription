@@ -16,6 +16,7 @@ const MobileMenu = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  
   return (
     <nav className="fixed w-full top-0 left-0 z-50 bg-[#1F133D] shadow-lg">
       <div className="flex justify-between items-center">
