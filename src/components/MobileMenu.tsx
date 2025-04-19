@@ -19,12 +19,21 @@ const MobileMenu = () => {
 
   return (
     <nav className="fixed w-full top-0 left-0 z-50 bg-[#1F133D] shadow-lg">
-      <button
-        className="md:hidden text-white p-4"
-        onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
-      >
-        {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-      </button>
+      <div className="flex justify-between items-center">
+        <Link href="/" className="md:hidden m-2">
+          <div className="text-2xl font-bold cursor-pointer">
+            <h1 className="text-[#C27AFF] text-3xl">
+              Prime<span className="text-white">Flix</span>
+            </h1>
+          </div>
+        </Link>
+        <button
+          className="md:hidden text-white p-4"
+          onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+      </div>
       <div
         className={`md:hidden transition-all ${
           isMobileMenuOpen ? "block" : "hidden"
