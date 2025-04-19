@@ -27,9 +27,6 @@ const Footer = () => {
 
   const companyLinks = [
     { name: "About", url: "/about" },
-    { name: "Blog", url: "/blog" },
-    { name: "Partners", url: "/partners" },
-    { name: "Careers", url: "/careers" }
   ];
 
   const legalLinks = [
@@ -38,10 +35,9 @@ const Footer = () => {
     { name: "Refund Policy", url: "/refunds" },
     { name: "Cookie Policy", url: "/cookies" }
   ];
-
   const supportLinks = [
     { name: "Contact Us", url: "/contact" },
-    { name: "FAQ", url: "/faq" },
+    { name: "FAQ", url: "/#faq" },
     { name: "Shipping", url: "/shipping" },
     { name: "Returns", url: "/returns" }
   ];
