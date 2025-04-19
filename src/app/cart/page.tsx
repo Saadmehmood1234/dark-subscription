@@ -86,19 +86,16 @@ export default function CartPage() {
     });
     return Array.from(uniqueItemsMap.values());
   };
-  
+
   const uniqueCartItems = getUniqueCartItems();
   // if (status === "loading") return <p className="text-center py-12">Loading...</p>;
   if (status === "failed") {
     setTimeout(() => {
       router.push("/");
     }, 2000);
+
     if (error === "Signin to continue") {
-      return (
-        <p className="text-center py-12 text-3xl max-lg:text-2xl max-md:text-xl text-red-500">
-          {error}
-        </p>
-      );
+      toast.error(error);
     }
   }
 

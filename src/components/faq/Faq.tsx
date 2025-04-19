@@ -81,7 +81,6 @@ const Faq = () => {
       {!isFormOpen ? (
         <div className="flex justify-center items-center w-full my-20">
           <div className="w-full max-w-7xl mx-auto px-4" id="faq">
-            {/* Header */}
             <div className="flex flex-col items-center text-center mb-16">
               <div className="inline-flex items-center gap-2 text-[#A92EDF] mb-4">
                 <HelpCircle className="size-6" />
@@ -95,8 +94,6 @@ const Faq = () => {
                 subscriptions, and payment process.
               </p>
             </div>
-
-            {/* FAQ Grid */}
             <div className="flex max-lg:flex-col max-lg:gap-12 gap-4">
               <div className="grid grid-cols-1 gap-6 flex-1">
                 {FAQ_DATA.map((item, index) => (
