@@ -206,8 +206,7 @@ export const signup = async (data: {
       };
     }
     if (
-      password.toLowerCase().includes("password") ||
-      password.toLowerCase().includes(name.toLowerCase())
+      password.toLowerCase().includes("password") 
     ) {
       return {
         success: false,
