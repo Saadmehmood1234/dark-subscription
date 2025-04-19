@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 
 const FloatWhatsapp = () => {
-  const whatsappNumber = "9773834796";
+  const whatsappNumber = "9354050520";
   const defaultMessage = "Hello, I have a question about...";
 
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
