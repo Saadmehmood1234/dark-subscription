@@ -1,8 +1,6 @@
-
 import { getProductByName } from '@/app/actions/product.actions';
-import { Metadata } from 'next';
 import { ReactNode } from 'react';
-
+import { Metadata } from 'next';
 
 interface LayoutProps {
   children: ReactNode;
@@ -23,13 +21,14 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
         index: false,
         follow: true
       }
-    }
+    };
   }
-  const product = JSON.parse(res.product as any);
+
+  const product = JSON.parse(res.product as string);
   const productUrl = `/product/${product.slug || productName}`;
 
   return {
-    title: product?.title?.toLowerCase(), // Will become "Product Title | My Store" via template
+    title: product?.title?.toLowerCase(),
     description: product.description.substring(0, 160),
     alternates: {
       canonical: productUrl
@@ -38,30 +37,32 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
       title: product.title,
       description: product.description.substring(0, 160),
       url: productUrl,
-      images: product.images.map((img:string) => ({
+      images: product.images.map((img: string) => ({
         url: img,
         width: 800,
         height: 600,
         alt: product.title,
       })),
+      type: 'website',
     },
     twitter: {
+      card: 'summary_large_image',
       title: product.title,
       description: product.description.substring(0, 160),
-      images: product.images[0] // Just use first image for Twitter
+      images: product.images[0] ? [product.images[0]] : undefined
     },
     other: {
       'product:price:amount': product.price.toString(),
       'product:price:currency': 'INR',
       'product:availability': product.stock > 0 ? 'in stock' : 'out of stock'
     }
-  }
+  };
 }
 
-export default function ProductLayout({ children }:{children:ReactNode}) {
+export default function ProductLayout({ children }: LayoutProps) {
   return (
     <div className="bg-gradient-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] min-h-screen">
       {children}
     </div>
-  )
+  );
 }
