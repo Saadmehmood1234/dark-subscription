@@ -1,6 +1,6 @@
 import { getProductByName } from '@/app/actions/product.actions';
 import { ReactNode } from 'react';
-import { Metadata } from 'next';
+
 
 // Correct interface for dynamic route params
 interface ProductPageParams {
@@ -13,7 +13,7 @@ interface ProductLayoutProps {
   params: ProductPageParams;
 }
 
-export async function generateMetadata({ params }: { params: ProductPageParams }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: ProductPageParams }): Promise<any> {
   const productName = decodeURIComponent(params.product);
   const res = await getProductByName(productName);
 
