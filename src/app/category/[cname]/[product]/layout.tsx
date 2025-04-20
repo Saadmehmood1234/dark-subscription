@@ -2,17 +2,19 @@ import { getProductByName } from '@/app/actions/product.actions';
 import { ReactNode } from 'react';
 import { Metadata } from 'next';
 
+// Correct interface for dynamic route params
+interface ProductPageParams {
+  cname: string;
+  product: string;
+}
 
 interface ProductLayoutProps {
   children: ReactNode;
-  params: {
-    cname: string;
-    product: string;
-  };
+  params: ProductPageParams;
 }
 
-export async function generateMetadata({ params }: ProductLayoutProps): Promise<Metadata> {
-  const productName = decodeURIComponent(params.cname);
+export async function generateMetadata({ params }: { params: ProductPageParams }): Promise<Metadata> {
+  const productName = decodeURIComponent(params.product);
   const res = await getProductByName(productName);
 
   if (!res?.success) {
@@ -27,10 +29,10 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
   }
 
   const product = JSON.parse(res.product as string);
-  const productUrl = `/product/${product.slug || productName}`;
+  const productUrl = `/category/${params.cname}/${product.slug || productName}`;
 
   return {
-    title: product?.title?.toLowerCase(),
+    title: product?.title,
     description: product.description.substring(0, 160),
     alternates: {
       canonical: productUrl
@@ -56,12 +58,13 @@ export async function generateMetadata({ params }: ProductLayoutProps): Promise<
     other: {
       'product:price:amount': product.price.toString(),
       'product:price:currency': 'INR',
-      'product:availability': product.stock > 0 ? 'in stock' : 'out of stock'
+      'product:availability': product.stock > 0 ? 'in stock' : 'out of stock',
+      'product:category': params.cname
     }
   };
 }
 
-export default function ProductLayout({ children }: ProductLayoutProps) {
+export default function ProductLayout({ children, params }: ProductLayoutProps) {
   return (
     <div className="bg-gradient-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] min-h-screen">
       {children}
