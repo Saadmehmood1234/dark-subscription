@@ -166,11 +166,18 @@ const nameSchema = z
   .refine((name) => validator.isAlpha(name.replace(/\s/g, "")), {
     message: "Name can only contain letters and spaces",
   });
+const phoneSchema = z
+  .string()
+  .regex(
+    /^[6-9]\d{9}$/,
+    "Phone must be a valid 10-digit number starting with 6-9"
+  );
 
 const signupSchema = z
   .object({
     name: nameSchema,
     email: emailSchema,
+    phone: phoneSchema,
     password: passwordSchema,
   })
   .strict();
@@ -178,6 +185,7 @@ const signupSchema = z
 export const signup = async (data: {
   name: string;
   email: string;
+  phone: string;
   password: string;
 }) => {
   try {
@@ -195,7 +203,7 @@ export const signup = async (data: {
       };
     }
 
-    const { name, email, password } = validationResult.data;
+    const { name, email, password, phone } = validationResult.data;
 
     const existingUser = await DarkUser.findOne({ email }).lean();
     if (existingUser) {
@@ -205,9 +213,7 @@ export const signup = async (data: {
           "If this email is registered, you'll receive a verification email",
       };
     }
-    if (
-      password.toLowerCase().includes("password") 
-    ) {
+    if (password.toLowerCase().includes("password")) {
       return {
         success: false,
         message: "Password is too weak or contains personal information",
@@ -223,6 +229,7 @@ export const signup = async (data: {
     await DarkUser.create({
       name: validator.escape(name),
       email,
+      phone,
       image: profilePicture,
       password: hashedPassword,
       profilePublicId: profilePicture,

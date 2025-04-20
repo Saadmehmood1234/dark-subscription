@@ -92,18 +92,27 @@ export default function SignInPage() {
                   }
                   placeholder="example@gmail.com"
                 />
-                <Input
-                  label="Password"
-                  type="password"
-                  icon={<Lock className="h-5 w-5 text-purple-500" />}
-                  {...register("password")}
-                  error={
-                    errors.password
-                      ? { message: errors.password.message }
-                      : undefined
-                  }
-                  placeholder="*****"
-                />
+                <div className="w-full relative">
+                  <Input
+                    label="Password"
+                    type="password"
+                    icon={<Lock className="h-5 w-5 text-purple-500" />}
+                    {...register("password")}
+                    error={
+                      errors.password
+                        ? { message: errors.password.message }
+                        : undefined
+                    }
+                    placeholder="*****"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => router.push("/auth/forgot-password")}
+                    className="my-4 text-sm text-[#A92EDF] hover:text-[#c645ff] cursor-pointer transition-colors"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
                 {error && (
                   <p className="text-red-500 text-sm text-center">{error}</p>
                 )}

@@ -6,7 +6,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
-import { User, Mail, Lock } from "lucide-react";
+import { User, Mail, Lock, Phone } from "lucide-react";
 import { FaGoogle } from "react-icons/fa";
 import { signup } from "../../actions/signup.actions";
 import { motion } from "framer-motion";
@@ -14,6 +14,9 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
+  phone: z
+    .string()
+    .regex(/^[6-9]\d{9}$/, "Phone must be a valid 10-digit number"),
   email: z.string().email("Invalid email"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
@@ -59,7 +62,7 @@ export default function SignUpPage() {
               </h2>
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="w-full flex flex-col gap-2"
+                className="w-full flex flex-col gap-4"
               >
                 <Input
                   label="Full Name"
@@ -68,11 +71,7 @@ export default function SignUpPage() {
                   error={errors.name && { message: errors.name.message }}
                   placeholder="sourav sec"
                 />
-                {errors.name && (
-                  <span className="text-red-500 text-sm">
-                    {errors.name.message}
-                  </span>
-                )}
+               
                 <Input
                   label="Email"
                   icon={<Mail className="h-5 w-5 text-[#A92EDF]" />}
@@ -80,11 +79,15 @@ export default function SignUpPage() {
                   error={errors.email && { message: errors.email.message }}
                   placeholder="example@gmail.com"
                 />
-                {errors.email && (
-                  <span className="text-red-500 text-sm">
-                    {errors.email.message}
-                  </span>
-                )}
+               
+                <Input
+                  label="Phone Number"
+                  icon={<Phone className="h-5 w-5 text-[#A92EDF]" />}
+                  {...register("phone")}
+                  error={errors.phone && { message: errors.phone.message }}
+                  placeholder="9873933435"
+                />
+               
                 <Input
                   label="Password"
                   type="password"
@@ -95,11 +98,7 @@ export default function SignUpPage() {
                   }
                   placeholder="*****"
                 />
-                {errors.password && (
-                  <span className="text-red-500 text-sm">
-                    {errors.password.message}
-                  </span>
-                )}
+               
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
