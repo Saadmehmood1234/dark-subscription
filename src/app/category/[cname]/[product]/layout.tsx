@@ -3,19 +3,7 @@ import { Metadata } from 'next';
 import { ReactNode } from 'react';
 
 
-// Correct interface for dynamic route params
-interface ProductPageParams {
-  cname: string;
-  product: string;
-}
-
-interface ProductLayoutProps {
-  children: ReactNode;
-  params: ProductPageParams;
-}
-
-export async function generateMetadata({ params }: { params: ProductPageParams }): Promise<Metadata> {
-  console.log(params.cname,params.product,"params")
+export async function generateMetadata({ params }: { params: any }): Promise<Metadata> {
   const productName = decodeURIComponent(params.product);
   const res = await getProductByName(productName);
 
@@ -66,7 +54,7 @@ export async function generateMetadata({ params }: { params: ProductPageParams }
   };
 }
 
-export default function ProductLayout({ children, params }: ProductLayoutProps) {
+export default function ProductLayout({ children }:{children:ReactNode}) {
   return (
     <div className="bg-gradient-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] min-h-screen">
       {children}
