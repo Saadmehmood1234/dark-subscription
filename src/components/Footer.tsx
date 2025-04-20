@@ -1,27 +1,27 @@
 "use client";
 import React from "react";
-import { Youtube, Twitter, Instagram, Mail } from "lucide-react";
-
+import { Youtube, Instagram, Mail } from "lucide-react";
+import { FaTelegramPlane } from "react-icons/fa";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const socialLinks = [
     {
       icon: Youtube,
-      url: "https://youtube.com/@darksale",
+      url: " https://youtube.com/@primeflix-site",
       label: "YouTube",
       color: "hover:text-red-500",
       bg: "hover:bg-red-500/10",
     },
     {
-      icon: Twitter,
-      url: "https://twitter.com/darksale",
+      icon: FaTelegramPlane,
+      url: " https://t.me/primeflix_site",
       label: "Twitter",
       color: "hover:text-blue-400",
       bg: "hover:bg-blue-400/10",
     },
     {
       icon: Instagram,
-      url: "https://instagram.com/darksale",
+      url: "https://www.instagram.com/primeflix.site",
       label: "Instagram",
       color: "hover:text-pink-500",
       bg: "hover:bg-pink-500/10",
