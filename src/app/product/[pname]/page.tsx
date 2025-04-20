@@ -36,7 +36,7 @@ const ProductPage = () => {
     return <Loader />;
   }
 
-  if (sendDetail || isDetailOpen) {
+  if (sendDetail && isDetailOpen) {
     return (
       <ProductDetail
         {...{ setIsDetailOpen, isDetailOpen, product: sendDetail }}

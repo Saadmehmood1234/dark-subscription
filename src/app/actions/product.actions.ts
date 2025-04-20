@@ -128,7 +128,7 @@ export const filterProducts = async (search: string) => {
       };
     }
 
-    const products = await Product.find({}).select("title description category price");
+    const products = await Product.find({}).select("title description category price slug");
     
     const filteredProducts = products.filter((product) => {
       // Check if any field matches (OR condition instead of AND)

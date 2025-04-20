@@ -89,7 +89,7 @@ const SearchInput = () => {
             suggestions.map((product:any) => (
               <Link
                 key={product._id}
-                href={`/product/${product.title || product._id}`}
+                href={`/product/${product.slug || product.title || product._id}`}
                 className="flex items-center px-4 py-3 hover:bg-[#310557] transition-colors group"
                 onClick={() => {
                   setInputValue(product.title);
