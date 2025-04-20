@@ -1,8 +1,16 @@
 
 import { getProductByName } from '@/app/actions/product.actions';
+import { Metadata } from 'next';
 import { ReactNode } from 'react';
 
-export async function generateMetadata({ params }:{params:{pname:string}}) {
+interface LayoutProps {
+  children: ReactNode;
+  params: {
+    pname: string;
+  };
+}
+
+export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
   const productName = decodeURIComponent(params.pname);
   const res = await getProductByName(productName);
 
