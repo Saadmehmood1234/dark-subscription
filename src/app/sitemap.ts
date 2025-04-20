@@ -63,7 +63,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const categories = JSON.parse(resCat.categories!);
       categoryPages = categories.map((category: any) => ({
         url: `${baseUrl}/category/${
-          category.slug || encodeURIComponent(category.title)
+          category?.slug || encodeURIComponent(category?.title)
         }`,
         lastModified: new Date(),
         changeFrequency: "weekly" as const,
@@ -76,11 +76,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     if (res?.success && res.products) {
       const products = JSON.parse(res.products!);
       productPages = products.map((product: any) => ({
-        url: `${baseUrl}/category/${product.category}/${
-          product.slug || encodeURIComponent(product.title)
+        url: `${baseUrl}/category/${product?.category}/${
+          product?.slug || encodeURIComponent(product?.title)
         }`,
-        lastModified: product.updatedAt
-          ? new Date(product.updatedAt)
+        lastModified: product?.updatedAt
+          ? new Date(product?.updatedAt)
           : new Date(),
         changeFrequency: "weekly" as const,
         priority: 0.7,
