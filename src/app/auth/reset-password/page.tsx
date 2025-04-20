@@ -106,6 +106,7 @@ export default function ResetPasswordPage() {
                     <Button className="w-full cursor-pointer bg-[#A92EDF] hover:bg-[#8e5ea3] text-white font-semibold py-4 rounded-xl transition-all">
                       Sign In
                     </Button>
+                    
                   </Link>
                 </div>
               ) : (
