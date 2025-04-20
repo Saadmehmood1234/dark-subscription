@@ -1,16 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Product } from "@/lib/types";
 import { getProductByName } from "@/app/actions/product.actions";
 import { useParams } from "next/navigation";
 import ProductDetail from "@/components/ProductDetail";
 import Loader from "@/components/Loader";
 
-const CategoryPage = () => {
+const ProductPage = () => {
   const { product } = useParams();
   const productName = Array.isArray(product) ? product[0] : product;
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
-  const [sendDetail, setSendDetail] = useState<Product | null>(null);
+  const [sendDetail, setSendDetail] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,7 +20,7 @@ const CategoryPage = () => {
           productName ? decodeURIComponent(productName) : ""
         );
         if (res.success) {
-          setSendDetail(JSON.parse(res.product!));
+          setSendDetail(JSON.parse(res.product as any));
           setIsDetailOpen(true);
         }
       } catch (error: any) {
@@ -37,7 +36,7 @@ const CategoryPage = () => {
     return <Loader />;
   }
 
-  if (sendDetail) {
+  if (sendDetail || isDetailOpen) {
     return (
       <ProductDetail
         {...{ setIsDetailOpen, isDetailOpen, product: sendDetail }}
@@ -66,4 +65,4 @@ const CategoryPage = () => {
   );
 };
 
-export default CategoryPage;
+export default ProductPage;
