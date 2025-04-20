@@ -154,3 +154,19 @@ export const filterProducts = async (search: string) => {
     };
   }
 };
+
+
+export const getProductNames = async()=>{
+  try {
+    const products = await Product.find({}).select("title category slug");
+    return {
+      message:"product got",
+      products:JSON.stringify(products)
+    }
+  } catch (error:any) {
+    return{
+      message:error.message,
+      success:false
+    }
+  }
+}

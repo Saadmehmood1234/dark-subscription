@@ -31,3 +31,18 @@ export const getCategory = async () => {
     };
   }
 };
+
+export const getCatgoryNames = async () => {
+  try {
+    const categories = await Category.find({});
+    return {
+      message: "categories got",
+      categories: JSON.stringify(categories),
+    };
+  } catch (error: any) {
+    return {
+      message: error.message,
+      success: false,
+    };
+  }
+};
