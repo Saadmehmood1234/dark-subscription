@@ -19,10 +19,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title:
-    "Prime Flix - Buy Premium Accounts at Affordable Prices | Netflix, Amazon, Tinder & More",
-  description:
-    "Get verified premium accounts for Netflix, Amazon Prime, Tinder Gold, Spotify, and more at the cheapest prices. Instant delivery, 24/7 support, and lifetime replacements.",
+  metadataBase: new URL("https://www.primeflix.site"),
+  title: {
+    default: "Prime Flix - Premium Accounts at Affordable Prices",
+    template: "%s | Prime Flix"
+  },
+  description: "Get verified premium accounts for Netflix, Amazon Prime, Tinder Gold, Spotify, and more at the cheapest prices. Instant delivery, 24/7 support, and lifetime replacements.",
+  applicationName: "Prime Flix",
+  referrer: "origin-when-cross-origin",
   keywords: [
     "cheap Netflix premium",
     "buy Amazon Prime account",
@@ -33,18 +37,31 @@ export const metadata: Metadata = {
     "Prime Flix",
     "legitimate premium accounts",
   ],
+  creator: "Prime Flix Team",
+  publisher: "Prime Flix",
+  formatDetection: {
+    email: true,
+    address: false,
+    telephone: true,
+  },
+  alternates: {
+    canonical: "/",
+  },
+  themeColor: "#0E091C",
+  category: "e-commerce",
   openGraph: {
     title: "Prime Flix - Premium Accounts at Low Costs",
-    description:
-      "Trusted marketplace for discounted Netflix, Amazon, Tinder, and other premium subscriptions.",
+    siteName: "Prime Flix",
+    description: "Trusted marketplace for discounted Netflix, Amazon, Tinder, and other premium subscriptions.",
+    url: "https://www.primeflix.site",
     type: "website",
-    url: "https://yourwebsite.com",
+    locale: "en_US",
     images: [
       {
-        url: "https://yourwebsite.com/og-image.jpg",
+        url: "/logo.png",
         width: 1200,
         height: 630,
-        alt: "Prime Flix Premium Accounts",
+        alt: "Prime Flix Premium Accounts Marketplace",
       },
     ],
   },
@@ -52,19 +69,48 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Prime Flix - Premium Accounts at Low Costs",
     description: "Trusted marketplace for discounted premium subscriptions.",
-    images: ["https://yourwebsite.com/og-image.jpg"],
+    creator: "@primeflix",
+    images: ["/logo.png"],
   },
   robots: {
     index: true,
     follow: true,
-  },
-  authors: [
-    {
-      name: "Prime Flix Team",
-      url: "https://yourwebsite.com",
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
-  ],
-  metadataBase: new URL("https://yourwebsite.com"),
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      new URL("/favicon.ico", "https://www.primeflix.site"),
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png" },
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    other: [
+      {
+        rel: "mask-icon",
+        url: "/safari-pinned-tab.svg",
+        color: "#A92EDF",
+      },
+    ],
+  },
+  manifest: "/site.webmanifest",
+  verification: {
+    google: "your-google-verification-code",
+    yandex: "your-yandex-verification-code",
+  },
+  other: {
+    "msapplication-TileColor": "#0E091C",
+    "msapplication-config": "/browserconfig.xml",
+  },
 };
 
 export default async function RootLayout({
