@@ -47,12 +47,10 @@ export async function getProduct() {
   }
 }
 
-export async function getProductByCategoryName(group: string) {
+export async function getProductByCategoryName(category: string) {
   try {
     await dbConnect();
-    console.log("Categort",group)
-    const products = await Product.find({ group }).lean();
-    console.log("Category Data",products)
+    const products = await Product.find({ category })
     if (!products || products.length === 0) {
       return {
         success: false,
@@ -80,6 +78,28 @@ export async function getProductByCategoryName(group: string) {
 
     return {
       data: formattedProducts,
+      success: true,
+      message: "Products fetched successfully",
+      status: 200,
+    };
+  } catch (error: any) {
+    console.error("Error in getProduct:", error);
+    return {
+      success: false,
+      message: "Server Error while fetching products",
+      status: 500,
+      data: [],
+    };
+  }
+}
+
+export async function getProductByName(title: string) {
+  try {
+    await dbConnect();
+    const product = await Product.findOne({ title })
+   
+    return {
+      product: JSON.stringify(product),
       success: true,
       message: "Products fetched successfully",
       status: 200,

@@ -20,10 +20,10 @@ const CategoryPage = () => {
   const [sendDetail, setSendDetail] = useState<Product | null>(null);
   const [status, setStatus] = useState({ message: "", error: "" });
   const searchQuery = useSelector((state: RootState) => state.search.query);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
+     
         const res = await getProductByCategoryName(
           categoryName ? decodeURIComponent(categoryName) : ""
         );
