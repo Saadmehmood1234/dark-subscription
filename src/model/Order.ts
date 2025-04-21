@@ -9,8 +9,8 @@ interface IOrder {
   userId: mongoose.Types.ObjectId;
   products: IOrderItem[];
   totalAmount: number;
-  status: "pending" | "delivered" | "cancelled";
-  paymentStatus: "pending" | "paid" | "failed";
+  status: "processing" | "delivered" | "cancelled";
+  paymentStatus: "processing" | "paid" | "failed";
   paymentMethod: string;
   paymentId?: string;
   orderEmail?: string;
@@ -40,13 +40,13 @@ const orderSchema = new Schema<IOrder>(
     totalAmount: { type: Number, required: true },
     status: {
       type: String,
-      enum: ["pending", "delivered", "cancelled"],
-      default: "pending",
+      enum: ["processing", "delivered", "cancelled"],
+      default: "processing",
     },
     paymentStatus: {
       type: String,
-      enum: ["pending", "paid", "failed"],
-      default: "pending",
+      enum: ["processing", "paid", "failed"],
+      default: "processing",
     },
     paymentMethod: { type: String, required: true },
     orderEmail: String,

@@ -54,8 +54,8 @@ export async function orderProduct(
       })),
       totalAmount,
       paymentMethod: method,
-      paymentStatus: "pending",
-      status: "pending",
+      paymentStatus: "processing",
+      status: "processing",
     });
 
     const savedOrder = await newOrder.save({ session });

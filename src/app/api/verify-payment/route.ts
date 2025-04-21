@@ -5,7 +5,6 @@ import { dbConnect } from "@/lib/dbConnect";
 import { DarkUser } from "@/model/User";
 import { Product } from "@/model/Product";
 export async function POST(request: NextRequest) {
-
   await dbConnect();
   const { sessionId, orderId } = await request.json();
   if (!sessionId || !orderId) {
@@ -19,11 +18,11 @@ export async function POST(request: NextRequest) {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
     if (session.payment_status === "paid") {
       const order = await Order.findById(orderId);
-      const productId  = order?.products[0]?.productId;
+      const productId = order?.products[0]?.productId;
       const product = await Product.findById(productId).select("title");
 
-        // .populate("userId")
-        // .populate("products.productId");
+      // .populate("userId")
+      // .populate("products.productId");
 
       if (!order) {
         return NextResponse.json(
@@ -31,13 +30,13 @@ export async function POST(request: NextRequest) {
           { status: 400 }
         );
       }
-      order.paymentStatus="paid";
-      order.status="delivered";
+      order.paymentStatus = "paid";
+      order.status = "processing";
 
       await order.save();
       return NextResponse.json({
         success: true,
-       product
+        product,
       });
     }
     return NextResponse.json(

@@ -16,11 +16,13 @@ export async function sendConfirmationEmail({
   userName,
   orderDate,
   orderId,
-  websiteName
+  websiteName = "Your Website",
 }: EmailParams) {
   try {
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.hostinger.com",
+      port: 465,
+      secure: true,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD,
@@ -28,7 +30,7 @@ export async function sendConfirmationEmail({
     });
 
     const mailOptions = {
-      from: `"Your Website Name" <${process.env.EMAIL_USER}>`,
+      from: `"${websiteName} Team" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: `Payment Successful - Your ${productName} Subscription is Confirmed!`,
       html: `
@@ -50,7 +52,7 @@ export async function sendConfirmationEmail({
           <p>If you have any questions, please contact our support team.</p>
           
           <p>Best regards,<br/>
-          <strong>Your Website Name Team</strong></p>
+          <strong>${websiteName} Team</strong></p>
           
           <div style="margin-top: 30px; font-size: 12px; color: #777;">
             <p>This is an automated message. Please do not reply directly to this email.</p>

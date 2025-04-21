@@ -34,15 +34,20 @@ export async function sendPasswordResetEmail(formData: FormData) {
     );
     const resetLink = `${process.env.NEXTAUTH_URL}/auth/reset-password?token=${token}`;
     const transporter = nodemailer.createTransport({
-      service: process.env.EMAIL_SERVICE || "gmail",
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || "465"),
+      secure: process.env.SMTP_PORT === "465",
       auth: {
         user: process.env.SMTP_EMAIL,
         pass: process.env.SMTP_PASSWORD,
       },
+      tls: {
+        rejectUnauthorized: true,
+      },
     });
 
     await transporter.sendMail({
-      from: process.env.EMAIL_FROM,
+      from: process.env.SMTP_EMAIL,
       to: email,
       subject: "Password Reset Request",
       html: `

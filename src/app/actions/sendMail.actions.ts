@@ -13,19 +13,24 @@ export async function sendConfirmationEmail(params: EmailParams) {
   const session = await getServerSession(authOptions);
   try {
     const transporter = nodemailer.createTransport({
-      service: process.env.EMAIL_SERVICE || "gmail",
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || "465"),
+      secure: process.env.SMTP_PORT === "465",
       auth: {
-        user: process.env.SMTP_EMAIL,
-        pass: process.env.SMTP_PASSWORD,
+        user: process.env.SMTP_EMAIL, // your full email
+        pass: process.env.SMTP_PASSWORD, // your email password
+      },
+      tls: {
+        rejectUnauthorized: true,
       },
     });
     const email = session?.user?.email;
-    const name  = session?.user?.name;
+    const name = session?.user?.name;
     const mailOptions = {
       from: `"${params.websiteName || "Your Website"}" <${
-        process.env.EMAIL_USER
+        process.env.SMTP_EMAIL
       }>`,
-      to:email,
+      to: email,
       subject: `Payment Successful - Your ${params.productName} Subscription is Confirmed!`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0;">

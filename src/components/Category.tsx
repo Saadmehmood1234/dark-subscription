@@ -87,7 +87,7 @@ const Category = () => {
 
     return () => tl.kill();
   }, [categories]);
-
+  console.log("Images", categories);
   return (
     <div className="py-8 sm:py-10 px-2 sm:px-4 overflow-hidden relative">
       <h1 className="text-center font-bold text-3xl sm:text-4xl text-white mb-6 sm:mb-8">
@@ -118,7 +118,7 @@ const Category = () => {
               <div className="flex flex-col items-center gap-2 sm:gap-3 cursor-pointer transform transition duration-300 hover:scale-105 active:scale-95">
                 <div className="relative">
                   <img
-                    src={`${category.logoImage}`}
+                    src={`${category?.logoImage}`}
                     alt={category.title}
                     className="w-16 h-16 xs:w-[70px] xs:h-[70px] sm:w-20 sm:h-20 md:w-[100px] md:h-[100px] object-cover bg-white p-2 rounded-full border-2 border-gray-300 group-hover:border-[#C27AFF] shadow-md transition-all duration-300"
                     loading="lazy"

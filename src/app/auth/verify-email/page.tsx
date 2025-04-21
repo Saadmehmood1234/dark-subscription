@@ -28,7 +28,7 @@ function VerifyEmailContent() {
         );
       }
     };
-
+    
     verifyEmail();
   }, [token, router]);
 
