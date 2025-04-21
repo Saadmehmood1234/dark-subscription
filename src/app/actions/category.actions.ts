@@ -34,10 +34,12 @@ export const getCategory = async () => {
 
 export const getCatgoryNames = async () => {
   try {
+    await dbConnect();
     const categories = await Category.find({});
     return {
       message: "categories got",
       categories: JSON.stringify(categories),
+      success:true
     };
   } catch (error: any) {
     return {

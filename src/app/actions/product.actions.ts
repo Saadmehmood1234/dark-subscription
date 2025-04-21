@@ -158,10 +158,13 @@ export const filterProducts = async (search: string) => {
 
 export const getProductNames = async()=>{
   try {
+    await dbConnect();
     const products = await Product.find({}).select("title category slug");
+    console.log(products,"pro")
     return {
       message:"product got",
-      products:JSON.stringify(products)
+      products:JSON.stringify(products),
+      success:true
     }
   } catch (error:any) {
     return{

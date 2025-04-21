@@ -2,14 +2,9 @@ import { getProductByName } from '@/app/actions/product.actions';
 import { ReactNode } from 'react';
 import { Metadata } from 'next';
 
-interface LayoutProps {
-  children: ReactNode;
-  params: {
-    pname: string;
-  };
-}
 
-export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
+
+export async function generateMetadata({ params }: any): Promise<Metadata> {
   const productName = decodeURIComponent(params.pname);
   const res = await getProductByName(productName);
 
@@ -59,7 +54,7 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
   };
 }
 
-export default function ProductLayout({ children, params }: LayoutProps) {
+export default function ProductLayout({ children}: {children:ReactNode}) {
   return (
     <div className="bg-gradient-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] min-h-screen">
       {children}

@@ -129,8 +129,7 @@ export default function ForgotPasswordPage() {
                     <p className="text-red-500 text-sm text-center">{error}</p>
                   )}
                   <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    
                   >
                     <button
                       type="submit"
