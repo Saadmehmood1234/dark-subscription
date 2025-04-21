@@ -15,23 +15,21 @@ const ProductSection = () => {
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
   const [sendDetail, setSendDetail] = useState<Product | null>(null);
   const searchQuery = useSelector((state: RootState) => state.search.query);
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
         const res = await getProduct();
-        if(res.success){
+        if (res.success) {
           setProducts(res.data || []);
         }
-        
       } catch (error: any) {
-       console.log(error)
-      }finally{
-        setLoading(false)
+        console.log(error);
+      } finally {
+        setLoading(false);
       }
-  
     };
     fetchData();
   }, []);
@@ -55,9 +53,8 @@ const ProductSection = () => {
     );
   }
 
-
-  if(loading){
-    return <Loader />
+  if (loading) {
+    return <Loader />;
   }
   return (
     <section className="w-full py-12 md:py-20 px-4 sm:px-6 lg:px-8">
@@ -66,8 +63,12 @@ const ProductSection = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="max-w-7xl mx-auto"
+       
       >
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 md:mb-20 bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent" id="products">
+        <h2
+          className="text-3xl sm:text-4xl font-bold text-center mb-12 md:mb-20 bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"
+          id="products"
+        >
           Discover Trending Subscriptions
         </h2>
 
