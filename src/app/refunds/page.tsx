@@ -94,9 +94,9 @@ export default function RefundPolicy() {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <span className="text-[#A92EDF] mr-2">•</span>
-                <span>Approved refunds processed within 5-7 business days</span>
+                <span>Refunds will be credited to the original payment method within 5-7 days.</span>
               </li>
-              <li className="flex items-start">
+              {/* <li className="flex items-start">
                 <span className="text-[#A92EDF] mr-2">•</span>
                 <span>Refunds issued to original payment method</span>
               </li>
@@ -105,7 +105,7 @@ export default function RefundPolicy() {
                 <span>
                   Bank processing times may vary (typically 3-5 additional days)
                 </span>
-              </li>
+              </li> */}
             </ul>
             <div className="bg-[#160A25] p-4 rounded-lg border border-[#2A1E3A] mt-4">
               <p className="text-[#B4ACD9] text-sm">
