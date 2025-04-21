@@ -45,7 +45,6 @@ export default function SuccessContent({
           orderId,
           time: new Date().toISOString(),
         });
-        console.log(error.message,"err")
       } finally {
         setLoading(false);
       }

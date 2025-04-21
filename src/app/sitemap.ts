@@ -55,6 +55,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Initialize dynamic pages arrays
   let categoryPages: MetadataRoute.Sitemap = [];
   let productPages: MetadataRoute.Sitemap = [];
+  let productPages2 = [] as any;
 
   try {
     // Get all categories`
@@ -73,7 +74,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Get all products
     const res:any = await getProductNames();
-    console.log(res,"res")
     if (res?.success && res?.products) {
       const products = JSON.parse(res.products!);
       productPages = products.map((product: any) => ({
@@ -88,12 +88,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }));
 
       
+      const resPro:any = await getProductNames();
+      if (resPro?.success && resPro?.products) {
+        const products = JSON.parse(resPro.products!);
+        productPages2 = products.map((product: any) => ({
+          url: `${baseUrl}/product/${
+            product?.slug || encodeURIComponent(product?.title)
+          }`,
+          lastModified: product?.updatedAt
+            ? new Date(product?.updatedAt)
+            : new Date(),
+          changeFrequency: "weekly" as const,
+          priority: 0.7,
+        }));
+
+      
     }
+  }
   } catch (error) {
     console.error("Error generating sitemap:", error);
     // Return at least static pages if dynamic generation fails
     return staticPages;
   }
-console.log(categoryPages,productPages,"pages")
-  return [...staticPages, ...categoryPages, ...productPages];
+  return [...staticPages, ...categoryPages, ...productPages,...productPages2];
 }

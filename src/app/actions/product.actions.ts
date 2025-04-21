@@ -160,7 +160,6 @@ export const getProductNames = async()=>{
   try {
     await dbConnect();
     const products = await Product.find({}).select("title category slug");
-    console.log(products,"pro")
     return {
       message:"product got",
       products:JSON.stringify(products),

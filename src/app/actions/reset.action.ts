@@ -12,7 +12,6 @@ export async function sendPasswordResetEmail(formData: FormData) {
 
   try {
     await dbConnect();
-    console.log(identifier);
     if (!identifier) {
       return {
         success: false,
@@ -80,7 +79,7 @@ export async function resetPassword(formData: FormData) {
 
   try {
     await dbConnect();
-    console.log("Reset Data", token, password);
+
     const resetToken = await PasswordResetToken.findOne({ token })
       .populate("userId")
       .exec();

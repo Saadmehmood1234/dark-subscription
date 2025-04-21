@@ -22,7 +22,6 @@ const SearchInput = () => {
         if (debouncedValue.length > 1) {
           setIsSearching(true);
           const res = await filterProducts(debouncedValue);
-          console.log(res, "res");
           if (res.success && res.products) {
             setSuggestions(JSON.parse(res.products as any));
           } else {

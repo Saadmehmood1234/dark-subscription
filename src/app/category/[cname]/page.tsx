@@ -46,7 +46,6 @@ const CategoryPage = () => {
     };
     fetchData();
   }, []);
-  console.log(products);
   if (products.length === 0) {
     console.log("No products available for this category.");
   } else {

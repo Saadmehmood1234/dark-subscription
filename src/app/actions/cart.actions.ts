@@ -150,7 +150,6 @@ export const getCartByCustomer = async (): Promise<{
 }> => {
   await dbConnect();
   const session = await getServerSession(authOptions);
-console.log("Session data",session)
   if (!session?.user?.id) {
     return {
       success: false,
@@ -168,11 +167,9 @@ console.log("Session data",session)
         status: 404,
       };
     }
-    console.log("user data",userData)
     let cart = await Cart.findOne({ customer: userData._id }).populate(
       "items.product"
     );
-console.log('Final data',cart)
     if (!cart) {
       return {
         success: true,
