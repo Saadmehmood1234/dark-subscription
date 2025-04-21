@@ -48,17 +48,14 @@ export default function ForgotPasswordPage() {
   } = form;
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("Saad Mehmood");
+   
     setLoading(true);
     setError(null);
     try {
-      console.log("Form Data", values.identifier);
+  
       const formData = new FormData();
       formData.append("identifier", values.identifier);
-
-      console.log("Form Data Test", formData);
       const response = await sendPasswordResetEmail(formData);
-      console.log(response)
 
       if (!response.success) {
         throw new Error(response.error || "Something went wrong");
@@ -129,8 +126,7 @@ export default function ForgotPasswordPage() {
                     <p className="text-red-500 text-sm text-center">{error}</p>
                   )}
                   <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    
                   >
                     <button
                       type="submit"

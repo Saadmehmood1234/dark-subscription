@@ -55,7 +55,7 @@ export default function ResetPasswordPage() {
     setLoading(true);
     setError(null);
     try {
-      console.log("Form Data", values.password, values.confirmPassword);
+
       const formData = new FormData();
       formData.append("password", values.password);
       formData.append("confirmPassword", values.confirmPassword);

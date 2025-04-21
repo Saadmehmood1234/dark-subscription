@@ -2,7 +2,6 @@ import { Schema, model, models } from "mongoose";
 export const categorySchema = new Schema(
   {
     title: { type: String, required: true },
-    logoImage: { type: String, required: true },
   },
   { timestamps: true }
 );

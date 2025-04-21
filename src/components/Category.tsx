@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
-import { getCategory } from "@/app/actions/category.actions";
+import { getGroup } from "@/app/actions/category.actions";
 
 type CategoryType = {
   title: string;
@@ -35,8 +35,9 @@ const Category = () => {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const res = await getCategory();
+        const res = await getGroup();
         setCategories(res.data || []);
+        console.log("Data",res.data)
       } catch (err) {
         console.log(err);
       }
@@ -117,7 +118,7 @@ const Category = () => {
                   <img
                     src={category.logoImage}
                     alt={category.title}
-                    className="w-16 h-16 xs:w-[70px] xs:h-[70px] sm:w-20 sm:h-20 md:w-[100px] md:h-[100px] object-contain bg-white p-2 rounded-full border-2 border-gray-300 group-hover:border-[#C27AFF] shadow-md transition-all duration-300"
+                    className="w-16 h-16 xs:w-[70px] xs:h-[70px] sm:w-20 sm:h-20 md:w-[100px] md:h-[100px] object-cover bg-white p-2 rounded-full border-2 border-gray-300 group-hover:border-[#C27AFF] shadow-md transition-all duration-300"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 rounded-full bg-[#C27AFF] opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>

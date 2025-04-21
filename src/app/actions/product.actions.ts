@@ -50,7 +50,7 @@ export async function getProduct() {
 export async function getProductByCategoryName(category: string) {
   try {
     await dbConnect();
-    const products = await Product.find({ category })
+    const products = await Product.find({ category });
     if (!products || products.length === 0) {
       return {
         success: false,
@@ -59,7 +59,7 @@ export async function getProductByCategoryName(category: string) {
         data: [],
       };
     }
-   
+
     const formattedProducts = products.map((product) => ({
       id: (product._id as mongoose.Types.ObjectId).toString(),
       title: product.title,
@@ -96,8 +96,8 @@ export async function getProductByCategoryName(category: string) {
 export async function getProductByName(title: string) {
   try {
     await dbConnect();
-    const product = await Product.findOne({ title })
-   
+    const product = await Product.findOne({ title });
+
     return {
       product: JSON.stringify(product),
       success: true,
@@ -110,7 +110,65 @@ export async function getProductByName(title: string) {
       success: false,
       message: "Server Error while fetching products",
       status: 500,
-      data: [],
+      product: [],
     };
+  }
+}
+
+export const filterProducts = async (search: string) => {
+  try {
+    const query = search.toLowerCase().trim();
+    
+    // Early return if empty query
+    if (!query) {
+      return {
+        products: [],
+        success: true,
+        message: "Empty search query"
+      };
+    }
+
+    const products = await Product.find({}).select("title description category price slug");
+    
+    const filteredProducts = products.filter((product) => {
+      // Check if any field matches (OR condition instead of AND)
+      return (
+        product.title?.toLowerCase().includes(query) ||
+        product.description?.toLowerCase().includes(query) ||
+        product.category?.toLowerCase().includes(query)
+      );
+    });
+
+    return {
+      products: JSON.stringify(filteredProducts), // Cleaner serialization
+      success: true,
+      message: "Successfully filtered products",
+    };
+  } catch (error) {
+    console.error("Error in filterProducts:", error);
+    return {
+      success: false,
+      message: "Server error while filtering products",
+      products: [],
+      status: 500
+    };
+  }
+};
+
+
+export const getProductNames = async()=>{
+  try {
+    await dbConnect();
+    const products = await Product.find({}).select("title category slug");
+    return {
+      message:"product got",
+      products:JSON.stringify(products),
+      success:true
+    }
+  } catch (error:any) {
+    return{
+      message:error.message,
+      success:false
+    }
   }
 }

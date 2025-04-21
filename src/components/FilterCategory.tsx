@@ -1,53 +1,54 @@
 "use client";
-import { categories } from "@/lib/Data/categoryData";
-import React, { useState } from "react";
-import Link from "next/link";
+import React, { useEffect, useState } from "react";
+
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { setQuery } from "@/redux/slices/searchSlice";
+import { getCategory } from "@/app/actions/category.actions";
 
 const CategoryLabels = () => {
-  const [showAll, setShowAll] = useState(false);
-  const dispatch = useDispatch();
-    const colorPalette = [
-  "bg-[#5E35B1] text-[#D1C4E9] border-[#7E57C2]",
-    "bg-[#3949AB] text-[#C5CAE9] border-[#5C6BC0]",
-    "bg-[#2E7D32] text-[#C8E6C9] border-[#66BB6A]",
-    "bg-[#6D4C41] text-[#D7CCC8] border-[#8D6E63]",
-    "bg-[#4527A0] text-[#B39DDB] border-[#9575CD]",
-    "bg-[#0277BD] text-[#B3E5FC] border-[#4FC3F7]",
-  ];
-
-  const visibleCategories = showAll ? categories : categories.slice(0, 6);
+  const [category,setCategory] = useState<any>();
+  const dispatch = useDispatch()
+    useEffect(() => {
+      const fetchCategory = async () => {
+        try {
+          const res = await getCategory();
+          setCategory(res.data as any);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+  
+      fetchCategory();
+    }, []);
 
   return (
     <div className="w-full px-2 py-4 sm:px-4 sm:py-6">
       <div className="w-full flex flex-col items-center">
         {/* Improved grid layout for small screens */}
         <div className="w-full grid grid-cols-3 sm:flex sm:flex-wrap sm:justify-center gap-2 sm:gap-3">
-          {visibleCategories.map((category, index) => {
-            const colorIndex = index % colorPalette.length;
-            const [bgColor, textColor, borderColor] = colorPalette[colorIndex].split(" ");
+          {category && category.map((category:any, index:number) => {
+        
 
             return (
               <motion.button
-                key={category.id}
+                key={category._id}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => dispatch(setQuery(category.name.toLowerCase()))}
-                className={`${bgColor} ${textColor} ${borderColor} 
+                onClick={() => dispatch(setQuery(category.title.toLowerCase()))}
+                className={`
                   min-w-[80px] sm:min-w-0 py-1 px-2 text-center
                   text-xs sm:text-sm font-medium
                   rounded-lg sm:rounded-xl border transition-all duration-200
                   shadow-sm hover:shadow-md`}
               >
-                {category.name}
+                {category.title}
               </motion.button>
             );
           })}
         </div>
 
-        {categories.length > 5 && (
+        {/* {categories.length > 5 && (
           <button
             onClick={() => setShowAll(!showAll)}
             className="mt-3 px-4 py-2 bg-gray-800 text-white 
@@ -70,7 +71,7 @@ const CategoryLabels = () => {
               </>
             )}
           </button>
-        )}
+        )} */}
       </div>
     </div>
   );

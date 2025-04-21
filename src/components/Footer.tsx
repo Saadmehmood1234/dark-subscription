@@ -31,7 +31,7 @@ const Footer = () => {
   const companyLinks = [
     { name: "About", url: "/about" },
     { name: "Contact Us", url: "/contact" },
-    { name: "FAQ", url: "/#faq" },
+    
   ];
 
   const legalLinks = [
@@ -42,8 +42,7 @@ const Footer = () => {
 
   const supportLinks = [
     { name: "Refund Policy", url: "/refunds" },
-    { name: "Shipping", url: "/shipping" },
-    { name: "Returns", url: "/returns" },
+    { name: "FAQ", url: "/#faq" }
   ];
 
   return (

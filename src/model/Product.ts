@@ -13,8 +13,13 @@ export const productSchema = new Schema(
     stock: { type: Number, required: true },
     features: { type: [String], required: true },
     images: { type: [String], required: true },
+    slug:{
+      type:String
+    }
   },
   { timestamps: true }
 );
+
+
 
 export const Product = models?.Product || model("Product", productSchema);

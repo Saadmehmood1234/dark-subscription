@@ -55,6 +55,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 interface Slide {
   id: number;
@@ -143,6 +144,7 @@ const Header: React.FC = () => {
                 <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-[#C27AFF] to-[#7B61FF] bg-clip-text text-transparent">
                   {slide.text}
                 </h1>
+                <Link href="#products">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -151,6 +153,7 @@ const Header: React.FC = () => {
                   Purchase Now
                   <ArrowRight className="size-5" />
                 </motion.button>
+                </Link>
               </div>
             </motion.div>
           </div>

@@ -18,7 +18,6 @@ const CategoryPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
   const [sendDetail, setSendDetail] = useState<Product | null>(null);
-  const [status, setStatus] = useState({ message: "", error: "" });
   const searchQuery = useSelector((state: RootState) => state.search.query);
   useEffect(() => {
     const fetchData = async () => {
@@ -27,33 +26,18 @@ const CategoryPage = () => {
         const res = await getProductByCategoryName(
           categoryName ? decodeURIComponent(categoryName) : ""
         );
-        if (!res?.success) {
-          setStatus({
-            error: res?.message || "Error fetching data",
-            message: "",
-          });
-        } else {
-          setStatus({ message: res.message || "Success", error: "" });
+        if (res?.success) {
           setProducts(res.data || []);
         }
       } catch (error: any) {
-        setStatus({
-          error: error.message || "Error fetching data",
-          message: "",
-        });
+       console.log(error)
+        
       }
-      setTimeout(() => setStatus({ message: "", error: "" }), 2000);
+     
     };
     fetchData();
   }, []);
-  console.log(products);
-  if (products.length === 0) {
-    console.log("No products available for this category.");
-  } else {
-    console.log(
-      `Loaded ${products.length} products for this category. ${products}`
-    );
-  }
+
   const handleDetail = (data: Product) => {
     setSendDetail(data);
     setIsDetailOpen(true);
@@ -73,15 +57,7 @@ const CategoryPage = () => {
   
   return (
     <section className="w-full py-12 md:py-20 px-4 sm:px-6 lg:px-8">
-      {status.error && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="fixed top-4 left-1/2 -translate-x-1/2 bg-red-100 text-red-800 px-4 py-2 rounded-md shadow-md z-50"
-        >
-          {status.error}
-        </motion.div>
-      )}
+
 
       <motion.div
         initial={{ opacity: 0, y: 50 }}
