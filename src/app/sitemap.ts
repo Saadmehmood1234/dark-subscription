@@ -1,7 +1,7 @@
 // app/sitemap.ts
 import { MetadataRoute } from "next";
 import { getProductNames } from "@/app/actions/product.actions";
-import { getCatgoryNames } from "@/app/actions/category.actions";
+import { getCategory } from "./actions/category.actions";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.primeflix.site";
@@ -59,7 +59,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   try {
     // Get all categories`
-    const resCat:any = await getCatgoryNames();
+    const resCat: any = await getCategory();
     if (resCat?.success && resCat?.categories) {
       const categories = JSON.parse(resCat.categories!);
       categoryPages = categories.map((category: any) => ({
@@ -73,7 +73,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     // Get all products
-    const res:any = await getProductNames();
+    const res: any = await getProductNames();
     if (res?.success && res?.products) {
       const products = JSON.parse(res.products!);
       productPages = products.map((product: any) => ({
@@ -87,8 +87,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.7,
       }));
 
-      
-      const resPro:any = await getProductNames();
+      const resPro: any = await getProductNames();
       if (resPro?.success && resPro?.products) {
         const products = JSON.parse(resPro.products!);
         productPages2 = products.map((product: any) => ({
@@ -101,14 +100,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           changeFrequency: "weekly" as const,
           priority: 0.7,
         }));
-
-      
+      }
     }
-  }
   } catch (error) {
     console.error("Error generating sitemap:", error);
     // Return at least static pages if dynamic generation fails
     return staticPages;
   }
-  return [...staticPages, ...categoryPages, ...productPages,...productPages2];
+  return [...staticPages, ...categoryPages, ...productPages, ...productPages2];
 }
