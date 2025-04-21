@@ -18,7 +18,7 @@ const Category = () => {
     if (sliderRef.current) {
       sliderRef.current.scrollBy({
         left: -200,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   };
@@ -27,7 +27,7 @@ const Category = () => {
     if (sliderRef.current) {
       sliderRef.current.scrollBy({
         left: 200,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   };
@@ -37,7 +37,7 @@ const Category = () => {
       try {
         const res = await getGroup();
         setCategories(res.data || []);
-        console.log("Data",res.data)
+        console.log("Data", res.data);
       } catch (err) {
         console.log(err);
       }
@@ -93,7 +93,7 @@ const Category = () => {
       <h1 className="text-center font-bold text-3xl sm:text-4xl text-white mb-6 sm:mb-8">
         Popular <span className="text-[#C27AFF]">Categories</span>
       </h1>
-      
+
       <div className="w-full flex items-center overflow-hidden relative">
         {/* <button 
           onClick={slideLeft} 
@@ -102,21 +102,23 @@ const Category = () => {
         >
           &lt;
         </button> */}
-        
+
         <div
           ref={sliderRef}
           className="flex gap-6 sm:gap-8 md:gap-10 min-w-max whitespace-nowrap px-2 sm:px-0"
         >
           {categories.map((category, index) => (
             <Link
-              href={`/category/${category.title.toLowerCase().replace(/\s+/g, "-")}`}
+              href={`/category/${category.title
+                .toLowerCase()
+                .replace(/\s+/g, "-")}`}
               key={index}
               className="group"
             >
               <div className="flex flex-col items-center gap-2 sm:gap-3 cursor-pointer transform transition duration-300 hover:scale-105 active:scale-95">
                 <div className="relative">
                   <img
-                    src={category.logoImage}
+                    src={`${category.logoImage}`}
                     alt={category.title}
                     className="w-16 h-16 xs:w-[70px] xs:h-[70px] sm:w-20 sm:h-20 md:w-[100px] md:h-[100px] object-cover bg-white p-2 rounded-full border-2 border-gray-300 group-hover:border-[#C27AFF] shadow-md transition-all duration-300"
                     loading="lazy"
@@ -130,7 +132,7 @@ const Category = () => {
             </Link>
           ))}
         </div>
-        
+
         {/* <button 
           onClick={slideRight} 
           className="hidden md:block absolute right-0 z-10 bg-gray-800/80 hover:bg-gray-700/90 text-white p-2 rounded-full mr-2"
@@ -139,7 +141,7 @@ const Category = () => {
           &gt;
         </button> */}
       </div>
-      
+
       <div className="md:hidden flex justify-center gap-2 mt-4">
         {categories.length > 5 && (
           <>
