@@ -124,14 +124,8 @@ const Features = () => {
         </h1>
         <p className="text-xl font-mono text-gray-500">
           Why pay full price when you can get the same premium experience for 
-          less? Our customers save an average of $300/year on subscriptions.
+          less? Our customers save an average of ₹1599/year on subscriptions.
         </p>
-        <button 
-          className="w-64 mt-12 rounded-2xl text-2xl h-16 hover:scale-[1.02] cursor-pointer bg-gradient-to-tr from-[#500150] via-[#42026d] to-[#031877] px-6 transition-transform duration-300"
-          aria-label="Browse available subscriptions"
-        >
-          Browse Plans
-        </button>
       </div>
     </div>
   

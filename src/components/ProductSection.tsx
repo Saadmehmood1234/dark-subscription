@@ -8,34 +8,30 @@ import { FiArrowRight } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import NoProductAvailable from "./NoProductPage";
+import Loader from "./Loader";
 
 const ProductSection = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
   const [sendDetail, setSendDetail] = useState<Product | null>(null);
-  const [status, setStatus] = useState({ message: "", error: "" });
   const searchQuery = useSelector((state: RootState) => state.search.query);
+  const [loading,setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const res = await getProduct();
-        if (!res.success) {
-          setStatus({
-            error: res.message || "Error fetching data",
-            message: "",
-          });
-        } else {
-          setStatus({ message: res.message || "Success", error: "" });
+        if(res.success){
           setProducts(res.data || []);
         }
+        
       } catch (error: any) {
-        setStatus({
-          error: error.message || "Error fetching data",
-          message: "",
-        });
+       console.log(error)
+      }finally{
+        setLoading(false)
       }
-      setTimeout(() => setStatus({ message: "", error: "" }), 2000);
+  
     };
     fetchData();
   }, []);
@@ -59,18 +55,12 @@ const ProductSection = () => {
     );
   }
 
+
+  if(loading){
+    return <Loader />
+  }
   return (
     <section className="w-full py-12 md:py-20 px-4 sm:px-6 lg:px-8">
-      {status.error && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="fixed top-4 left-1/2 -translate-x-1/2 bg-red-100 text-red-800 px-4 py-2 rounded-md shadow-md z-50"
-        >
-          {status.error}
-        </motion.div>
-      )}
-
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
