@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ReduxProvider } from "./StoreProvider";
 import { authOptions } from "@/auth";
+import Script from "next/script";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -132,6 +133,10 @@ export default async function RootLayout({
               <Footer />
             </ReduxProvider>
           </SessionProviderWrapper>
+          <Script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=G-MYTBDFD9E8`}
+        />
         </div>
         <Toaster
           position="bottom-right"
