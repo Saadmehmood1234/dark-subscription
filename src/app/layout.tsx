@@ -137,6 +137,15 @@ export default async function RootLayout({
           async
           src={`https://www.googletagmanager.com/gtag/js?id=G-MYTBDFD9E8`}
         />
+         <Script id="google-analytics">
+          {`
+           window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MYTBDFD9E8');
+          `}
+        </Script>
         </div>
         <Toaster
           position="bottom-right"
