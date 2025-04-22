@@ -21,8 +21,6 @@ export async function createPaymentLink(
   request: PaymentRequest
 ): Promise<PaymentResponse> {
   try {
-
-    
     const cashfreeEndpoint =
       process.env.CASHFREE_TEST_MODE === "true"
         ? "https://sandbox.cashfree.com/pg/orders"
@@ -31,11 +29,11 @@ export async function createPaymentLink(
     const validCustomerId = request.customerEmail
       .replace(/[^a-zA-Z0-9_-]/g, "_")
       .substring(0, 50);
-      console.log("Using Cashfree headers:", {
-        clientId: process.env.CASHFREE_APP_ID,
-        clientSecret: process.env.CASHFREE_SECRET_KEY,
-        endpoint: cashfreeEndpoint,
-      });
+    console.log("Using Cashfree headers:", {
+      clientId: process.env.CASHFREE_APP_ID,
+      clientSecret: process.env.CASHFREE_SECRET_KEY,
+      endpoint: cashfreeEndpoint,
+    });
     const response = await axios.post(
       cashfreeEndpoint,
       {
@@ -49,7 +47,7 @@ export async function createPaymentLink(
           customer_phone: request.customerPhone,
         },
         order_meta: {
-          return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/payment/status?order_id={order_id}`,
+          return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/payment/status?order_id=${request.orderId}`,
         },
       },
       {
