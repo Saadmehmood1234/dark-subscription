@@ -23,9 +23,10 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.primeflix.site"),
   title: {
     default: "Prime Flix - Premium Accounts at Affordable Prices",
-    template: "%s | Prime Flix"
+    template: "%s | Prime Flix",
   },
-  description: "Get verified premium accounts for Netflix, Amazon Prime, Tinder Gold, Spotify, and more at the cheapest prices. Instant delivery, 24/7 support, and lifetime replacements.",
+  description:
+    "Get verified premium accounts for Netflix, Amazon Prime, Tinder Gold, Spotify, and more at the cheapest prices. Instant delivery, 24/7 support, and lifetime replacements.",
   applicationName: "Prime Flix",
   referrer: "origin-when-cross-origin",
   keywords: [
@@ -53,7 +54,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Prime Flix - Premium Accounts at Low Costs",
     siteName: "Prime Flix",
-    description: "Trusted marketplace for discounted Netflix, Amazon, Tinder, and other premium subscriptions.",
+    description:
+      "Trusted marketplace for discounted Netflix, Amazon, Tinder, and other premium subscriptions.",
     url: "https://www.primeflix.site",
     type: "website",
     locale: "en_US",
@@ -125,6 +127,18 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Script
+          id="gtm-script"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-KBFZMGPQ');`,
+          }}
+        />
+
         <div className="bg-gradient-to-tr from-[#0E091C] via-[#1F133D] min-h-screen to-[#0B1027] overflow-x-hidden flex flex-col justify-between w-full pt-20">
           <SessionProviderWrapper session={session}>
             <ReduxProvider>
@@ -134,18 +148,27 @@ export default async function RootLayout({
             </ReduxProvider>
           </SessionProviderWrapper>
           <Script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=G-MYTBDFD9E8`}
-        />
-         <Script id="google-analytics">
-          {`
-           window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=G-MYTBDFD9E8`}
+            strategy="afterInteractive"
+          />
+          <Script id="ga-script" strategy="afterInteractive">
+            {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-MYTBDFD9E8');
+  `}
+          </Script>
 
-  gtag('config', 'G-MYTBDFD9E8');
-          `}
-        </Script>
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-KBFZMGPQ"
+              height="0"
+              width="0"
+              className="hidden invisible"
+            />
+          </noscript>
         </div>
         <Toaster
           position="bottom-right"
