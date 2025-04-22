@@ -59,7 +59,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   try {
     // Get all categories`
-    
+
     const resCat: any = await getCategory();
     if (resCat?.success && resCat?.categories) {
       const categories = JSON.parse(resCat.categories!);

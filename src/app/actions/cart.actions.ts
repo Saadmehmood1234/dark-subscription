@@ -19,6 +19,7 @@ export const addItemToCart = async (
 ) => {
   await dbConnect();
   const session = await getServerSession(authOptions);
+  console.log("Test",session)
   if (!session?.user?.email) {
     return {
       success: false,
@@ -150,6 +151,7 @@ export const getCartByCustomer = async (): Promise<{
 }> => {
   await dbConnect();
   const session = await getServerSession(authOptions);
+  console.log("session",session)
   if (!session?.user?.id) {
     return {
       success: false,
