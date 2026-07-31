@@ -14,14 +14,14 @@ const Footer = () => {
     },
     {
       icon: FaTelegramPlane,
-      url: " https://t.me/primeflix_site",
+      url: "https://x.com/SaadMeh97739578",
       label: "Twitter",
       color: "hover:text-blue-400",
       bg: "hover:bg-blue-400/10",
     },
     {
       icon: Instagram,
-      url: "https://www.instagram.com/primeflix.site",
+      url: "https://www.instagram.com/saadmehmood030",
       label: "Instagram",
       color: "hover:text-pink-500",
       bg: "hover:bg-pink-500/10",
@@ -46,12 +46,12 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full bg-gradient-to-tr from-[#160A25] via-[#180A25] to-[#0D0F29] border-t border-gray-800">
+    <footer className="w-full bg-linear-to-tr from-[#160A25] via-[#180A25] to-[#0D0F29] border-t border-gray-800">
       <div className="container mx-auto px-4 py-12 max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-8">
           {/* Brand Column */}
           <div className="md:col-span-2 lg:col-span-1">
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
+            <h2 className="text-2xl font-bold bg-linear-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
               PrimeFlix
             </h2>
             <p className="text-gray-400 mt-4 text-sm leading-relaxed">
@@ -157,7 +157,7 @@ const Footer = () => {
               </div>
               <button
                 type="submit"
-                className="bg-gradient-to-r from-[#A92EDF] to-purple-600 hover:from-[#8e25c9] hover:to-purple-500 text-white text-sm font-semibold py-3 px-6 rounded-lg transition-all duration-300"
+                className="bg-linear-to-r from-[#A92EDF] to-purple-600 hover:from-[#8e25c9] hover:to-purple-500 text-white text-sm font-semibold py-3 px-6 rounded-lg transition-all duration-300"
                 aria-label="Subscribe to newsletter"
               >
                 Subscribe
