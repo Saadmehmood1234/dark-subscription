@@ -1,8 +1,61 @@
 "use server";
 import { dbConnect } from "@/lib/dbConnect";
-import { Category } from "@/model/Category";
+import { CategoryModel } from "@/model/Category";
+import { Types } from "mongoose";
+
+type CategoryLean = {
+  _id: Types.ObjectId;
+  title: string;
+  logoImage: string;
+  status: "active" | "inactive";
+  slug: string;
+};
+
+export const getCategory = async () => {
+  try {
+    await dbConnect();
+
+    const categoryData = await CategoryModel.find({
+      status: "active",
+    })
+      .select("_id title logoImage status slug")
+      .sort({ createdAt: -1 })
+      .lean<CategoryLean[]>();
+
+    if (categoryData.length === 0) {
+      return {
+        success: false,
+        message: "No categories available",
+        data: [],
+        status: 404,
+      };
+    }
+
+    return {
+      success: true,
+      message: "Categories fetched successfully",
+      data: categoryData.map((category) => ({
+        id: category._id.toString(),
+        title: category.title,
+        logoImage: category.logoImage,
+        status: category.status,
+        slug: category.slug,
+      })),
+      status: 200,
+    };
+  } catch (error) {
+    console.error("Category fetch error:", error);
+
+    return {
+      success: false,
+      message: "Failed to fetch categories",
+      data: [],
+      status: 500,
+    };
+  }
+};
+
 import { Group } from "@/model/Group";
-import { Product } from "@/model/Product";
 
 export const getGroup = async () => {
   try {
@@ -46,37 +99,6 @@ export const getGroupNames = async () => {
     return {
       message: error.message,
       success: false,
-    };
-  }
-};
-
-export const getCategory = async () => {
-  try {
-    await dbConnect();
-    const categoryData = await Category.find();
-    console.log(categoryData);
-
-    if (!categoryData || categoryData.length === 0) {
-      return {
-        success: false,
-        message: "No Data available in group",
-        status: 400,
-      };
-    }
-
-    return {
-      success: true,
-      message: "Category fetched successfully",
-      data: categoryData.map((category) => ({
-        title: category.title,
-      })),
-      status: 200,
-    };
-  } catch (error: any) {
-    return {
-      success: false,
-      message: "Server error in getting the group",
-      status: 500,
     };
   }
 };

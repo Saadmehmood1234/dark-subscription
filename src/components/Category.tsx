@@ -1,158 +1,166 @@
 "use client";
 
 import Link from "next/link";
-import React, { useRef, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { getGroup } from "@/app/actions/category.actions";
+import { getCategory } from "@/app/actions/category.actions";
+import { Types } from "mongoose";
+import { Category } from "@/lib/types";
 
-type CategoryType = {
-  title: string;
-  logoImage: string;
-};
-
-const Category = () => {
+const Categories = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
-  const [categories, setCategories] = useState<CategoryType[]>([]);
+  const animationRef = useRef<gsap.core.Tween | null>(null);
 
-  const slideLeft = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({
-        left: -200,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const slideRight = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({
-        left: 200,
-        behavior: "smooth",
-      });
-    }
-  };
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchCategory = async () => {
+    let active = true;
+
+    const fetchCategories = async () => {
       try {
-        const res = await getGroup();
-        setCategories(res.data || []);
-        console.log("Data", res.data);
-      } catch (err) {
-        console.log(err);
+        setLoading(true);
+        setError(null);
+
+        const response = await getCategory();
+
+        if (!active) return;
+
+        if (!response.success) {
+          setCategories([]);
+          setError(response.message);
+          return;
+        }
+
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Category fetch error:", error);
+
+        if (active) {
+          setCategories([]);
+          setError("Unable to load categories");
+        }
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
       }
     };
 
-    fetchCategory();
+    fetchCategories();
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   useEffect(() => {
-    if (!sliderRef.current || categories.length === 0) return;
-
     const slider = sliderRef.current;
-    const items = Array.from(slider.children) as HTMLElement[];
-    if (items.length === 0) return;
-    const itemWidth = items[0].offsetWidth + 40;
-    const totalWidth = itemWidth * categories.length;
-    const clones = items.map((item) => item.cloneNode(true) as HTMLElement);
-    clones.forEach((clone) => slider.appendChild(clone));
 
-    const tl = gsap.timeline({
-      repeat: -1,
-      defaults: { ease: "none" },
-    });
-
-    tl.to(slider, {
-      x: -totalWidth,
-      duration: categories.length * 1.5,
-      modifiers: {
-        x: gsap.utils.unitize((x) => parseFloat(x) % totalWidth),
-      },
-    });
-
-    const sliderContainer = slider.parentElement;
-    if (sliderContainer) {
-      const pause = () => gsap.to(tl, { timeScale: 0 });
-      const play = () => gsap.to(tl, { timeScale: 1 });
-
-      sliderContainer.addEventListener("mouseenter", pause);
-      sliderContainer.addEventListener("mouseleave", play);
-
-      return () => {
-        tl.kill();
-        sliderContainer.removeEventListener("mouseenter", pause);
-        sliderContainer.removeEventListener("mouseleave", play);
-      };
+    if (!slider || categories.length === 0) {
+      return;
     }
 
-    return () => tl.kill();
+    // Kill any previous animation.
+    animationRef.current?.kill();
+
+    const context = gsap.context(() => {
+      animationRef.current = gsap.to(slider, {
+        xPercent: -50,
+        duration: Math.max(categories.length * 2, 10),
+        ease: "none",
+        repeat: -1,
+      });
+    }, slider);
+
+    const pauseAnimation = () => {
+      animationRef.current?.pause();
+    };
+
+    const resumeAnimation = () => {
+      animationRef.current?.resume();
+    };
+
+    slider.addEventListener("mouseenter", pauseAnimation);
+    slider.addEventListener("mouseleave", resumeAnimation);
+
+    return () => {
+      slider.removeEventListener("mouseenter", pauseAnimation);
+      slider.removeEventListener("mouseleave", resumeAnimation);
+
+      animationRef.current?.kill();
+      animationRef.current = null;
+
+      context.revert();
+    };
   }, [categories]);
-  console.log("Images", categories);
+
+  if (loading) {
+    return (
+      <section className="py-10 text-center text-white">
+        Loading categories...
+      </section>
+    );
+  }
+
+  if (error || categories.length === 0) {
+    return (
+      <section className="py-10 text-center text-gray-400">
+        {error || "No categories available"}
+      </section>
+    );
+  }
+
+  // Render two copies for the infinite scrolling animation.
+  const sliderCategories = [...categories, ...categories];
+
   return (
-    <div className="py-8 sm:py-10 px-2 sm:px-4 overflow-hidden relative">
-      <h1 className="text-center font-bold text-3xl sm:text-4xl text-white mb-6 sm:mb-8">
+    <section className="relative overflow-hidden px-2 py-8 sm:px-4 sm:py-10">
+      <h2 className="mb-6 text-center text-3xl font-bold text-white sm:mb-8 sm:text-4xl">
         Popular <span className="text-[#C27AFF]">Categories</span>
-      </h1>
+      </h2>
 
-      <div className="w-full flex items-center overflow-hidden relative">
-        {/* <button 
-          onClick={slideLeft} 
-          className="hidden md:block absolute left-0 z-10 bg-gray-800/80 hover:bg-gray-700/90 text-white p-2 rounded-full ml-2"
-          aria-label="Previous categories"
-        >
-          &lt;
-        </button> */}
-
+      <div className="relative flex w-full items-center overflow-hidden">
         <div
           ref={sliderRef}
-          className="flex gap-6 sm:gap-8 md:gap-10 min-w-max whitespace-nowrap px-2 sm:px-0"
+          className="flex min-w-max gap-6 whitespace-nowrap px-2 sm:gap-8 sm:px-0 md:gap-10"
         >
-          {categories.map((category, index) => (
+          {sliderCategories.map((category, index) => (
             <Link
-              href={`/category/${category.title
-                .toLowerCase()
-                .replace(/\s+/g, "-")}`}
-              key={index}
+              href={`/category/${changeCategoryToSlug(category.title)}`}
+              key={`${category.id}-${index}`}
               className="group"
             >
-              <div className="flex flex-col items-center gap-2 sm:gap-3 cursor-pointer transform transition duration-300 hover:scale-105 active:scale-95">
+              <div className="flex cursor-pointer flex-col items-center gap-2 transition duration-300 hover:scale-105 active:scale-95 sm:gap-3">
                 <div className="relative">
                   <img
-                    src={`${category?.logoImage}`}
-                    alt={category.title}
-                    className="w-16 h-16 xs:w-[70px] xs:h-[70px] sm:w-20 sm:h-20 md:w-[100px] md:h-[100px] object-cover bg-white p-2 rounded-full border-2 border-gray-300 group-hover:border-[#C27AFF] shadow-md transition-all duration-300"
+                    src={category.logoImage}
+                    alt={`${category.title} category`}
+                    className="h-16 w-16 rounded-full border-2 border-gray-300 bg-white object-cover p-2 shadow-md transition-all duration-300 group-hover:border-[#C27AFF] sm:h-20 sm:w-20 md:h-24 md:w-24"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 rounded-full bg-[#C27AFF] opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+
+                  <div className="absolute inset-0 rounded-full bg-[#C27AFF] opacity-0 transition-opacity duration-300 group-hover:opacity-10" />
                 </div>
-                <h3 className="text-sm xs:text-base sm:text-lg font-medium text-white text-center max-w-[90px] xs:max-w-[100px] sm:max-w-none truncate">
+
+                <h3 className="max-w-24 truncate text-center text-sm font-medium text-white sm:max-w-32 sm:text-lg">
                   {category.title}
                 </h3>
               </div>
             </Link>
           ))}
         </div>
-
-        {/* <button 
-          onClick={slideRight} 
-          className="hidden md:block absolute right-0 z-10 bg-gray-800/80 hover:bg-gray-700/90 text-white p-2 rounded-full mr-2"
-          aria-label="Next categories"
-        >
-          &gt;
-        </button> */}
       </div>
-
-      <div className="md:hidden flex justify-center gap-2 mt-4">
-        {categories.length > 5 && (
-          <>
-            <div className="w-2 h-2 rounded-full bg-gray-500"></div>
-            <div className="w-2 h-2 rounded-full bg-gray-700"></div>
-            <div className="w-2 h-2 rounded-full bg-gray-500"></div>
-          </>
-        )}
-      </div>
-    </div>
+    </section>
   );
 };
 
-export default Category;
+export default Categories;
+
+const changeCategoryToSlug = (title: string) => {
+  return title
+    .split(" ")
+    .map((val) => val.toLowerCase())
+    .join("-");
+};

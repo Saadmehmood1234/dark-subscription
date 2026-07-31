@@ -1,11 +1,13 @@
 "use server";
 import { dbConnect } from "@/lib/dbConnect";
+import { CategoryModel } from "@/model/Category";
 import { Product } from "@/model/Product";
 import mongoose from "mongoose";
 export async function getProduct() {
   try {
     await dbConnect();
     const products = await Product.find().lean();
+    console.log("product", products);
     if (!products || products.length === 0) {
       return {
         success: false,
@@ -26,6 +28,7 @@ export async function getProduct() {
       logoImage: product.logoImage,
       features: product.features,
       images: product.images,
+      slug: product.slug,
       createdAt: product.createdAt,
       updatedAt: product.updatedAt,
     }));
@@ -47,9 +50,17 @@ export async function getProduct() {
   }
 }
 
-export async function getProductByCategoryName(category: string) {
+const slugToCategory = (slug: string) => {
+  return slug
+    .split("-")
+    .map((val) => val.charAt(0).toUpperCase() + val.slice(1))
+    .join(" ");
+};
+
+export async function getProductByCategoryName(slug: string) {
   try {
     await dbConnect();
+    const category = slugToCategory(slug);
     const products = await Product.find({ category });
     if (!products || products.length === 0) {
       return {
@@ -118,18 +129,20 @@ export async function getProductByName(title: string) {
 export const filterProducts = async (search: string) => {
   try {
     const query = search.toLowerCase().trim();
-    
+
     // Early return if empty query
     if (!query) {
       return {
         products: [],
         success: true,
-        message: "Empty search query"
+        message: "Empty search query",
       };
     }
 
-    const products = await Product.find({}).select("title description category price slug");
-    
+    const products = await Product.find({}).select(
+      "title description category price slug",
+    );
+
     const filteredProducts = products.filter((product) => {
       // Check if any field matches (OR condition instead of AND)
       return (
@@ -150,25 +163,24 @@ export const filterProducts = async (search: string) => {
       success: false,
       message: "Server error while filtering products",
       products: [],
-      status: 500
+      status: 500,
     };
   }
 };
 
-
-export const getProductNames = async()=>{
+export const getProductNames = async () => {
   try {
     await dbConnect();
     const products = await Product.find({}).select("title category slug");
     return {
-      message:"product got",
-      products:JSON.stringify(products),
-      success:true
-    }
-  } catch (error:any) {
-    return{
-      message:error.message,
-      success:false
-    }
+      message: "product got",
+      products: JSON.stringify(products),
+      success: true,
+    };
+  } catch (error: any) {
+    return {
+      message: error.message,
+      success: false,
+    };
   }
-}
+};

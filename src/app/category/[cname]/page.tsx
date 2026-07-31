@@ -65,7 +65,7 @@ const CategoryPage = () => {
         transition={{ duration: 0.8 }}
         className="max-w-7xl mx-auto"
       >
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 md:mb-20 bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 md:mb-20 bg-linear-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
           Discover Trending Subscriptions
         </h2>
 
@@ -86,7 +86,7 @@ const CategoryPage = () => {
                   className="absolute -top-6 left-1/2 -translate-x-1/2 z-10"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                 >
-                  <div className="rounded-full w-32 h-32  bg-gradient-to-tr from-[#500150] via-[#42026d] to-[#031877] border-8 border-blue-100 shadow-lg">
+                  <div className="rounded-full w-32 h-32  bg-linear-to-tr from-[#500150] via-[#42026d] to-[#031877] border-8 border-blue-100 shadow-lg">
                     <img
                       src={product.logoImage}
                       alt={`${product.logoImage} Logo`}
@@ -95,7 +95,7 @@ const CategoryPage = () => {
                   </div>
                 </motion.div>
                 <div className="bg-[#0C1B44] mt-6 rounded-2xl p-6 pt-24 h-full flex flex-col border border-gray-700/50 hover:border-purple-500/50 transition-all shadow-lg hover:shadow-xl">
-                  <div className="flex-grow">
+                  <div className="grow">
                     <h3 className="text-xl font-bold text-white mb-3 line-clamp-2">
                       {product.title}
                     </h3>
