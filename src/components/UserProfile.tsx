@@ -47,7 +47,7 @@ export default function UserProfile({ user }: UserProfileProps) {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="w-full max-w-7xl bg-[#0C1B44] rounded-3xl px-4 py-8 shadow-xl hover:shadow-2xl transition-shadow border-2 border-[#A92EDF]"
+        className="w-full max-w-7xl px-4 py-8"
       >
         <div className="w-full flex flex-col md:flex-row gap-8">
           <div className="w-full md:w-1/3 lg:w-1/4">
