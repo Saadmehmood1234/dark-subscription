@@ -13,12 +13,34 @@ import { motion } from "framer-motion";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
+  name: z
+    .string()
+    .trim()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name must be less than 100 characters")
+    .regex(/^[A-Za-z ]+$/, "Name can only contain letters and spaces"),
+
   phone: z
     .string()
-    .regex(/^[6-9]\d{9}$/, "Phone must be a valid 10-digit number"),
-  email: z.string().email("Invalid email"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+    .trim()
+    .regex(
+      /^[6-9]\d{9}$/,
+      "Phone must be a valid 10-digit number starting with 6-9",
+    ),
+
+  email: z.string().trim().toLowerCase().email("Invalid email address"),
+
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .regex(/[A-Z]/, "Password must contain an uppercase letter")
+    .regex(/[a-z]/, "Password must contain a lowercase letter")
+    .regex(/\d/, "Password must contain a number")
+    .regex(/[^A-Za-z0-9]/, "Password must contain a special character")
+    .refine(
+      (password) => !password.toLowerCase().includes("password"),
+      'Password cannot contain the word "password"',
+    ),
 });
 export default function SignUpPage() {
   const router = useRouter();
@@ -32,17 +54,42 @@ export default function SignUpPage() {
   });
   const [loading, setLoading] = useState(false);
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setLoading(true);
-    const res = await signup(values);
-    if (!res.success) {
-      toast.error(res.message || "Error in SignUp");
+    try {
+      setLoading(true);
+
+      const result = await signup(values);
+
+      if (!result.success) {
+        toast.error(result.message);
+
+        if (result.code === "GOOGLE_ACCOUNT_EXISTS") {
+          // Keep the user on the page so they can press the Google button.
+          return;
+        }
+
+        if (result.code === "ACCOUNT_ALREADY_EXISTS") {
+          router.push("/auth/signin");
+          return;
+        }
+
+        return;
+      }
+
+      toast.success(result.message);
+      reset();
+
+      if (
+        result.code === "ACCOUNT_CREATED" ||
+        result.code === "VERIFICATION_RESENT"
+      ) {
+        router.push(`/verifyemail?email=${encodeURIComponent(values.email)}`);
+      }
+    } catch (error) {
+      console.error("Signup submission error:", error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
       setLoading(false);
-      return;
     }
-    toast.success("SignUp Successfully");
-    reset();
-    setLoading(false);
-    router.push("/verifyemail");
   };
   return (
     <section className="flex w-full justify-center items-center pt-4 pb-20 bg-gradient-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] min-h-screen">
@@ -71,7 +118,7 @@ export default function SignUpPage() {
                   error={errors.name && { message: errors.name.message }}
                   placeholder="sourav sec"
                 />
-               
+
                 <Input
                   label="Email"
                   icon={<Mail className="h-5 w-5 text-[#A92EDF]" />}
@@ -79,7 +126,7 @@ export default function SignUpPage() {
                   error={errors.email && { message: errors.email.message }}
                   placeholder="example@gmail.com"
                 />
-               
+
                 <Input
                   label="Phone Number"
                   icon={<Phone className="h-5 w-5 text-[#A92EDF]" />}
@@ -87,7 +134,7 @@ export default function SignUpPage() {
                   error={errors.phone && { message: errors.phone.message }}
                   placeholder="9873933435"
                 />
-               
+
                 <Input
                   label="Password"
                   type="password"
@@ -98,7 +145,7 @@ export default function SignUpPage() {
                   }
                   placeholder="*****"
                 />
-               
+
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
