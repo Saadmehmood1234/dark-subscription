@@ -55,16 +55,16 @@
 
 //   if (loading) {
 //     return (
-//       <div className="min-h-screen bg-gradient-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center">
+//       <div className="min-h-screen bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center">
 //         <div className="text-white">Loading...</div>
 //       </div>
 //     );
 //   }
 //   if (!orderVerified) {
 //     return (
-//       <div className="min-h-screen bg-gradient-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
+//       <div className="min-h-screen bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
 //         <div className="bg-[#0C1B44]/80 backdrop-blur-sm border-2 border-[#A92EDF]/30 rounded-2xl p-8 max-w-md w-full text-center">
-//           <h1 className="text-3xl font-bold mt-4 bg-gradient-to-r from-[#A92EDF] to-[#C27AFF] bg-clip-text text-transparent">
+//           <h1 className="text-3xl font-bold mt-4 bg-linear-to-r from-[#A92EDF] to-[#C27AFF] bg-clip-text text-transparent">
 //             Payment Verification Failed
 //           </h1>
 //           <p className="mt-2 text-gray-300">
@@ -83,12 +83,12 @@
 //   }
 
 //   return (
-//     <div className="min-h-screen bg-gradient-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
+//     <div className="min-h-screen bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
 //       <div className="bg-[#0C1B44]/80 backdrop-blur-sm border-2 border-[#A92EDF]/30 rounded-2xl p-8 max-w-md w-full text-center">
 //         <div className="flex justify-center">
 //           <CheckCircle className="w-16 h-16 text-green-400" />
 //         </div>
-//         <h1 className="text-3xl font-bold mt-4 bg-gradient-to-r from-[#A92EDF] to-[#C27AFF] bg-clip-text text-transparent">
+//         <h1 className="text-3xl font-bold mt-4 bg-linear-to-r from-[#A92EDF] to-[#C27AFF] bg-clip-text text-transparent">
 //           Payment Successful!
 //         </h1>
 //         <p className="mt-2 text-gray-300">
@@ -168,7 +168,7 @@ export default function SuccessContent({ orderId }: { orderId?: string }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center">
         <div className="text-white">Loading...</div>
       </div>
     );
@@ -176,9 +176,9 @@ export default function SuccessContent({ orderId }: { orderId?: string }) {
 
   if (!orderVerified) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
         <div className="bg-[#0C1B44]/80 backdrop-blur-sm border-2 border-[#A92EDF]/30 rounded-2xl p-8 max-w-md w-full text-center">
-          <h1 className="text-3xl font-bold mt-4 bg-gradient-to-r from-[#A92EDF] to-[#C27AFF] bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold mt-4 bg-linear-to-r from-[#A92EDF] to-[#C27AFF] bg-clip-text text-transparent">
             Payment Verification Failed
           </h1>
           <p className="mt-2 text-gray-300">
@@ -197,12 +197,12 @@ export default function SuccessContent({ orderId }: { orderId?: string }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
       <div className="bg-[#0C1B44]/80 backdrop-blur-sm border-2 border-[#A92EDF]/30 rounded-2xl p-8 max-w-md w-full text-center">
         <div className="flex justify-center">
           <CheckCircle className="w-16 h-16 text-green-400" />
         </div>
-        <h1 className="text-3xl font-bold mt-4 bg-gradient-to-r from-[#A92EDF] to-[#C27AFF] bg-clip-text text-transparent">
+        <h1 className="text-3xl font-bold mt-4 bg-linear-to-r from-[#A92EDF] to-[#C27AFF] bg-clip-text text-transparent">
           Payment Successful!
         </h1>
         <p className="mt-2 text-gray-300">

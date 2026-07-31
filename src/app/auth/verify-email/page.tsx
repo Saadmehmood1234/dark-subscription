@@ -33,14 +33,14 @@ function VerifyEmailContent() {
   }, [token, router]);
 
   return (
-    <section className="flex justify-center items-center min-h-screen bg-gradient-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027]">
+    <section className="flex justify-center items-center min-h-screen bg-linear-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027]">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="bg-[#0C1B44]/90 backdrop-blur-sm border-2 border-[#A92EDF]/30 rounded-3xl p-8 shadow-2xl relative overflow-hidden w-full max-w-md"
       >
-        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-96 h-96 bg-gradient-to-tr from-[#500150] via-[#42026d] to-[#031877] rounded-full blur-2xl opacity-20" />
+        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-96 h-96 bg-linear-to-tr from-[#500150] via-[#42026d] to-[#031877] rounded-full blur-2xl opacity-20" />
         <div className="text-center space-y-6">
           <h1 className="text-2xl font-semibold text-white">{message}</h1>
           {message.includes("Verifying") && (
@@ -64,7 +64,7 @@ export default function VerifyEmailPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex justify-center items-center min-h-screen bg-gradient-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027]">
+        <div className="flex justify-center items-center min-h-screen bg-linear-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027]">
           <div className="text-white">Loading verification...</div>
         </div>
       }

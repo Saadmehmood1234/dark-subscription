@@ -123,7 +123,7 @@ const Header: React.FC = () => {
       <Slider {...settings} className="overflow-hidden">
         {slides.map((slide) => (
           <div key={slide.id} className="relative h-[70vh] xl:h-[80vh]">
-            <div className="absolute inset-0 bg-gradient-to-t from-[#160A25] via-[#160A25]/70 to-transparent z-10" />
+            <div className="absolute inset-0 bg-linear-to-t from-[#160A25] via-[#160A25]/70 to-transparent z-10" />
             <img
               src={slide.bg}
               alt="Offer"
@@ -141,14 +141,14 @@ const Header: React.FC = () => {
                 <span className="inline-block mb-4 px-4 py-2 bg-[#C27AFF]/10 text-[#C27AFF] rounded-full text-sm font-semibold">
                   {slide.offer}
                 </span>
-                <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-[#C27AFF] to-[#7B61FF] bg-clip-text text-transparent">
+                <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-linear-to-r from-[#C27AFF] to-[#7B61FF] bg-clip-text text-transparent">
                   {slide.text}
                 </h1>
                 <Link href="#products">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-gradient-to-r from-[#C27AFF] to-[#7B61FF] text-white rounded-xl font-semibold hover:shadow-xl transition-all flex items-center gap-2 mx-auto"
+                  className="px-8 py-4 bg-linear-to-r from-[#C27AFF] to-[#7B61FF] text-white rounded-xl font-semibold hover:shadow-xl transition-all flex items-center gap-2 mx-auto"
                 >
                   Purchase Now
                   <ArrowRight className="size-5" />

@@ -3,12 +3,12 @@ import Link from "next/link";
 
 export default function CancelPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
       <div className="bg-[#0C1B44]/80 backdrop-blur-sm border-2 border-red-500/30 rounded-2xl p-8 max-w-md w-full text-center">
         <div className="flex justify-center">
           <AlertTriangle className="w-16 h-16 text-red-400" />
         </div>
-        <h1 className="text-3xl font-bold mt-4 bg-gradient-to-r from-red-500 to-orange-400 bg-clip-text text-transparent">
+        <h1 className="text-3xl font-bold mt-4 bg-linear-to-r from-red-500 to-orange-400 bg-clip-text text-transparent">
           Payment Not Completed
         </h1>
         <p className="mt-2 text-gray-300">

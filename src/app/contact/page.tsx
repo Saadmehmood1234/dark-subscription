@@ -13,7 +13,7 @@ import Link from "next/link";
 export default function ContactPage() {
   return (
     <main
-      className="min-h-screen text-white bg-gradient-to-b from-[#0D071A] to-[#1A0C3D]"
+      className="min-h-screen text-white bg-linear-to-b from-[#0D071A] to-[#1A0C3D]"
       style={{
         background: `
 background-color: #37005c;
@@ -25,7 +25,7 @@ background-image: url("https://www.transparenttextures.com/patterns/asfalt-light
     >
       <div className="max-w-6xl mx-auto py-20 px-6">
         <section className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-linear-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
             Contact Us
           </h1>
           <p className="text-xl md:text-2xl text-[#B4ACD9] max-w-3xl mx-auto leading-relaxed">
@@ -37,7 +37,7 @@ background-image: url("https://www.transparenttextures.com/patterns/asfalt-light
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           <div className="bg-[#1E1433] rounded-xl p-8 border border-[#2A1E3A] hover:border-[#A92EDF] transition-all">
             <h2 className="text-2xl font-bold mb-6 flex items-center">
-              <span className="bg-gradient-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
                 Get In Touch
               </span>
             </h2>
@@ -67,7 +67,7 @@ background-image: url("https://www.transparenttextures.com/patterns/asfalt-light
           </div>
           <div className="bg-[#1E1433] rounded-xl p-8 border border-[#2A1E3A] hover:border-[#A92EDF] transition-all">
             <h2 className="text-2xl font-bold mb-6 flex items-center">
-              <span className="bg-gradient-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
                 Business Hours
               </span>
             </h2>
@@ -111,7 +111,7 @@ background-image: url("https://www.transparenttextures.com/patterns/asfalt-light
         </div>
         <section className="bg-[#1E1433] rounded-xl p-8 border border-[#2A1E3A]">
           <h2 className="text-2xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
               Send Us a Message
             </span>
           </h2>
@@ -168,7 +168,7 @@ background-image: url("https://www.transparenttextures.com/patterns/asfalt-light
 
             <button
               type="submit"
-              className="bg-gradient-to-r from-[#A92EDF] to-purple-600 hover:from-[#A92EDF]/90 hover:to-purple-600/90 text-white font-semibold py-3 px-8 rounded-lg text-lg transition-all shadow-lg hover:shadow-[#A92EDF]/20"
+              className="bg-linear-to-r from-[#A92EDF] to-purple-600 hover:from-[#A92EDF]/90 hover:to-purple-600/90 text-white font-semibold py-3 px-8 rounded-lg text-lg transition-all shadow-lg hover:shadow-[#A92EDF]/20"
             >
               Send Message
             </button>

@@ -158,7 +158,7 @@ export default function ProfileSettings({ user }: ProfileSettingsProps) {
             <motion.button
               type="submit"
               disabled={isLoading}
-              className="px-6 py-2 rounded-full cursor-pointer text-sm font-medium text-white bg-gradient-to-r from-[#A92EDF] to-[#A92EDF] hover:from-[#A92EDF]/90 hover:to-[#A92EDF]/90"
+              className="px-6 py-2 rounded-full cursor-pointer text-sm font-medium text-white bg-linear-to-r from-[#A92EDF] to-[#A92EDF] hover:from-[#A92EDF]/90 hover:to-[#A92EDF]/90"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -208,7 +208,7 @@ export default function ProfileSettings({ user }: ProfileSettingsProps) {
           <div className="flex justify-start pt-6">
             <motion.button
               onClick={() => setIsEditing(true)}
-              className="px-8 py-3 cursor-pointer rounded-full text-lg font-medium text-white bg-gradient-to-r from-[#A92EDF] to-[#A92EDF] hover:from-[#A92EDF]/90 hover:to-[#A92EDF]/90"
+              className="px-8 py-3 cursor-pointer rounded-full text-lg font-medium text-white bg-linear-to-r from-[#A92EDF] to-[#A92EDF] hover:from-[#A92EDF]/90 hover:to-[#A92EDF]/90"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

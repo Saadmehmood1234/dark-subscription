@@ -3,13 +3,13 @@ import { Cookie, Settings, BarChart2, Shield } from "lucide-react";
 
 export default function CookiePolicy() {
   return (
-    <main className="min-h-screen text-white bg-gradient-to-b from-[#0D071A] to-[#1A0C3D]">
+    <main className="min-h-screen text-white bg-linear-to-b from-[#0D071A] to-[#1A0C3D]">
       <div className="max-w-4xl mx-auto py-16 px-6">
         <section className="text-center mb-12">
           <div className="flex justify-center mb-4">
             <Cookie className="text-[#A92EDF] w-12 h-12" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-linear-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
             Cookie Policy
           </h1>
           <p className="text-xl text-[#B4ACD9] max-w-3xl mx-auto">
@@ -91,7 +91,7 @@ export default function CookiePolicy() {
             </p>
             <a
               href="mailto:privacy@primeflix.site"
-              className="inline-block bg-gradient-to-r from-[#A92EDF] to-purple-600 hover:from-[#A92EDF]/90 hover:to-purple-600/90 text-white font-medium py-2 px-6 rounded-lg transition-all"
+              className="inline-block bg-linear-to-r from-[#A92EDF] to-purple-600 hover:from-[#A92EDF]/90 hover:to-purple-600/90 text-white font-medium py-2 px-6 rounded-lg transition-all"
             >
               Contact Privacy Team
             </a>

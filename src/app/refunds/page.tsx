@@ -3,14 +3,14 @@ import { ArrowLeftCircle, Clock, MailCheck, BadgeCheck } from "lucide-react";
 
 export default function RefundPolicy() {
   return (
-    <main className="min-h-screen text-white bg-gradient-to-b from-[#0D071A] to-[#1A0C3D]">
+    <main className="min-h-screen text-white bg-linear-to-b from-[#0D071A] to-[#1A0C3D]">
       <div className="max-w-5xl mx-auto py-16 px-6">
         {/* Header Section */}
         <section className="text-center mb-12">
           <div className="flex justify-center mb-4">
             <ArrowLeftCircle className="text-[#A92EDF] w-12 h-12" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-bold mb-3 bg-linear-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
             Refund Policy
           </h1>
           <p className="text-xl text-[#B4ACD9] max-w-3xl mx-auto">
@@ -70,7 +70,7 @@ export default function RefundPolicy() {
             <div className="flex items-center mt-4">
               <a
                 href="mailto:support@primeflix.site"
-                className="inline-flex items-center bg-gradient-to-r from-[#A92EDF] to-purple-600 hover:from-[#A92EDF]/90 hover:to-purple-600/90 text-white font-medium py-2 px-6 rounded-lg transition-all"
+                className="inline-flex items-center bg-linear-to-r from-[#A92EDF] to-purple-600 hover:from-[#A92EDF]/90 hover:to-purple-600/90 text-white font-medium py-2 px-6 rounded-lg transition-all"
               >
                 <MailCheck className="mr-2 w-5 h-5" />
                 Contact Support

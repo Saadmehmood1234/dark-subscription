@@ -104,11 +104,11 @@ export default function CartPage() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 }}
-      className="m-6 sm:m-8 md:m-10 lg:m-12 p-4 sm:p-6 md:p-8 bg-gradient-to-br from-[#0C1B44] to-[#1A0C3D] rounded-3xl border-2 border-[#A92EDF]/30 shadow-2xl"
+      className="m-6 sm:m-8 md:m-10 lg:m-12 p-4 sm:p-6 md:p-8 bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] rounded-3xl border-2 border-[#A92EDF]/30 shadow-2xl"
     >
       <div className="flex items-center gap-3 mb-6 sm:mb-8">
         <ShoppingCart className="text-[#C27AFF]" size={24} />
-        <h3 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#C27AFF] to-[#A05BD3] bg-clip-text text-transparent">
+        <h3 className="text-xl sm:text-2xl font-bold bg-linear-to-r from-[#C27AFF] to-[#A05BD3] bg-clip-text text-transparent">
           Your Shopping Cart
         </h3>
       </div>
@@ -245,7 +245,7 @@ export default function CartPage() {
               Explore our services and find something special!
             </p>
             <Link href={"/"}>
-              <button className="bg-gradient-to-r from-[#C27AFF] to-[#7B61FF] px-6 sm:px-8 py-2 sm:py-3 rounded-xl hover:opacity-90 transition-opacity">
+              <button className="bg-linear-to-r from-[#C27AFF] to-[#7B61FF] px-6 sm:px-8 py-2 sm:py-3 rounded-xl hover:opacity-90 transition-opacity">
                 Browse Services
               </button>
             </Link>

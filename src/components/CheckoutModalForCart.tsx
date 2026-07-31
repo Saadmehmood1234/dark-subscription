@@ -107,7 +107,7 @@
 //         transition={{ duration: 0.5 }}
 //         className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4"
 //       >
-//         <motion.div className="relative max-w-2xl w-full mx-auto p-6 sm:p-8 bg-gradient-to-br from-[#0C1B44] to-[#1A0C3D] rounded-3xl border-2 border-[#A92EDF]/30 shadow-2xl">
+//         <motion.div className="relative max-w-2xl w-full mx-auto p-6 sm:p-8 bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] rounded-3xl border-2 border-[#A92EDF]/30 shadow-2xl">
 //           <button
 //             onClick={onClose}
 //             className="absolute top-4 right-4 text-gray-300 hover:text-red-400 transition"
@@ -116,7 +116,7 @@
 //           </button>
 
 //           <div className="mb-6 text-center">
-//             <h2 className="text-3xl font-bold bg-gradient-to-r from-[#A92EDF] to-[#A92EDF] bg-clip-text text-transparent">
+//             <h2 className="text-3xl font-bold bg-linear-to-r from-[#A92EDF] to-[#A92EDF] bg-clip-text text-transparent">
 //               Complete Checkout
 //             </h2>
 //             <p className="text-gray-400 mt-2">
@@ -308,7 +308,7 @@ const CheckoutModal = ({ cartItems, isOpen, onClose }: any) => {
       transition={{ duration: 0.5 }}
       className="fixed inset-0 z-50 bg-black bg-opacity-60 flex items-center justify-center p-4"
     >
-      <motion.div className="relative max-w-2xl w-full mx-auto p-6 sm:p-8 bg-gradient-to-br from-[#0C1B44] to-[#1A0C3D] rounded-3xl border-2 border-[#A92EDF]/30 shadow-2xl">
+      <motion.div className="relative max-w-2xl w-full mx-auto p-6 sm:p-8 bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] rounded-3xl border-2 border-[#A92EDF]/30 shadow-2xl">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-300 hover:text-red-400 transition"
@@ -317,7 +317,7 @@ const CheckoutModal = ({ cartItems, isOpen, onClose }: any) => {
         </button>
 
         <div className="mb-6 text-center">
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-[#A92EDF] to-[#A92EDF] bg-clip-text text-transparent">
+          <h2 className="text-3xl font-bold bg-linear-to-r from-[#A92EDF] to-[#A92EDF] bg-clip-text text-transparent">
             Complete Checkout
           </h2>
           <p className="text-gray-400 mt-2">

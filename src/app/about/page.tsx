@@ -39,7 +39,7 @@ export default function AboutPage() {
 
   return (
     <main
-      className="min-h-screen text-white bg-gradient-to-b from-[#0D071A] to-[#1A0C3D]"
+      className="min-h-screen text-white bg-linear-to-b from-[#0D071A] to-[#1A0C3D]"
       style={{
         backgroundImage: `
       url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%235d32a1' fill-opacity='0.29' fill-rule='evenodd'/%3E%3C/svg%3E")
@@ -62,7 +62,7 @@ background-image: url("https://www.transparenttextures.com/patterns/asfalt-light
           <div className="absolute top-0 left-0 w-full h-full bg-[url('/pattern.svg')] bg-cover bg-center"></div>
         </div>
         <div className="max-w-6xl mx-auto relative z-10 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-linear-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
             About PrimeFlix
           </h1>
           <p className="text-xl md:text-2xl text-[#B4ACD9] max-w-3xl mx-auto leading-relaxed">
@@ -112,7 +112,7 @@ background-image: url("https://www.transparenttextures.com/patterns/asfalt-light
         </div>
       </section>
       <section
-        className="py-16 px-6 bg-gradient-to-r from-[#1E1433] to-[#160A25]"
+        className="py-16 px-6 bg-linear-to-r from-[#1E1433] to-[#160A25]"
         style={{
           background: `
    background-color: #37005c;
@@ -170,7 +170,7 @@ background-image: url("https://www.transparenttextures.com/patterns/asfalt-light
         </div>
       </section>
       <section
-        className="py-20 px-6 bg-gradient-to-br from-[#1A0C3D] to-[#0D071A]"
+        className="py-20 px-6 bg-linear-to-br from-[#1A0C3D] to-[#0D071A]"
         style={{
           background: `
    background-color: #37005c;
@@ -189,7 +189,7 @@ background-image: url("https://www.transparenttextures.com/patterns/asfalt-light
             Experience the PrimeFlix difference - where innovation meets
             entertainment. Get Best Subscriptions today.
           </p>
-          <button className="bg-gradient-to-r from-[#A92EDF] to-purple-600 hover:from-[#A92EDF]/90 hover:to-purple-600/90 cursor-pointer text-white font-semibold py-3 px-8 rounded-lg text-lg transition-all shadow-lg hover:shadow-[#A92EDF]/20">
+          <button className="bg-linear-to-r from-[#A92EDF] to-purple-600 hover:from-[#A92EDF]/90 hover:to-purple-600/90 cursor-pointer text-white font-semibold py-3 px-8 rounded-lg text-lg transition-all shadow-lg hover:shadow-[#A92EDF]/20">
             Explore
           </button>
         </div>

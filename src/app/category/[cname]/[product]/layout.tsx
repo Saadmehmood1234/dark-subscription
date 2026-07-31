@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: { params: any }): Promise<Met
 
 export default function ProductLayout({ children }:{children:ReactNode}) {
   return (
-    <div className="bg-gradient-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] min-h-screen">
+    <div className="bg-linear-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] min-h-screen">
       {children}
     </div>
   );

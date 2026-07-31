@@ -45,7 +45,7 @@ const Features = () => {
   ];
 
   return (
-    <div className="w-full overflow-x-hidden flex justify-center items-center flex-col bg-gradient-to-tr from-[#160A25] via-[#180A25] to-[#0D0F29] pt-12 px-2 sm:px-4">
+    <div className="w-full overflow-x-hidden flex justify-center items-center flex-col bg-linear-to-tr from-[#160A25] via-[#180A25] to-[#0D0F29] pt-12 px-2 sm:px-4">
   
     <div className="flex mx-1 justify-center items-center flex-col w-full">
       <div className="max-w-4xl text-center w-full px-2">
@@ -63,7 +63,7 @@ const Features = () => {
          */}
         {steps.map((step, index) => (
           <div key={index} className="relative group text-center w-52 sm:w-64">
-            <div className="relative w-32 h-32 max-lg:w-24 max-lg:h-24 max-md:w-20 max-md:h-20 max-sm:w-16 max-sm:h-16 bg-gradient-to-tr from-[#500150] via-[#42026d] to-[#031877] rounded-full flex justify-center items-center z-10 transition-transform duration-300 group-hover:scale-110 mx-auto">
+            <div className="relative w-32 h-32 max-lg:w-24 max-lg:h-24 max-md:w-20 max-md:h-20 max-sm:w-16 max-sm:h-16 bg-linear-to-tr from-[#500150] via-[#42026d] to-[#031877] rounded-full flex justify-center items-center z-10 transition-transform duration-300 group-hover:scale-110 mx-auto">
               <step.icon className="text-white size-12 max-lg:size-10 max-md:size-8 max-sm:size-6" />
             </div>
             <div className="mt-4 w-full">
@@ -99,7 +99,7 @@ const Features = () => {
                   className="bg-[#0C1B44] rounded-xl p-6 hover:transform hover:scale-[1.02] transition-all duration-300 group flex-1 min-h-[200px]"
                 >
                   <div
-                    className={`bg-gradient-to-tr ${feature.color} w-fit p-3 rounded-2xl mb-4`}
+                    className={`bg-linear-to-tr ${feature.color} w-fit p-3 rounded-2xl mb-4`}
                   >
                     <feature.icon className="text-white size-6 sm:size-8" />
                   </div>

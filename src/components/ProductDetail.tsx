@@ -113,7 +113,7 @@ const ProductDetail = ({
     setShowCheckout(true);
   };
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] py-8 sm:py-12 md:py-16 lg:py-20">
+    <div className="min-h-screen bg-linear-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] py-8 sm:py-12 md:py-16 lg:py-20">
       <div className="container mx-auto px-4 sm:px-6">
         {showCheckout && (
           <CheckoutModal
@@ -195,7 +195,7 @@ const ProductDetail = ({
               transition={{ delay: 0.2 }}
             >
               <div className="flex justify-between items-start">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#A92EDF] to-[#A92EDF] bg-clip-text text-transparent">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-linear-to-r from-[#A92EDF] to-[#A92EDF] bg-clip-text text-transparent">
                   {product.title}
                 </h1>
                 <X

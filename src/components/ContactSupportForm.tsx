@@ -70,7 +70,7 @@ const ContactSupportForm = ({ setIsOpen }: ContactPropType) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.3 }}
-      className="relative max-w-2xl mx-auto p-6 sm:p-6 bg-gradient-to-br from-[#0C1B44] to-[#1A0C3D] rounded-3xl border-2 border-[#A92EDF]/30 shadow-2xl"
+      className="relative max-w-2xl mx-auto p-6 sm:p-6 bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] rounded-3xl border-2 border-[#A92EDF]/30 shadow-2xl"
       aria-modal="true"
       role="dialog"
     >
@@ -83,7 +83,7 @@ const ContactSupportForm = ({ setIsOpen }: ContactPropType) => {
       </button>
 
       <div className="mb-4 text-center">
-        <h1 className="text-3xl font-bold max-sm:text-2xl bg-gradient-to-r from-[#A92EDF] to-[#7B1FA2] bg-clip-text text-transparent">
+        <h1 className="text-3xl font-bold max-sm:text-2xl bg-linear-to-r from-[#A92EDF] to-[#7B1FA2] bg-clip-text text-transparent">
           Contact Support
         </h1>
         <p className="text-gray-400 max-sm:text-sm mt-2">
@@ -184,7 +184,7 @@ const ContactSupportForm = ({ setIsOpen }: ContactPropType) => {
           whileTap={{ scale: 0.98 }}
           type="submit"
           disabled={isSubmitting}
-          className="w-full max-sm:text-sm cursor-pointer bg-gradient-to-r from-[#A92EDF] to-[#7B1FA2] hover:from-[#8e25c9] hover:to-[#6a1b99] py-2 rounded-xl font-bold flex items-center justify-center gap-2 transition-all disabled:opacity-70"
+          className="w-full max-sm:text-sm cursor-pointer bg-linear-to-r from-[#A92EDF] to-[#7B1FA2] hover:from-[#8e25c9] hover:to-[#6a1b99] py-2 rounded-xl font-bold flex items-center justify-center gap-2 transition-all disabled:opacity-70"
         >
           {isSubmitting ? "Sending..." : "Send Message"}
           {!isSubmitting && <Mail size={18} />}

@@ -46,7 +46,7 @@ const ProductPage = () => {
 
   // Handle case when product isn't found
   return (
-    <div className="bg-gradient-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] min-h-screen flex items-center justify-center">
+    <div className="bg-linear-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] min-h-screen flex items-center justify-center">
       <div className="text-center p-8 max-w-md">
         <h1 className="text-2xl font-bold text-white mb-4">
           Product Not Found
@@ -56,7 +56,7 @@ const ProductPage = () => {
         </p>
         <a
           href="/"
-          className="bg-gradient-to-r from-[#A92EDF] to-purple-600 text-white px-6 py-3 rounded-lg inline-block"
+          className="bg-linear-to-r from-[#A92EDF] to-purple-600 text-white px-6 py-3 rounded-lg inline-block"
         >
           Browse Products
         </a>

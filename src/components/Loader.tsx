@@ -2,7 +2,7 @@ import React from 'react'
 
 const Loader = () => {
   return (
-    <div className="bg-gradient-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] min-h-screen p-8">
+    <div className="bg-linear-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] min-h-screen p-8">
     {/* Product Image Skeleton */}
     <div className="mx-auto max-w-2xl">
       <div className="h-64 bg-[#0C1B44] rounded-xl mb-6 animate-pulse"></div>
@@ -22,7 +22,7 @@ const Loader = () => {
       </div>
       
       {/* CTA Button Skeleton */}
-      <div className="h-12 bg-gradient-to-r from-[#500150] to-[#031877] rounded-xl w-full animate-pulse"></div>
+      <div className="h-12 bg-linear-to-r from-[#500150] to-[#031877] rounded-xl w-full animate-pulse"></div>
     </div>
   </div>
   )

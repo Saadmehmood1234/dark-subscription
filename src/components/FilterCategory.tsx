@@ -27,7 +27,7 @@ const CategoryLabels = () => {
 
   if (isLoading) {
     return (
-      <section className="w-full px-4 py-12 sm:px-6 lg:px-8 bg-gradient-to-b from-[#0F0A1F] to-[#1A1033]">
+      <section className="w-full px-4 py-12 sm:px-6 lg:px-8 bg-linear-to-b from-[#0F0A1F] to-[#1A1033]">
         <div className="max-w-7xl mx-auto">
           <div className="w-full flex flex-col items-center">
             <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -49,7 +49,7 @@ const CategoryLabels = () => {
   }
 
   return (
-    <section className="w-full px-4 py-12 sm:px-6 lg:px-8 bg-gradient-to-b from-[#0F0A1F] to-[#1A1033]">
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8 bg-linear-to-b from-[#0F0A1F] to-[#1A1033]">
       <div className="max-w-7xl mx-auto">
         <div className="w-full flex flex-col items-center">
           <motion.h2 
@@ -83,7 +83,7 @@ const CategoryLabels = () => {
                   font-medium text-sm sm:text-base
                   whitespace-nowrap overflow-hidden text-ellipsis
                   rounded-xl border border-[#3A2A5A]
-                  bg-gradient-to-b from-[#251A3A] to-[#1E1433]
+                  bg-linear-to-b from-[#251A3A] to-[#1E1433]
                   text-white hover:text-[#F0E6FF]
                   transition-all duration-300
                   shadow-lg hover:shadow-xl
@@ -93,7 +93,7 @@ const CategoryLabels = () => {
                 aria-label={`Filter by ${category.title}`}
               >
                 <span className="relative z-10">{category.title}</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#A92EDF]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-linear-to-r from-transparent via-[#A92EDF]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#A92EDF] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
               </motion.button>
             ))}

@@ -43,7 +43,7 @@ export default function TeamCard({ member }: { member: TeamMember }) {
           />
         ) : (
           <div
-            className={`w-full h-full flex items-center justify-center bg-gradient-to-br ${avatarColor} animate-pulse`}
+            className={`w-full h-full flex items-center justify-center bg-linear-to-br ${avatarColor} animate-pulse`}
           >
             <div className="relative">
               <div className="flex items-center justify-center w-full h-full">
@@ -62,7 +62,7 @@ export default function TeamCard({ member }: { member: TeamMember }) {
           </div>
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+        <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
           <div>
             <h3 className="text-xl font-bold">{member.name}</h3>
             {/* <p className="text-[#B4ACD9]">{member.role}</p> */}

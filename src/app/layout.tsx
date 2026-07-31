@@ -139,7 +139,7 @@ export default async function RootLayout({
           }}
         />
 
-        <div className="bg-gradient-to-tr from-[#0E091C] via-[#1F133D] min-h-screen to-[#0B1027] overflow-x-hidden flex flex-col justify-between w-full pt-20">
+        <div className="bg-linear-to from-[#0E091C] via-[#1F133D] min-h-screen to-[#0B1027] overflow-x-hidden flex flex-col justify-between w-full pt-20">
           <SessionProviderWrapper session={session}>
             <ReduxProvider>
               <Navbar />

@@ -37,7 +37,7 @@ const Review = () => {
   };
 
   return (
-    <div className="w-full flex justify-center items-center flex-col p-6 bg-gradient-to-tr from-[#140214] via-[#12021d] to-[#010724]">
+    <div className="w-full flex justify-center items-center flex-col p-6 bg-linear-to-tr from-[#140214] via-[#12021d] to-[#010724]">
       <div className="flex justify-center items-center w-full my-20">
         <div className="w-full max-w-7xl mx-auto px-4">
           <div className="flex flex-col items-center text-center mb-16">
@@ -60,7 +60,7 @@ const Review = () => {
                 className="bg-[#0C1B44] rounded-xl p-8 hover:transform hover:scale-[1.02] transition-all duration-300 group"
               >
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="bg-gradient-to-tr from-[#500150] to-[#031877] rounded-full size-12 flex items-center justify-center">
+                  <div className="bg-linear-to-tr from-[#500150] to-[#031877] rounded-full size-12 flex items-center justify-center">
                     <span className="text-white font-bold">
                       {testimonial.name[0]}
                     </span>
