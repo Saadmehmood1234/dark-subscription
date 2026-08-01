@@ -7,7 +7,6 @@ export async function getProduct() {
   try {
     await dbConnect();
     const products = await Product.find().lean();
-    console.log("product", products);
     if (!products || products.length === 0) {
       return {
         success: false,
@@ -60,8 +59,18 @@ const slugToCategory = (slug: string) => {
 export async function getProductByCategoryName(slug: string) {
   try {
     await dbConnect();
-    const category = slugToCategory(slug);
-    const products = await Product.find({ category });
+    const normalizedSlug = slug.trim().toLowerCase();
+    const categoryDocument = (await CategoryModel.findOne({
+      slug: normalizedSlug,
+      status: "active",
+    })
+      .select("title")
+      .lean()) as { title: string } | null;
+    const category = categoryDocument?.title || slugToCategory(normalizedSlug);
+    const escapedCategory = category.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const products = await Product.find({
+      category: { $regex: `^${escapedCategory}$`, $options: "i" },
+    }).lean();
     if (!products || products.length === 0) {
       return {
         success: false,
@@ -104,10 +113,20 @@ export async function getProductByCategoryName(slug: string) {
   }
 }
 
-export async function getProductByName(title: string) {
+export async function getProductByName(identifier: string) {
   try {
     await dbConnect();
-    const product = await Product.findOne({ title });
+    const decodedIdentifier = decodeURIComponent(identifier).trim();
+    const escapedIdentifier = decodedIdentifier.replace(
+      /[.*+?^${}()|[\]\\]/g,
+      "\\$&"
+    );
+    const product = await Product.findOne({
+      $or: [
+        { slug: decodedIdentifier.toLowerCase() },
+        { title: { $regex: `^${escapedIdentifier}$`, $options: "i" } },
+      ],
+    });
 
     return {
       product: JSON.stringify(product),
@@ -128,6 +147,7 @@ export async function getProductByName(title: string) {
 
 export const filterProducts = async (search: string) => {
   try {
+    await dbConnect();
     const query = search.toLowerCase().trim();
 
     // Early return if empty query

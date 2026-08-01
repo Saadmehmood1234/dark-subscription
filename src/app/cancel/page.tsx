@@ -24,7 +24,7 @@ export default function CancelPage() {
             Return Home
           </Link>
           <Link
-            href="/checkout"
+            href="/cart"
             className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-white bg-transparent hover:bg-[#0C1B44] transition-colors"
           >
             Try Again

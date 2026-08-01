@@ -1,18 +1,36 @@
 import mongoose from "mongoose";
+
+type MongooseCache = {
+  connection: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+};
+
+const globalWithMongoose = globalThis as typeof globalThis & {
+  mongooseCache?: MongooseCache;
+};
+
+const cache = globalWithMongoose.mongooseCache || {
+  connection: null,
+  promise: null,
+};
+
+globalWithMongoose.mongooseCache = cache;
+
 export const dbConnect = async () => {
-  const mongouri = process.env.MONGO_URI;
-  if (!mongouri) {
-    console.log("Mongodb url is missing");
-    return;
+  if (cache.connection) return cache.connection;
+
+  const mongoUri = process.env.MONGO_URI;
+  if (!mongoUri) throw new Error("MONGO_URI is not configured");
+
+  if (!cache.promise) {
+    cache.promise = mongoose.connect(mongoUri, { bufferCommands: false });
   }
+
   try {
-    if (mongoose.connections[0].readyState) {
-      console.log("Mongodb is already connected");
-      return;
-    }
-    await mongoose.connect(mongouri);
-    console.log(`MongoDB Connected  successfilly`);
-  } catch (error: any) {
-    console.log("Error in connecting mongodb");
+    cache.connection = await cache.promise;
+    return cache.connection;
+  } catch (error) {
+    cache.promise = null;
+    throw error;
   }
 };

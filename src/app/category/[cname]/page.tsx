@@ -2,10 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Product } from "@/lib/types";
-import {
-  getProduct,
-  getProductByCategoryName,
-} from "@/app/actions/product.actions";
+import { getProductByCategoryName } from "@/app/actions/product.actions";
 import { FiArrowRight } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
@@ -16,27 +13,46 @@ const CategoryPage = () => {
   const { cname } = useParams();
   const categoryName = Array.isArray(cname) ? cname[0] : cname;
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
   const [sendDetail, setSendDetail] = useState<Product | null>(null);
   const searchQuery = useSelector((state: RootState) => state.search.query);
   useEffect(() => {
+    let active = true;
+
     const fetchData = async () => {
+      setLoading(true);
+      setLoadError(null);
       try {
-     
         const res = await getProductByCategoryName(
           categoryName ? decodeURIComponent(categoryName) : ""
         );
-        if (res?.success) {
+        if (!active) return;
+
+        if (res.success) {
           setProducts(res.data || []);
+        } else {
+          setProducts([]);
+          if (res.status === 500) setLoadError(res.message);
         }
-      } catch (error: any) {
-       console.log(error)
-        
+      } catch (error: unknown) {
+        if (active) {
+          setProducts([]);
+          setLoadError(
+            error instanceof Error ? error.message : "Unable to load products"
+          );
+        }
+      } finally {
+        if (active) setLoading(false);
       }
-     
     };
-    fetchData();
-  }, []);
+
+    void fetchData();
+    return () => {
+      active = false;
+    };
+  }, [categoryName]);
 
   const handleDetail = (data: Product) => {
     setSendDetail(data);
@@ -69,7 +85,18 @@ const CategoryPage = () => {
           Discover Trending Subscriptions
         </h2>
 
-        {filteredProducts.length === 0 ? (
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[0, 1, 2].map((item) => (
+              <div
+                key={item}
+                className="h-96 animate-pulse rounded-2xl bg-[#0C1B44]"
+              />
+            ))}
+          </div>
+        ) : loadError ? (
+          <div className="py-20 text-center text-red-300">{loadError}</div>
+        ) : filteredProducts.length === 0 ? (
           <NoProductAvailable />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-sm:gap-20 mb-12">

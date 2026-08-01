@@ -10,9 +10,12 @@ interface IOrder {
   products: IOrderItem[];
   totalAmount: number;
   status: "processing" | "delivered" | "cancelled";
-  paymentStatus: "processing" | "paid" | "failed";
+  paymentStatus: "processing" | "verification_pending" | "paid" | "failed";
   paymentMethod: string;
   paymentId?: string;
+  paymentSubmittedAt?: Date;
+  paymentReviewedAt?: Date;
+  confirmationEmailSentAt?: Date;
   orderEmail?: string;
   credentials?: Array<{
     product: string;
@@ -45,12 +48,15 @@ const orderSchema = new Schema<IOrder>(
     },
     paymentStatus: {
       type: String,
-      enum: ["processing", "paid", "failed"],
+      enum: ["processing", "verification_pending", "paid", "failed"],
       default: "processing",
     },
     paymentMethod: { type: String, required: true },
     orderEmail: String,
     paymentId: String,
+    paymentSubmittedAt: Date,
+    paymentReviewedAt: Date,
+    confirmationEmailSentAt: Date,
     credentials: [
       {
         product: String,

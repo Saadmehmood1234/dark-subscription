@@ -35,8 +35,8 @@ export interface Order {
   }[];
   totalAmount: number;
   paymentMethod: string;
-  status: "pending" | "delivered" | "cancelled";
-  paymentStatus: "pending" | "paid" | "failed";
+  status: "processing" | "delivered" | "cancelled";
+  paymentStatus: "processing" | "verification_pending" | "paid" | "failed";
   createdAt: string;
 }
 

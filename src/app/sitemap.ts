@@ -3,6 +3,8 @@ import { MetadataRoute } from "next";
 import { getProductNames } from "@/app/actions/product.actions";
 import { getCategory } from "./actions/category.actions";
 
+export const dynamic = "force-dynamic";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.primeflix.site";
 

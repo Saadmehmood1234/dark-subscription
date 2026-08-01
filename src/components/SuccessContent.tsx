@@ -1,195 +1,101 @@
-// "use client";
-
-// import { CheckCircle } from "lucide-react";
-// import Link from "next/link";
-// import { useEffect, useState } from "react";
-// import { sendConfirmationEmail } from "@/app/actions/sendMail.actions";
-// import axios from "axios";
-// export default function SuccessContent({
-//   sessionId,
-//   orderId,
-// }: {
-//   sessionId?: string;
-//   orderId?: string;
-// }) {
-//   const [orderVerified, setOrderVerified] = useState(false);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     const verifyPayment = async () => {
-
-//       if (!sessionId || !orderId) {
-//         console.warn("Missing sessionId or orderId");
-//         setLoading(false);
-//         return;
-//       }
-//       try {
-//         const {data} = await axios.post("api/verify-payment",{sessionId,orderId});
-
-//         if (data.success) {
-//           setOrderVerified(true);
-//           try {
-//             await sendConfirmationEmail({
-//               productName: data?.product?.title,
-//               orderId: orderId,
-//               websiteName: process.env.NEXT_PUBLIC_WEBSITE_NAME || "Our Site",
-//             });
-//           } catch (emailError) {
-//             console.error("Email failed:", emailError);
-//           }
-//         }
-//       } catch (error:any) {
-//         console.error("Verification failed:", {
-//           error,
-//           sessionId,
-//           orderId,
-//           time: new Date().toISOString(),
-//         });
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     verifyPayment();
-//   }, [sessionId, orderId]);
-
-//   if (loading) {
-//     return (
-//       <div className="min-h-screen bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center">
-//         <div className="text-white">Loading...</div>
-//       </div>
-//     );
-//   }
-//   if (!orderVerified) {
-//     return (
-//       <div className="min-h-screen bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
-//         <div className="bg-[#0C1B44]/80 backdrop-blur-sm border-2 border-[#A92EDF]/30 rounded-2xl p-8 max-w-md w-full text-center">
-//           <h1 className="text-3xl font-bold mt-4 bg-linear-to-r from-[#A92EDF] to-[#C27AFF] bg-clip-text text-transparent">
-//             Payment Verification Failed
-//           </h1>
-//           <p className="mt-2 text-gray-300">
-//             We couldn't verify your payment. Please check your orders or contact
-//             support.
-//           </p>
-//           <Link
-//             href="/profile"
-//             className="mt-6 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#A92EDF] hover:bg-[#8e5ea3] transition-colors"
-//           >
-//             View Your Orders
-//           </Link>
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className="min-h-screen bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
-//       <div className="bg-[#0C1B44]/80 backdrop-blur-sm border-2 border-[#A92EDF]/30 rounded-2xl p-8 max-w-md w-full text-center">
-//         <div className="flex justify-center">
-//           <CheckCircle className="w-16 h-16 text-green-400" />
-//         </div>
-//         <h1 className="text-3xl font-bold mt-4 bg-linear-to-r from-[#A92EDF] to-[#C27AFF] bg-clip-text text-transparent">
-//           Payment Successful!
-//         </h1>
-//         <p className="mt-2 text-gray-300">
-//           Thank you for your purchase. Your order is being processed.
-//         </p>
-//         <p className="mt-4 text-gray-300">
-//           A confirmation email has been sent to your registered email address.
-//         </p>
-
-//         {orderId && (
-//           <p className="mt-4 text-sm text-center text-gray-400">
-//             Order ID: {orderId}
-//           </p>
-//         )}
-
-//         <Link
-//           href="/profile"
-//           className="mt-6 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#A92EDF] hover:bg-[#8e5ea3] transition-colors"
-//         >
-//           View Your Orders
-//         </Link>
-//       </div>
-//     </div>
-//   );
-// }
-
 "use client";
-import { CheckCircle } from "lucide-react";
+
+import { CheckCircle, Clock3, XCircle } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { sendConfirmationEmail } from "@/app/actions/sendMail.actions";
-import axios from "axios";
+
+type VerificationState = "loading" | "pending" | "success" | "failed";
 
 export default function SuccessContent({ orderId }: { orderId?: string }) {
-  const [orderVerified, setOrderVerified] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [productName, setProductName] = useState("");
+  const [state, setState] = useState<VerificationState>("loading");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const verifyPayment = async () => {
-      if (!orderId) {
-        console.warn("Missing orderId");
-        setLoading(false);
-        return;
-      }
+    if (!orderId) {
+      setMessage("The order ID is missing.");
+      setState("failed");
+      return;
+    }
 
+    let stopped = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
+    const checkPayment = async () => {
       try {
-        const { data } = await axios.post("/api/payment/verify", { orderId });
-
-        if (data.success) {
-          setOrderVerified(true);
-          setProductName(data.product?.title || "your purchase");
-
-          try {
-            await sendConfirmationEmail({
-              productName: data.product?.title || "your purchase",
-              orderId: orderId,
-              websiteName: process.env.NEXT_PUBLIC_WEBSITE_NAME || "Our Site",
-            });
-          } catch (emailError) {
-            console.error("Email failed:", emailError);
-          }
-        }
-      } catch (error: any) {
-        console.error("Verification failed:", {
-          error,
-          orderId,
-          time: new Date().toISOString(),
+        const response = await fetch("/api/payment/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ orderId }),
+          cache: "no-store",
         });
-      } finally {
-        setLoading(false);
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || "Payment status could not be checked");
+        }
+        if (stopped) return;
+
+        if (data.paymentStatus === "paid") {
+          setState("success");
+          return;
+        }
+        if (data.paymentStatus === "failed") {
+          setMessage("The submitted payment could not be verified. Please contact support.");
+          setState("failed");
+          return;
+        }
+
+        setState("pending");
+        timer = setTimeout(checkPayment, 5000);
+      } catch (error: unknown) {
+        if (stopped) return;
+        setMessage(error instanceof Error ? error.message : "Payment status could not be checked");
+        setState("failed");
       }
     };
 
-    verifyPayment();
+    void checkPayment();
+    return () => {
+      stopped = true;
+      if (timer) clearTimeout(timer);
+    };
   }, [orderId]);
 
-  if (loading) {
+  if (state === "loading") {
     return (
       <div className="min-h-screen bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center">
-        <div className="text-white">Loading...</div>
+        <div className="text-white">Checking your payment…</div>
       </div>
     );
   }
 
-  if (!orderVerified) {
+  if (state === "pending") {
     return (
       <div className="min-h-screen bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
-        <div className="bg-[#0C1B44]/80 backdrop-blur-sm border-2 border-[#A92EDF]/30 rounded-2xl p-8 max-w-md w-full text-center">
-          <h1 className="text-3xl font-bold mt-4 bg-linear-to-r from-[#A92EDF] to-[#C27AFF] bg-clip-text text-transparent">
-            Payment Verification Failed
-          </h1>
-          <p className="mt-2 text-gray-300">
-            We couldn't verify your payment. Please check your orders or contact
-            support.
+        <div className="bg-[#0C1B44]/80 border-2 border-amber-400/30 rounded-2xl p-8 max-w-md w-full text-center">
+          <Clock3 className="w-16 h-16 text-amber-300 mx-auto" />
+          <h1 className="text-3xl font-bold mt-4 text-amber-200">Payment submitted</h1>
+          <p className="mt-3 text-gray-300">
+            Your UTR is waiting for admin verification. This page updates automatically.
           </p>
-          <Link
-            href="/profile"
-            className="mt-6 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#A92EDF] hover:bg-[#8e5ea3] transition-colors"
-          >
-            View Your Orders
+          {orderId && <p className="mt-4 text-sm text-gray-400">Order ID: {orderId}</p>}
+          <Link href="/profile" className="mt-6 inline-flex px-6 py-3 rounded-md text-white bg-[#A92EDF]">
+            View your orders
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (state === "failed") {
+    return (
+      <div className="min-h-screen bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
+        <div className="bg-[#0C1B44]/80 border-2 border-red-500/30 rounded-2xl p-8 max-w-md w-full text-center">
+          <XCircle className="w-16 h-16 text-red-400 mx-auto" />
+          <h1 className="text-3xl font-bold mt-4 text-red-300">Payment not confirmed</h1>
+          <p className="mt-3 text-gray-300">{message}</p>
+          <Link href="/profile" className="mt-6 inline-flex px-6 py-3 rounded-md text-white bg-[#A92EDF]">
+            View your orders
           </Link>
         </div>
       </div>
@@ -198,31 +104,13 @@ export default function SuccessContent({ orderId }: { orderId?: string }) {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-[#0C1B44] to-[#1A0C3D] flex items-center justify-center p-4">
-      <div className="bg-[#0C1B44]/80 backdrop-blur-sm border-2 border-[#A92EDF]/30 rounded-2xl p-8 max-w-md w-full text-center">
-        <div className="flex justify-center">
-          <CheckCircle className="w-16 h-16 text-green-400" />
-        </div>
-        <h1 className="text-3xl font-bold mt-4 bg-linear-to-r from-[#A92EDF] to-[#C27AFF] bg-clip-text text-transparent">
-          Payment Successful!
-        </h1>
-        <p className="mt-2 text-gray-300">
-          Thank you for your purchase. Your order is being processed.
-        </p>
-        <p className="mt-4 text-gray-300">
-          A confirmation email has been sent to your registered email address.
-        </p>
-
-        {orderId && (
-          <p className="mt-4 text-sm text-center text-gray-400">
-            Order ID: {orderId}
-          </p>
-        )}
-
-        <Link
-          href="/profile"
-          className="mt-6 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#A92EDF] hover:bg-[#8e5ea3] transition-colors"
-        >
-          View Your Orders
+      <div className="bg-[#0C1B44]/80 border-2 border-[#A92EDF]/30 rounded-2xl p-8 max-w-md w-full text-center">
+        <CheckCircle className="w-16 h-16 text-green-400 mx-auto" />
+        <h1 className="text-3xl font-bold mt-4 text-[#C27AFF]">Payment confirmed!</h1>
+        <p className="mt-2 text-gray-300">Thank you. Your PrimeFlix order is being processed.</p>
+        {orderId && <p className="mt-4 text-sm text-gray-400">Order ID: {orderId}</p>}
+        <Link href="/profile" className="mt-6 inline-flex px-6 py-3 rounded-md text-white bg-[#A92EDF]">
+          View your orders
         </Link>
       </div>
     </div>

@@ -13,7 +13,6 @@ import { useRouter } from "next/navigation";
 export default function CartPage() {
   const dispatch = useDispatch<AppDispatch>();
   const { cart, status, error } = useSelector((state: RootState) => state.cart);
-  const [isLoading, setIsLoading] = useState(false);
   const [updatingItems, setUpdatingItems] = useState<Record<string, boolean>>(
     {}
   );
@@ -88,16 +87,12 @@ export default function CartPage() {
   };
 
   const uniqueCartItems = getUniqueCartItems();
-  // if (status === "loading") return <p className="text-center py-12">Loading...</p>;
-  if (status === "failed") {
-    setTimeout(() => {
-      router.push("/");
-    }, 2000);
-
-    if (error === "Signin to continue") {
-      toast.error(error);
-    }
-  }
+  useEffect(() => {
+    if (status !== "failed") return;
+    if (error === "Signin to continue") toast.error(error);
+    const redirect = window.setTimeout(() => router.push("/"), 2000);
+    return () => window.clearTimeout(redirect);
+  }, [error, router, status]);
 
   return (
     <motion.div
@@ -222,7 +217,7 @@ export default function CartPage() {
               onClick={() => setShowCheckout(true)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              disabled={isLoading}
+              disabled={status === "loading"}
               className="w-full cursor-pointer bg-[#A92EDF] hover:bg-[#8e5ea3] py-3 sm:py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all"
             >
               <span>Secure Checkout</span>

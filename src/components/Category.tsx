@@ -128,7 +128,7 @@ const Categories = () => {
         >
           {sliderCategories.map((category, index) => (
             <Link
-              href={`/category/${changeCategoryToSlug(category.title)}`}
+              href={`/category/${category.slug || changeCategoryToSlug(category.title)}`}
               key={`${category.id}-${index}`}
               className="group"
             >

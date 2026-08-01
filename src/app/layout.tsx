@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SessionProviderWrapper from "@/components/SessionProviderWrapper";
@@ -49,7 +49,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  themeColor: "#0E091C",
   category: "e-commerce",
   openGraph: {
     title: "Prime Flix - Premium Accounts at Low Costs",
@@ -116,6 +115,10 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#0E091C",
+};
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -139,7 +142,7 @@ export default async function RootLayout({
           }}
         />
 
-        <div className="bg-linear-to from-[#0E091C] via-[#1F133D] min-h-screen to-[#0B1027] overflow-x-hidden flex flex-col justify-between w-full pt-20">
+        <div className="app-shell min-h-screen overflow-x-hidden flex flex-col justify-between w-full pt-20">
           <SessionProviderWrapper session={session}>
             <ReduxProvider>
               <Navbar />
@@ -174,15 +177,15 @@ export default async function RootLayout({
           position="bottom-right"
           toastOptions={{
             style: {
-              background: "#0C1B44",
-              color: "#fff",
-              border: "1px solid #A92EDF",
+              background: "var(--surface-elevated)",
+              color: "var(--foreground)",
+              border: "1px solid var(--border-strong)",
             },
             success: {
               duration: 3000,
               iconTheme: {
-                primary: "#A92EDF",
-                secondary: "#fff",
+                primary: "var(--accent)",
+                secondary: "var(--accent-foreground)",
               },
             },
             error: {

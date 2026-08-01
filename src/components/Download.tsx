@@ -142,7 +142,8 @@ const OrderInvoicePDF = ({ invoice }: { invoice: InvoiceData }) => (
               backgroundColor:
                 invoice.order.paymentStatus === "paid"
                   ? "#4CAF50"
-                  : invoice.order.paymentStatus === "pending"
+                  : invoice.order.paymentStatus === "processing" ||
+                    invoice.order.paymentStatus === "verification_pending"
                   ? "#FFC107"
                   : "#F44336",
               color: "white",

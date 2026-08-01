@@ -100,13 +100,13 @@ const ProductDetail = ({
 
     const tempCartItem = {
       product: {
-        id: product.id,
+        _id: product.id,
         title: product.title,
         images: product.images,
         price: product.price,
       },
       quantity: quantity,
-      price: product.price,
+      price: product.price * quantity,
     };
 
     setCartItems([tempCartItem]);

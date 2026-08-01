@@ -4,9 +4,10 @@ import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { setQuery } from "@/redux/slices/searchSlice";
 import { getCategory } from "@/app/actions/category.actions";
+import type { Category } from "@/lib/types";
 
 const CategoryLabels = () => {
-  const [categories, setCategories] = useState<any[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
 
@@ -64,7 +65,7 @@ const CategoryLabels = () => {
           <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {categories.map((category, index) => (
               <motion.button
-                key={category._id}
+                key={category.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ 

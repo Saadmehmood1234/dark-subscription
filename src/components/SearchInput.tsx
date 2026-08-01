@@ -68,7 +68,7 @@ const SearchInput = () => {
           onChange={(e) => setInputValue(e.target.value)}
           onFocus={() => setIsFocused(true)}
           placeholder="Search Netflix, Spotify, etc..."
-          className="w-full h-10 bg-[#310557] text-white rounded-lg pl-10 pr-4 outline-none focus:ring-2 focus:ring-[#A92EDF] border border-[#A92EDF]/30"
+          className="h-10 w-full rounded-lg border border-input bg-card pl-10 pr-4 text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground hover:border-gray-700 focus:border-primary focus:ring-2 focus:ring-primary/30"
         />
         {isSearching && (
           <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
@@ -79,7 +79,7 @@ const SearchInput = () => {
 
       {/* Suggestions dropdown */}
       {isFocused && (suggestions.length > 0 || inputValue.length > 1) && (
-        <div className="absolute mt-1 w-full bg-[#1A0C3D] border border-[#A92EDF]/30 rounded-lg shadow-lg z-50 py-2 max-h-60 overflow-auto">
+        <div className="absolute z-50 mt-2 max-h-60 w-full overflow-auto rounded-xl border border-border bg-popover py-2 text-popover-foreground shadow-2xl shadow-black/30">
           {isSearching ? (
             <div className="flex justify-center py-4">
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#A92EDF]"></div>
@@ -89,16 +89,16 @@ const SearchInput = () => {
               <Link
                 key={product._id}
                 href={`/product/${product.slug || product.title || product._id}`}
-                className="flex items-center px-4 py-3 hover:bg-[#310557] transition-colors group"
+                className="group flex items-center px-4 py-3 transition-colors hover:bg-muted"
                 onClick={() => {
                   setInputValue(product.title);
                   setIsFocused(false);
                 }}
               >
-                <span className="text-white group-hover:text-[#A92EDF] transition-colors">
+                <span className="text-foreground transition-colors group-hover:text-primary">
                   {product.title}
                 </span>
-                <span className="ml-auto text-[#A92EDF] bg-[#A92EDF]/10 px-2 py-1 rounded text-sm">
+                <span className="ml-auto rounded bg-primary/10 px-2 py-1 text-sm font-medium text-primary">
                 ₹{product.price?.toFixed(2)}
                 </span>
               </Link>

@@ -1,8 +1,102 @@
 @import "tailwindcss";
 
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--surface);
+  --color-card-foreground: var(--foreground);
+  --color-popover: var(--surface-elevated);
+  --color-popover-foreground: var(--foreground);
+  --color-primary: var(--accent);
+  --color-primary-foreground: var(--accent-foreground);
+  --color-secondary: var(--surface-elevated);
+  --color-secondary-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input-border);
+  --color-ring: var(--accent);
+  --color-destructive: var(--danger);
+
+  /* Keep the existing gray utilities readable against purple/navy surfaces. */
+  --color-gray-200: var(--text-soft);
+  --color-gray-300: var(--text-secondary);
+  --color-gray-400: var(--muted-foreground);
+  --color-gray-500: var(--text-subtle);
+  --color-gray-700: var(--border-strong);
+  --color-gray-800: var(--border);
+}
+
+:root {
+  color-scheme: dark;
+  --background: #0e091c;
+  --foreground: #f8f5ff;
+  --surface: #19112c;
+  --surface-elevated: #24183c;
+  --muted: #2b2040;
+  --text-soft: #eee9f7;
+  --text-secondary: #d8d1e6;
+  --muted-foreground: #beb5d0;
+  --text-subtle: #aaa0bd;
+  --border: #392c4d;
+  --border-strong: #4a3a61;
+  --input-border: #51406b;
+  --accent: #d17aff;
+  --accent-foreground: #170822;
+  --danger: #ff727b;
+}
+
+html {
+  background: var(--background);
+}
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #1F133D;
-  color:#FFF;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+.app-shell {
+  background:
+    radial-gradient(circle at 12% 0%, rgb(125 54 164 / 18%), transparent 34rem),
+    linear-gradient(135deg, #0e091c 0%, #1b112e 48%, #090f23 100%);
+  color: var(--foreground);
+}
+
+input,
+textarea,
+select {
+  color: var(--foreground);
+  caret-color: var(--accent);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-subtle);
+  opacity: 1;
+}
+
+select option {
+  background: var(--surface-elevated);
+  color: var(--foreground);
+}
+
+::selection {
+  background: rgb(209 122 255 / 35%);
+  color: #ffffff;
+}
+
+/* Lift legacy accent-colored copy to the accessible theme accent. */
+[class~="text-[#A92EDF]"] {
+  color: var(--accent);
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --muted-foreground: #d8d1e6;
+    --text-subtle: #c9c1d8;
+    --border: #66557e;
+  }
 }
