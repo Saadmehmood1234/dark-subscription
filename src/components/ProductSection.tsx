@@ -12,8 +12,6 @@ import Link from "next/link";
 
 const ProductSection = () => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false);
-  const [sendDetail, setSendDetail] = useState<Product | null>(null);
   const searchQuery = useSelector((state: RootState) => state.search.query);
   const [loading, setLoading] = useState(false);
 
@@ -34,10 +32,6 @@ const ProductSection = () => {
     fetchData();
   }, []);
 
-  const handleDetail = (data: Product) => {
-    setSendDetail(data);
-    setIsDetailOpen(true);
-  };
 
   const filteredProducts = products.filter(
     (product) =>

@@ -45,7 +45,7 @@ const Features = () => {
   ];
 
   return (
-    <div className="w-full overflow-x-hidden flex justify-center items-center flex-col bg-linear-to-tr from-[#160A25] via-[#180A25] to-[#0D0F29] pt-12 px-2 sm:px-4">
+    <section id="how-it-works" className="w-full overflow-x-hidden flex justify-center items-center flex-col bg-linear-to-tr from-[#160A25] via-[#180A25] to-[#0D0F29] pt-12 px-2 sm:px-4">
   
     <div className="flex mx-1 justify-center items-center flex-col w-full">
       <div className="max-w-4xl text-center w-full px-2">
@@ -129,7 +129,7 @@ const Features = () => {
       </div>
     </div>
   
-  </div>
+  </section>
   
   );
 };

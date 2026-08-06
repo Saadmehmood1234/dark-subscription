@@ -121,7 +121,7 @@ export default function Chatbot() {
               type="button"
               onClick={() => setIsOpen(false)}
               aria-label="Close chatbot"
-              className="rounded-full p-2 text-white/70 transition hover:bg-white/10 hover:text-white"
+              className="rounded-full cursor-pointer p-2 text-white/70 transition hover:bg-white/10 hover:text-white"
             >
               <X className="size-5" />
             </button>
@@ -171,7 +171,7 @@ export default function Chatbot() {
               type="submit"
               disabled={loading || !input.trim()}
               aria-label="Send message"
-              className="flex size-11 items-center justify-center rounded-xl bg-violet-600 text-white transition hover:bg-violet-500 disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex size-11 cursor-pointer items-center justify-center rounded-xl bg-violet-600 text-white transition hover:bg-violet-500 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <Send className="size-5" />
             </button>
@@ -183,7 +183,7 @@ export default function Chatbot() {
         type="button"
         onClick={() => setIsOpen((current) => !current)}
         aria-label={isOpen ? "Close Primeflix chatbot" : "Open Primeflix chatbot"}
-        className="flex size-14 items-center justify-center rounded-full bg-violet-600 text-white shadow-lg transition hover:scale-105 hover:bg-violet-500"
+        className="flex size-14 cursor-pointer items-center justify-center rounded-full bg-violet-600 text-white shadow-lg transition hover:scale-105 hover:bg-violet-500"
       >
         {isOpen ? (
           <X className="size-6" />

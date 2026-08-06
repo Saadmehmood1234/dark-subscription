@@ -85,6 +85,7 @@ const CategoryLabels = () => {
                   whitespace-nowrap overflow-hidden text-ellipsis
                   rounded-xl border border-[#3A2A5A]
                   bg-linear-to-b from-[#251A3A] to-[#1E1433]
+                  cursor-pointer
                   text-white hover:text-[#F0E6FF]
                   transition-all duration-300
                   shadow-lg hover:shadow-xl

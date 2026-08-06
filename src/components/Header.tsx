@@ -111,7 +111,6 @@ const Header: React.FC = () => {
           return (
             <div key={slide.id}>
               <section className="relative min-h-155 overflow-hidden sm:min-h-170 lg:min-h-190">
-                {/* Background image */}
                 <img
                   src={slide.bg}
                   alt=""
@@ -119,12 +118,10 @@ const Header: React.FC = () => {
                   className={`absolute inset-0 h-full w-full object-cover ${slide.imagePosition}`}
                 />
 
-                {/* Dark overlays for readability */}
                 <div className="absolute inset-0 bg-black/25" />
                 <div className="absolute inset-0 bg-linear-to-r from-[#100719] via-[#100719]/85 to-[#100719]/20" />
                 <div className="absolute inset-0 bg-linear-to-t from-[#100719] via-transparent to-black/20" />
 
-                {/* Decorative glow */}
                 <div className="absolute -left-40 top-1/3 size-105 rounded-full bg-purple-600/20 blur-[120px]" />
                 <div className="absolute bottom-0 right-0 size-90 rounded-full bg-violet-500/10 blur-[100px]" />
 

@@ -5,9 +5,13 @@ export interface User {
   name: string;
   email: string;
   role: "user" | "admin";
-  image: string;
+  image?: string;
+  provider: "credentials" | "google";
+  emailVerified: boolean;
   createdAt: string;
+  updatedAt: string;
 }
+
 export type Product = {
   id: string;
   title: string;
