@@ -37,7 +37,7 @@ const Review = () => {
   };
 
   return (
-    <section className="w-full flex justify-center items-center flex-col p-6 bg-linear-to-tr from-[#140214] via-[#12021d] to-[#010724]">
+    <section className="w-full flex justify-center items-center flex-col px-2 sm:px-4 bg-linear-to-tr from-[#140214] via-[#12021d] to-[#010724]">
       <div className="flex justify-center items-center w-full my-20">
         <div className="w-full max-w-7xl mx-auto px-4">
           <div className="flex flex-col items-center text-center mb-16">

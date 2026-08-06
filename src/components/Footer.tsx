@@ -215,7 +215,7 @@ const Footer = () => {
             )}
           </div>
         </div>
-        <div className="border-t border-gray-800 pt-8">
+        <div className="border-t mb-8 sm:mb-4 border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm text-center md:text-left">
               © {currentYear} PrimeFlix. All rights reserved.

@@ -83,7 +83,7 @@ const Faq = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   return (
     <section
-      className="w-full flex justify-center items-center flex-col p-6 bg-linear-to-tr from-[#160A25] via-[#180A25] to-[#0D0F29]"
+      className="w-full flex justify-center items-center flex-col px-2 sm:px-4 bg-linear-to-tr from-[#160A25] via-[#180A25] to-[#0D0F29]"
       itemScope
       itemType="https://schema.org/FAQPage"
     >
