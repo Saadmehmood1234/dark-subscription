@@ -79,7 +79,7 @@ const CategoryPage = () => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="max-w-7xl mx-auto"
+        className="max-w-7xl mx-auto max-sm:py-8"
       >
         <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 md:mb-20 bg-linear-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
           Discover Trending Subscriptions
