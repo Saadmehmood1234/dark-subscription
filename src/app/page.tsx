@@ -13,7 +13,7 @@ const Home = () => {
       <Header />
 
       <Category />
-      <CategoryLabels />
+      {/* <CategoryLabels /> */}
       <ProductSection />
       <Featers />
       <Review />
