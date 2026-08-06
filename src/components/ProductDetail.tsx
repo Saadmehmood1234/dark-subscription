@@ -104,7 +104,7 @@ const ProductDetail = ({
     setShowCheckout(true);
   };
   return (
-    <div className="min-h-screen bg-linear-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027]">
+    <div className="min-h-screen bg-linear-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] py-8 sm:py-12 md:py-16 lg:py-20">
       <div className="container mx-auto px-4 sm:px-6">
         {showCheckout && (
           <CheckoutModal
