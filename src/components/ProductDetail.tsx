@@ -181,7 +181,7 @@ const ProductDetail = ({
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <div className="flex justify-between items-start">
+              <div className="flex justify-between p-4 sm:p-6 items-start">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-linear-to-r from-[#A92EDF] to-[#A92EDF] bg-clip-text text-transparent">
                   {product.title}
                 </h1>
@@ -219,7 +219,7 @@ const ProductDetail = ({
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.2 + index * 0.1 }}
-                      className="flex items-start py-2 bg-[#0C1B44] rounded-lg hover:bg-[#0C1B44]/80 transition-all"
+                      className="flex items-start py-2 px-2 bg-[#0C1B44] rounded-lg hover:bg-[#0C1B44]/80 transition-all"
                     >
                       <CheckCircle
                         className="text-[#A92EDF] mr-2 mt-0.5 shrink-0"
