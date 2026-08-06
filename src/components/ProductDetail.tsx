@@ -270,7 +270,7 @@ const ProductDetail = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="py-8 sm:py-10 md:py-12"
+          className="xl:gap-8 p-4 sm:p-6 md:p-8"
         >
           <div className="p-4 sm:p-6 bg-[#0C1B44] rounded-2xl border border-[#A92EDF]/20">
             <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-[#A92EDF]">
