@@ -99,7 +99,7 @@ export default function Chatbot() {
   }
 
   return (
-    <div className="fixed right-5 bottom-48 z-50">
+    <div className="fixed right-5 bottom-36 z-50">
       {isOpen && (
         <section className="absolute right-0 bottom-18 flex h-137.5 w-[calc(100vw-2.5rem)] max-w-md flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#130d25] text-white shadow-2xl">
           <header className="flex items-center justify-between border-b border-white/10 bg-[#1f1538] px-5 py-4">

@@ -14,7 +14,7 @@ const FloatWhatsapp = () => {
 
   return (
     <motion.div
-      className="fixed bottom-24 right-4 z-50"
+      className="fixed bottom-16 right-4 z-50"
       initial={{ opacity: 0, y: 100 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}

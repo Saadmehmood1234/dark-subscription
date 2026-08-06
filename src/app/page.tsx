@@ -1,9 +1,8 @@
 import Category from "@/components/Category";
-import Chatbot from "@/components/ChatBot";
+import FloatingSupport from "@/components/FloatingSupport";
 import Faq from "@/components/faq/Faq";
 import Featers from "@/components/Featers";
 import CategoryLabels from "@/components/FilterCategory";
-import FloatWhatsapp from "@/components/FloatWatsapp";
 import Header from "@/components/Header";
 import ProductSection from "@/components/ProductSection";
 import Review from "@/components/Review";
@@ -20,8 +19,7 @@ const Home = () => {
       <Review />
       <Faq />
 
-      <FloatWhatsapp />
-      <Chatbot />
+      <FloatingSupport />
     </div>
   );
 };
