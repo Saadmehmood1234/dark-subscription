@@ -158,7 +158,7 @@ const ContactSupportForm = ({ setIsOpen }: ContactPropType) => {
                 required: true,
                 minLength: 10,
               })}
-              className="w-full max-sm:text-sm pl-10 pr-4 py-3 bg-[#0C1B44]/70 rounded-lg border border-[#A92EDF]/30 focus:border-[#C27AFF] focus:outline-none min-h-[150px] backdrop-blur-sm"
+              className="w-full max-sm:text-sm pl-10 pr-4 py-3 bg-[#0C1B44]/70 rounded-lg border border-[#A92EDF]/30 focus:border-[#C27AFF] focus:outline-none min-h-37.5 backdrop-blur-sm"
               placeholder="Please describe your issue in detail"
             />
           </div>

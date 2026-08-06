@@ -2,6 +2,7 @@
 import { dbConnect } from "@/lib/dbConnect";
 import { CategoryModel } from "@/model/Category";
 import { Types } from "mongoose";
+import { Group } from "@/model/Group";
 
 type CategoryLean = {
   _id: Types.ObjectId;
@@ -54,8 +55,6 @@ export const getCategory = async () => {
     };
   }
 };
-
-import { Group } from "@/model/Group";
 
 export const getGroup = async () => {
   try {

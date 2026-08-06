@@ -1,180 +1,345 @@
 "use client";
+
+import { FormEvent, useState } from "react";
 import {
   Mail,
   Phone,
-  MapPin,
   Clock,
-  Facebook,
-  Twitter,
-  MessageCircle,
-  Instagram,
+  CheckCircle2,
+  LoaderCircle,
 } from "lucide-react";
 import Link from "next/link";
+import SocialLink from "@/components/SocialLink";
+
+type FormStatus = "idle" | "sending" | "success" | "error";
+
 export default function ContactPage() {
+  const [status, setStatus] = useState<FormStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const subject = String(formData.get("subject") || "").trim();
+    const message = String(formData.get("message") || "").trim();
+
+    if (!name || !email || !subject || !message) {
+      setStatus("error");
+      setErrorMessage("Please complete all fields before sending.");
+      return;
+    }
+
+    try {
+      setStatus("sending");
+      setErrorMessage("");
+
+      // Replace this with your actual API request.
+      // Example:
+      //
+      // const response = await fetch("/api/contact", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ name, email, subject, message }),
+      // });
+      //
+      // if (!response.ok) {
+      //   throw new Error("Failed to send message");
+      // }
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      form.reset();
+      setStatus("success");
+    } catch (error) {
+      console.error("Contact form error:", error);
+
+      setStatus("error");
+      setErrorMessage("We couldn't send your message. Please try again.");
+    }
+  };
+
   return (
     <main
-      className="min-h-screen text-white bg-linear-to-b from-[#0D071A] to-[#1A0C3D]"
+      className="min-h-screen bg-[#100719] text-white"
       style={{
-        background: `
-background-color: #37005c;
-background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
-/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
-  `,
-        backgroundBlendMode: "overlay",
+        backgroundImage: `
+          linear-gradient(to bottom, rgba(13, 7, 26, 0.9), rgba(26, 12, 61, 0.95)),
+          url("https://www.transparenttextures.com/patterns/asfalt-light.png")
+        `,
       }}
     >
-      <div className="max-w-6xl mx-auto py-20 px-6">
-        <section className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-linear-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
-            Contact Us
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <section className="mx-auto mb-12 max-w-3xl text-center sm:mb-16">
+          <span className="inline-flex rounded-full border border-purple-400/20 bg-purple-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-purple-200">
+            Customer support
+          </span>
+
+          <h1 className="mt-5 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            How can we help?
           </h1>
-          <p className="text-xl md:text-2xl text-[#B4ACD9] max-w-3xl mx-auto leading-relaxed">
-            Have questions, feedback, or need assistance? Our team is ready to
-            support you.
+
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/55 sm:text-lg">
+            Have a question about your subscription or order? Send us a message
+            and our support team will get back to you.
           </p>
         </section>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <div className="bg-[#1E1433] rounded-xl p-8 border border-[#2A1E3A] hover:border-[#A92EDF] transition-all">
-            <h2 className="text-2xl font-bold mb-6 flex items-center">
-              <span className="bg-linear-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
-                Get In Touch
-              </span>
-            </h2>
+        <div className="mb-8 grid gap-6 md:grid-cols-2">
+          <ContactInformation />
 
-            <ul className="space-y-6">
-              <li className="flex items-start">
-                <Mail className="text-[#A92EDF] mr-4 mt-1 flex-shrink-0" />
-                <div>
-                  <h3 className="font-bold text-lg">Email</h3>
-                  <a
-                    href="mailto:support@primeflix.site"
-                    className="text-[#B4ACD9] hover:text-white transition-colors"
-                  >
-                    support@primeflix.site
-                  </a>
-                </div>
-              </li>
-
-              <li className="flex items-start">
-                <Phone className="text-[#A92EDF] mr-4 mt-1 flex-shrink-0" />
-                <div>
-                  <h3 className="font-bold text-lg">Phone</h3>
-                  <p className="text-[#B4ACD9]">+91-XXXXXXXXXX</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div className="bg-[#1E1433] rounded-xl p-8 border border-[#2A1E3A] hover:border-[#A92EDF] transition-all">
-            <h2 className="text-2xl font-bold mb-6 flex items-center">
-              <span className="bg-linear-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
-                Business Hours
-              </span>
-            </h2>
-
-            <div className="flex items-start mb-6">
-              <Clock
-                className="text-[#A92EDF] mr-4 mt-1 flex-shrink-0"
-                size={32}
-              />
-              <div>
-                <ul className="space-y-3 text-3xl">
-                  <li className="text-[#B4ACD9]">24X7</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="pt-6 border-t border-[#2A1E3A]">
-              <h3 className="font-bold text-lg mb-4">Stay Connected</h3>
-              <div className="flex space-x-4">
-                <Link
-                  href="#"
-                  className="text-[#B4ACD9] hover:text-[#A92EDF] transition-colors"
-                >
-                  <Facebook className="w-6 h-6" />
-                </Link>
-                <Link
-                  href="#"
-                  className="text-[#B4ACD9] hover:text-[#A92EDF] transition-colors"
-                >
-                  <Twitter className="w-6 h-6" />
-                </Link>
-                <Link
-                  href="#"
-                  className="text-[#B4ACD9] hover:text-[#A92EDF] transition-colors"
-                >
-                  <Instagram className="w-6 h-6" />
-                </Link>
-              </div>
-            </div>
-          </div>
+          <BusinessHours />
         </div>
-        <section className="bg-[#1E1433] rounded-xl p-8 border border-[#2A1E3A]">
-          <h2 className="text-2xl font-bold mb-6">
-            <span className="bg-linear-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
-              Send Us a Message
-            </span>
-          </h2>
 
-          <form className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="name" className="block text-[#B4ACD9] mb-2">
-                  Name
-                </label>
-                <input
+        <section className="overflow-hidden rounded-3xl border border-white/10 bg-white/4.5 shadow-2xl shadow-black/20 backdrop-blur-xl">
+          <div className="grid lg:grid-cols-[0.75fr_1.25fr]">
+            <div className="border-b border-white/10 bg-purple-500/6 p-6 sm:p-8 lg:border-b-0 lg:border-r">
+              <span className="text-xs font-semibold uppercase tracking-[0.16em] text-purple-300">
+                Send a message
+              </span>
+
+              <h2 className="mt-4 text-2xl font-semibold text-white sm:text-3xl">
+                Tell us what you need help with
+              </h2>
+
+              <p className="mt-4 text-sm leading-6 text-white/50">
+                Provide as much detail as possible so our team can understand
+                your request and respond quickly.
+              </p>
+
+              <div className="mt-8 space-y-4 text-sm text-white/55">
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-purple-300" />
+                  <span>Support available 24 hours a day</span>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-purple-300" />
+                  <span>Help with orders and subscriptions</span>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-purple-300" />
+                  <span>Your information remains private</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 sm:p-8 lg:p-10">
+              {status === "success" && (
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="mb-6 flex items-start gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4"
+                >
+                  <div className="grid size-9 shrink-0 place-items-center rounded-full bg-emerald-400/15">
+                    <CheckCircle2 className="size-5 text-emerald-300" />
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-emerald-100">
+                      Message sent successfully
+                    </h3>
+
+                    <p className="mt-1 text-sm leading-5 text-emerald-100/65">
+                      Thank you for contacting us. Our support team will get
+                      back to you as soon as possible.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {status === "error" && (
+                <div
+                  role="alert"
+                  className="mb-6 rounded-2xl border border-red-400/20 bg-red-400/10 p-4 text-sm text-red-200"
+                >
+                  {errorMessage}
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <FormField
+                    id="name"
+                    name="name"
+                    label="Name"
+                    type="text"
+                    placeholder="Enter your name"
+                    autoComplete="name"
+                  />
+
+                  <FormField
+                    id="email"
+                    name="email"
+                    label="Email address"
+                    type="email"
+                    placeholder="you@example.com"
+                    autoComplete="email"
+                  />
+                </div>
+
+                <FormField
+                  id="subject"
+                  name="subject"
+                  label="Subject"
                   type="text"
-                  id="name"
-                  className="w-full bg-[#160A25] border border-[#2A1E3A] rounded-lg px-4 py-3 focus:border-[#A92EDF] focus:ring-1 focus:ring-[#A92EDF] outline-none transition-all"
-                  placeholder="Your name"
+                  placeholder="How can we help?"
                 />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-[#B4ACD9] mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="w-full bg-[#160A25] border border-[#2A1E3A] rounded-lg px-4 py-3 focus:border-[#A92EDF] focus:ring-1 focus:ring-[#A92EDF] outline-none transition-all"
-                  placeholder="your@email.com"
-                />
-              </div>
-            </div>
 
-            <div>
-              <label htmlFor="subject" className="block text-[#B4ACD9] mb-2">
-                Subject
-              </label>
-              <input
-                type="text"
-                id="subject"
-                className="w-full bg-[#160A25] border border-[#2A1E3A] rounded-lg px-4 py-3 focus:border-[#A92EDF] focus:ring-1 focus:ring-[#A92EDF] outline-none transition-all"
-                placeholder="What's this about?"
-              />
-            </div>
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="mb-2 block text-sm font-medium text-white/70"
+                  >
+                    Message
+                  </label>
 
-            <div>
-              <label htmlFor="message" className="block text-[#B4ACD9] mb-2">
-                Message
-              </label>
-              <textarea
-                id="message"
-                rows={5}
-                className="w-full bg-[#160A25] border border-[#2A1E3A] rounded-lg px-4 py-3 focus:border-[#A92EDF] focus:ring-1 focus:ring-[#A92EDF] outline-none transition-all"
-                placeholder="Your message here..."
-              ></textarea>
-            </div>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={6}
+                    required
+                    placeholder="Describe your question or issue..."
+                    className="w-full resize-none rounded-xl border border-white/10 bg-black/15 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/25 hover:border-white/20 focus:border-purple-400/60 focus:ring-4 focus:ring-purple-400/10"
+                  />
+                </div>
 
-            <button
-              type="submit"
-              className="bg-linear-to-r from-[#A92EDF] to-purple-600 hover:from-[#A92EDF]/90 hover:to-purple-600/90 text-white font-semibold py-3 px-8 rounded-lg text-lg transition-all shadow-lg hover:shadow-[#A92EDF]/20"
-            >
-              Send Message
-            </button>
-          </form>
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="inline-flex cursor-pointer min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#932AD2] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-950/25 transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-purple-900/30 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                >
+                  {status === "sending" ? (
+                    <>
+                      <LoaderCircle className="size-4 animate-spin" />
+                      Sending message...
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="size-4" />
+                      Send message
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
+          </div>
         </section>
       </div>
     </main>
   );
 }
+
+interface FormFieldProps {
+  id: string;
+  name: string;
+  label: string;
+  type: string;
+  placeholder: string;
+  autoComplete?: string;
+}
+
+const FormField = ({
+  id,
+  name,
+  label,
+  type,
+  placeholder,
+  autoComplete,
+}: FormFieldProps) => {
+  return (
+    <div>
+      <label
+        htmlFor={id}
+        className="mb-2 block text-sm font-medium text-white/70"
+      >
+        {label}
+      </label>
+
+      <input
+        id={id}
+        name={name}
+        type={type}
+        required
+        autoComplete={autoComplete}
+        placeholder={placeholder}
+        className="w-full rounded-xl border border-white/10 bg-black/15 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/25 hover:border-white/20 focus:border-purple-400/60 focus:ring-4 focus:ring-purple-400/10"
+      />
+    </div>
+  );
+};
+
+const ContactInformation = () => {
+  return (
+    <section className="rounded-3xl border border-white/10 bg-white/4.5 p-6 backdrop-blur-xl sm:p-8">
+      <h2 className="text-xl font-semibold text-white">Get in touch</h2>
+
+      <div className="mt-7 space-y-6">
+        <div className="flex items-start gap-4">
+          <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-purple-400/10 text-purple-300">
+            <Mail className="size-5" />
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold text-white">Email support</h3>
+
+            <a
+              href="mailto:mehmoodsaad347@gmail.com"
+              className="mt-1 block text-sm text-white/50 transition hover:text-purple-200"
+            >
+              support@primeflix.site
+            </a>
+          </div>
+        </div>
+
+        <div className="flex items-start gap-4">
+          <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-purple-400/10 text-purple-300">
+            <Phone className="size-5" />
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold text-white">Phone support</h3>
+
+            <p className="mt-1 text-sm text-white/50">+91-9773834796</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const BusinessHours = () => {
+
+  return (
+    <section className="rounded-3xl border border-white/10 bg-white/4.5 p-6 backdrop-blur-xl sm:p-8">
+      <h2 className="text-xl font-semibold text-white">Support availability</h2>
+
+      <div className="mt-7 flex items-start gap-4">
+        <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-purple-400/10 text-purple-300">
+          <Clock className="size-5" />
+        </div>
+
+        <div>
+          <h3 className="text-sm font-semibold text-white">Available 24/7</h3>
+
+          <p className="mt-1 text-sm leading-6 text-white/50">
+            Our support team is available throughout the week.
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-7 border-t border-white/10 pt-6">
+        <h3 className="text-sm font-semibold text-white pl-2 mb-2">Follow us</h3>
+
+       <SocialLink/>
+      </div>
+    </section>
+  );
+};

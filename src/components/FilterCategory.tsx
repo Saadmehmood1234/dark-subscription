@@ -89,7 +89,6 @@ const CategoryLabels = () => {
                   transition-all duration-300
                   shadow-lg hover:shadow-xl
                   focus:outline-none focus:ring-2 focus:ring-[#A92EDF] focus:ring-opacity-70
-                  overflow-hidden
                 `}
                 aria-label={`Filter by ${category.title}`}
               >

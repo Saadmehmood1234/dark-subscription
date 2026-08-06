@@ -20,14 +20,10 @@ import toast from "react-hot-toast";
 import CheckoutModal from "./CheckoutModalForCart";
 
 type ProductDetailPropType = {
-  setIsDetailOpen: (value: boolean) => void;
-  isDetailOpen: boolean;
   product: Product | null;
 };
 
 const ProductDetail = ({
-  setIsDetailOpen,
-  isDetailOpen,
   product,
 }: ProductDetailPropType) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -47,12 +43,7 @@ const ProductDetail = ({
       </div>
     );
   }
-  useEffect(() => {
-    if (isDetailOpen) {
-      setSelectedImage(0);
-      posRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [isDetailOpen]);
+
   const handleAddToCart = async () => {
     if (!product) return;
 
@@ -113,7 +104,7 @@ const ProductDetail = ({
     setShowCheckout(true);
   };
   return (
-    <div className="min-h-screen bg-linear-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027] py-8 sm:py-12 md:py-16 lg:py-20">
+    <div className="min-h-screen bg-linear-to-tr from-[#0E091C] via-[#1F133D] to-[#0B1027]">
       <div className="container mx-auto px-4 sm:px-6">
         {showCheckout && (
           <CheckoutModal
@@ -128,13 +119,9 @@ const ProductDetail = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           ref={posRef}
-          className="flex flex-col lg:flex-row gap-6 xl:gap-8 bg-[#0C1B44] backdrop-blur-sm rounded-3xl p-4 sm:p-6 md:p-8 border border-[#A92EDF]/20 shadow-2xl"
+          className="flex flex-col lg:flex-row gap-6 xl:gap-8 p-4 sm:p-6 md:p-8"
         >
-          <X
-            onClick={() => setIsDetailOpen(!isDetailOpen)}
-            size={24}
-            className="hover:text-[#A92EDF]  cursor-pointer lg:hidden absolute right-4 top-2 z-10"
-          />
+
           <div className="lg:w-1/2 lg:pr-4 p-2">
             <motion.div
               whileHover={{ scale: 1.02 }}
@@ -146,7 +133,7 @@ const ProductDetail = ({
                   alt={product.title}
                   width={600}
                   height={600}
-                  className="w-full h-auto max-h-[400px] object-contain p-2"
+                  className="w-full h-auto max-h-100 object-contain p-2"
                   unoptimized
                 />
               </div>
@@ -154,7 +141,7 @@ const ProductDetail = ({
                 {product.images.map((_, index) => (
                   <button
                     key={index}
-                    className={`h-2 w-6 sm:w-8 rounded-full transition-all duration-300 ${
+                    className={`h-2 w-6 sm:w-8 cursor-pointer rounded-full transition-all duration-300 ${
                       selectedImage === index
                         ? "bg-[#A92EDF]"
                         : "bg-gray-600/50"
@@ -170,14 +157,14 @@ const ProductDetail = ({
                   key={index}
                   onClick={() => setSelectedImage(index)}
                   whileHover={{ scale: 1.05 }}
-                  className="flex-shrink-0"
+                  className="shrink-0"
                 >
                   <Image
                     src={img}
                     alt={`Thumbnail ${index + 1}`}
                     width={80}
                     height={80}
-                    className={`h-16 w-16 m-1 sm:h-20 sm:w-20 object-contain rounded-lg border transition-all ${
+                    className={`h-16 w-16 m-1 cursor-pointer sm:h-20 sm:w-20 object-contain rounded-lg border transition-all ${
                       selectedImage === index
                         ? "border-[#A92EDF] scale-105"
                         : "border-transparent opacity-70"
@@ -198,11 +185,7 @@ const ProductDetail = ({
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-linear-to-r from-[#A92EDF] to-[#A92EDF] bg-clip-text text-transparent">
                   {product.title}
                 </h1>
-                <X
-                  onClick={() => setIsDetailOpen(!isDetailOpen)}
-                  size={24}
-                  className="hover:text-[#A92EDF] cursor-pointer hidden lg:block"
-                />
+
               </div>
               <div className="mt-3 flex flex-wrap items-center gap-2 sm:gap-4">
                 <div className="text-2xl sm:text-3xl font-bold text-white">
@@ -239,7 +222,7 @@ const ProductDetail = ({
                       className="flex items-start py-2 bg-[#0C1B44] rounded-lg hover:bg-[#0C1B44]/80 transition-all"
                     >
                       <CheckCircle
-                        className="text-[#A92EDF] mr-2 mt-0.5 flex-shrink-0"
+                        className="text-[#A92EDF] mr-2 mt-0.5 shrink-0"
                         size={20}
                       />
                       <span className="text-gray-200 text-sm sm:text-base font-medium">
@@ -253,7 +236,7 @@ const ProductDetail = ({
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-full bg-[#A92EDF] cursor-pointer hover:bg-[#8e5ea3] text-white font-bold rounded-xl flex items-center justify-center space-x-2"
+                  className="w-full bg-[#A92EDF] cursor-pointer md:py-4 py-3 hover:bg-[#8e5ea3] text-white font-bold rounded-xl flex items-center justify-center space-x-2"
                   onClick={handleBuyNow}
                 >
                   <ShoppingBag className="text-white" size={20} />
@@ -263,7 +246,7 @@ const ProductDetail = ({
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-full cursor-pointer bg-[#A92EDF] hover:bg-[#8e5ea3] text-white font-bold py-2 px-4 rounded-xl flex items-center justify-center space-x-2"
+                  className="w-full cursor-pointer md:py-4 py-3 bg-[#A92EDF] hover:bg-[#8e5ea3] text-white font-bold px-4 rounded-xl flex items-center justify-center space-x-2"
                   onClick={handleAddToCart}
                 >
                   <ShoppingCart className="text-white" size={20} />
@@ -287,7 +270,7 @@ const ProductDetail = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="mt-8 sm:mt-10 md:mt-12"
+          className="py-8 sm:py-10 md:py-12"
         >
           <div className="p-4 sm:p-6 bg-[#0C1B44] rounded-2xl border border-[#A92EDF]/20">
             <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-[#A92EDF]">

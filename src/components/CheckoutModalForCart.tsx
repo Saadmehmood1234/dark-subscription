@@ -130,7 +130,7 @@ export default function CheckoutModal({
           onClick={onClose}
           disabled={isProcessing || isSubmitting}
           aria-label="Close checkout"
-          className="absolute top-4 right-4 text-gray-300 hover:text-red-400 disabled:opacity-50"
+          className="absolute top-4 right-4 cursor-pointer text-gray-300 hover:text-red-400 disabled:opacity-50"
         >
           <X className="w-6 h-6" />
         </button>
@@ -183,7 +183,7 @@ export default function CheckoutModal({
               type="button"
               onClick={handleGenerateQr}
               disabled={isProcessing || cartItems.length === 0}
-              className="w-full mt-6 bg-[#A92EDF] hover:bg-[#8e5ea3] text-white py-3 rounded-xl font-semibold disabled:opacity-60"
+              className="w-full mt-6 cursor-pointer bg-[#A92EDF] hover:bg-[#8e5ea3] text-white py-3 rounded-xl font-semibold disabled:opacity-60"
             >
               {isProcessing ? "Generating QR…" : "Generate UPI QR"}
             </button>

@@ -1,37 +1,12 @@
 "use client";
 import React from "react";
-import { Youtube, Instagram, Mail } from "lucide-react";
-import { FaTelegramPlane } from "react-icons/fa";
+import {  Mail } from "lucide-react";
+import SocialLink from "./SocialLink";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const socialLinks = [
-    {
-      icon: Youtube,
-      url: " https://youtube.com/@primeflix-site",
-      label: "YouTube",
-      color: "hover:text-red-500",
-      bg: "hover:bg-red-500/10",
-    },
-    {
-      icon: FaTelegramPlane,
-      url: "https://x.com/SaadMeh97739578",
-      label: "Twitter",
-      color: "hover:text-blue-400",
-      bg: "hover:bg-blue-400/10",
-    },
-    {
-      icon: Instagram,
-      url: "https://www.instagram.com/saadmehmood030",
-      label: "Instagram",
-      color: "hover:text-pink-500",
-      bg: "hover:bg-pink-500/10",
-    },
-  ];
-
   const companyLinks = [
     { name: "About", url: "/about" },
     { name: "Contact Us", url: "/contact" },
-    
   ];
 
   const legalLinks = [
@@ -42,14 +17,13 @@ const Footer = () => {
 
   const supportLinks = [
     { name: "Refund Policy", url: "/refunds" },
-    { name: "FAQ", url: "/#faq" }
+    { name: "FAQ", url: "/#faq" },
   ];
 
   return (
     <footer className="w-full bg-linear-to-tr from-[#160A25] via-[#180A25] to-[#0D0F29] border-t border-gray-800">
       <div className="container mx-auto px-4 py-12 max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-8">
-          {/* Brand Column */}
           <div className="md:col-span-2 lg:col-span-1">
             <h2 className="text-2xl font-bold bg-linear-to-r from-[#A92EDF] to-purple-500 bg-clip-text text-transparent">
               PrimeFlix
@@ -59,27 +33,11 @@ const Footer = () => {
               prices. Serving over 50,000 satisfied customers since 2022.
             </p>
 
-            {/* Follow Us - Moved here for better visual hierarchy */}
             <div className="mt-6">
               <h4 className="text-white font-medium mb-3 text-sm">Follow Us</h4>
-              <div className="flex space-x-3">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Follow us on ${social.label}`}
-                    className={`p-2 rounded-lg bg-[#1E1433] text-gray-400 ${social.color} ${social.bg} transition-all duration-300`}
-                  >
-                    <social.icon className="size-5" />
-                  </a>
-                ))}
-              </div>
+              <SocialLink/>
             </div>
           </div>
-
-          {/* Company Links */}
           <div>
             <h3 className="text-white font-semibold mb-4 text-lg">Company</h3>
             <ul className="space-y-3">
@@ -96,8 +54,6 @@ const Footer = () => {
               ))}
             </ul>
           </div>
-
-          {/* Support Links */}
           <div>
             <h3 className="text-white font-semibold mb-4 text-lg">Support</h3>
             <ul className="space-y-3">
@@ -115,7 +71,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Legal Links */}
           <div>
             <h3 className="text-white font-semibold mb-4 text-lg">Legal</h3>
             <ul className="space-y-3">
@@ -132,8 +87,6 @@ const Footer = () => {
               ))}
             </ul>
           </div>
-
-          {/* Newsletter */}
           <div className="md:col-span-1 lg:col-span-1 w-full">
             <h3 className="text-white font-semibold mb-4 text-lg">
               Join Our Newsletter
@@ -165,8 +118,6 @@ const Footer = () => {
             </form>
           </div>
         </div>
-
-        {/* Copyright */}
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm text-center md:text-left">

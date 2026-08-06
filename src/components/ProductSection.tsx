@@ -2,13 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Product } from "@/lib/types";
-import ProductDetail from "./ProductDetail";
 import { getProduct } from "@/app/actions/product.actions";
 import { FiArrowRight } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import NoProductAvailable from "./NoProductPage";
 import Loader from "./Loader";
+import Link from "next/link";
 
 const ProductSection = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -42,16 +42,8 @@ const ProductSection = () => {
   const filteredProducts = products.filter(
     (product) =>
       product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.category.toLowerCase().includes(searchQuery.toLowerCase())
+      product.category.toLowerCase().includes(searchQuery.toLowerCase()),
   );
-
-  if (isDetailOpen && sendDetail) {
-    return (
-      <ProductDetail
-        {...{ setIsDetailOpen, isDetailOpen, product: sendDetail }}
-      />
-    );
-  }
 
   if (loading) {
     return <Loader />;
@@ -63,7 +55,6 @@ const ProductSection = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="max-w-7xl mx-auto"
-       
       >
         <h2
           className="text-3xl sm:text-4xl font-bold text-center mb-12 md:mb-20 bg-linear-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent"
@@ -120,15 +111,14 @@ const ProductSection = () => {
                         ₹{product.price}/mo
                       </span>
                     </div>
-                    <motion.button
-                      onClick={() => handleDetail(product)}
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.98 }}
+                    <Link
+                      href={`/products/${product.id}`}
+                      aria-label={`View details for ${product.title}`}
                       className="w-full flex items-center cursor-pointer justify-center gap-2 bg-[#A92EDF] hover:bg-[#8e5ea3] text-white font-medium py-3 px-6 rounded-lg transition-all"
                     >
                       Purchase Now{" "}
                       <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
-                    </motion.button>
+                    </Link>
                   </div>
                 </div>
               </motion.div>

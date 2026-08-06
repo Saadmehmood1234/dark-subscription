@@ -1,164 +1,246 @@
-// "use client";
-// import React from "react";
-// import Slider from "react-slick";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
-
-// const Header = () => {
-//   const slides = [
-//     { id: 1, img: "https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg", text: "Get Netflix Premium at the Lowest Price!" },
-//     { id: 2, img: "https://m.media-amazon.com/images/G/01/digital/video/acquisition/weblanding/prime/hero/PrimeVideo_Logo.png", text: "Amazon Prime Membership - Limited Offer!" },
-//     { id: 3, img: "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png", text: "YouTube Premium at Unbeatable Prices!" },
-//     { id: 4, img: "https://upload.wikimedia.org/wikipedia/commons/e/e3/Udemy_logo.svg", text: "Top Udemy & Coursera Courses at Huge Discounts!" },
-//     { id: 5, img: "https://www.scdn.co/i/_global/open-graph-default.png", text: "Spotify Premium for Less - Enjoy Unlimited Music!" },
-//   ];
-
-//   const settings = {
-//     dots: true,
-//     infinite: true,
-//     speed: 700,
-//     slidesToShow: 1,
-//     slidesToScroll: 1,
-//     autoplay: true,
-//     autoplaySpeed: 3000,
-//     arrows: false,
-//   };
-
-//   return (
-//     <header className="relative w-full mt-10">
-//       <Slider {...settings} className="md:w-[85vw] w-[95vw] mx-auto rounded-2xl">
-//         {slides.map((slide) => (
-//           <div key={slide.id} className="relative h-[380px] md:h-[450px] rounded-2xl overflow-hidden">
-//             <img
-//               src={slide.img}
-//               alt="Product Offer"
-//               className="w-full h-full object-contain bg-white p-6 transition-transform duration-500 hover:scale-105"
-//             />
-//             <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white text-center px-6">
-//               <h1 className="text-2xl md:text-4xl font-extrabold">{slide.text}</h1>
-//               <button className="mt-4 px-6 py-3 bg-[#C027FF] text-white font-semibold rounded-md shadow-md hover:bg-[#A020F0] transition-transform transform hover:scale-105">
-//                 Shop Now
-//               </button>
-//             </div>
-//           </div>
-//         ))}
-//       </Slider>
-//     </header>
-//   );
-// };
-
-// export default Header;
 "use client";
-import React from "react";
+
+import React, { useRef, useState } from "react";
 import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Sparkles,
+} from "lucide-react";
 import Link from "next/link";
 
 interface Slide {
   id: number;
   bg: string;
-  text: string;
+  eyebrow: string;
+  title: string;
+  description: string;
   offer: string;
+  imagePosition?: string;
 }
 
 const slides: Slide[] = [
   {
     id: 1,
     bg: "/netback.jpg",
-    text: "Get Netflix Premium at the Lowest Price!",
+    eyebrow: "Stream without limits",
+    title: "Netflix Premium at a price you'll love",
+    description:
+      "Enjoy your favourite movies and shows in high quality with affordable Netflix subscription plans.",
     offer: "Save up to 40%",
+    imagePosition: "center",
   },
   {
     id: 2,
     bg: "https://m.media-amazon.com/images/I/61DUO0NqyyL._SX3000_.jpg",
-    text: "Amazon Prime Membership - Limited Offer!",
-    offer: "First Month Free",
+    eyebrow: "Entertainment and shopping",
+    title: "Get more with Amazon Prime",
+    description:
+      "Access Prime Video, exclusive content and premium benefits with our limited-time membership offer.",
+    offer: "First month free",
+    imagePosition: "center",
   },
   {
     id: 3,
     bg: "/youpre.avif",
-    text: "YouTube Premium at Unbeatable Prices!",
-    offer: "60% Off Annual Plan",
+    eyebrow: "Watch without interruptions",
+    title: "Upgrade to YouTube Premium",
+    description:
+      "Enjoy ad-free videos, background playback and uninterrupted entertainment across your devices.",
+    offer: "60% off annual plan",
+    imagePosition: "center",
   },
   {
     id: 4,
     bg: "/udem.jpg",
-    text: "Top Courses at Huge Discounts!",
+    eyebrow: "Learn something new",
+    title: "Premium courses at affordable prices",
+    description:
+      "Build valuable skills with top-rated courses covering development, design, business and more.",
     offer: "Courses from ₹299",
+    imagePosition: "center",
   },
   {
     id: 5,
     bg: "/spotpre.jpg",
-    text: "Spotify Premium for Less!",
-    offer: "3 Months Free",
+    eyebrow: "Music made better",
+    title: "Spotify Premium for less",
+    description:
+      "Listen to your favourite music without ads and download songs for offline playback.",
+    offer: "Get 3 months free",
+    imagePosition: "center",
   },
 ];
 
-const settings: Settings = {
-  dots: true,
-  infinite: true,
-  speed: 1000,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  autoplay: true,
-  autoplaySpeed: 3000,
-  arrows: false,
-  fade: true,
-  appendDots: (dots) => (
-    <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-      <ul className="flex space-x-2">{dots}</ul>
-    </div>
-  ),
-  customPaging: () => (
-    <div className="w-3 h-3 bg-white/30 rounded-full transition-all hover:bg-white/50" />
-  ),
-};
-
 const Header: React.FC = () => {
-  return (
-    <header className="relative w-full">
-      <Slider {...settings} className="overflow-hidden">
-        {slides.map((slide) => (
-          <div key={slide.id} className="relative h-[70vh] xl:h-[80vh]">
-            <div className="absolute inset-0 bg-linear-to-t from-[#160A25] via-[#160A25]/70 to-transparent z-10" />
-            <img
-              src={slide.bg}
-              alt="Offer"
-              className="w-full h-full object-cover object-center"
-              loading="lazy"
-            />
+  const sliderRef = useRef<Slider | null>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="absolute bottom-0 left-0 right-0 z-20 px-6 pb-24 text-center"
-            >
-              <div className="max-w-4xl mx-auto">
-                <span className="inline-block mb-4 px-4 py-2 bg-[#C27AFF]/10 text-[#C27AFF] rounded-full text-sm font-semibold">
-                  {slide.offer}
-                </span>
-                <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-linear-to-r from-[#C27AFF] to-[#7B61FF] bg-clip-text text-transparent">
-                  {slide.text}
-                </h1>
-                <Link href="#products">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-linear-to-r from-[#C27AFF] to-[#7B61FF] text-white rounded-xl font-semibold hover:shadow-xl transition-all flex items-center gap-2 mx-auto"
-                >
-                  Purchase Now
-                  <ArrowRight className="size-5" />
-                </motion.button>
-                </Link>
-              </div>
-            </motion.div>
-          </div>
-        ))}
+  const settings: Settings = {
+    infinite: true,
+    speed: 700,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    pauseOnHover: true,
+    pauseOnFocus: true,
+    arrows: false,
+    dots: false,
+    fade: true,
+    waitForAnimate: false,
+    beforeChange: (_, next) => setActiveSlide(next),
+  };
+
+  const goToSlide = (index: number) => {
+    sliderRef.current?.slickGoTo(index);
+  };
+
+  return (
+    <header
+      className="relative isolate w-full overflow-hidden bg-[#100719]"
+      aria-label="Featured subscription offers"
+    >
+      <Slider ref={sliderRef} {...settings}>
+        {slides.map((slide, index) => {
+          const isActive = activeSlide === index;
+
+          return (
+            <div key={slide.id}>
+              <section className="relative min-h-155 overflow-hidden sm:min-h-170 lg:min-h-190">
+                {/* Background image */}
+                <img
+                  src={slide.bg}
+                  alt=""
+                  aria-hidden="true"
+                  className={`absolute inset-0 h-full w-full object-cover ${slide.imagePosition}`}
+                />
+
+                {/* Dark overlays for readability */}
+                <div className="absolute inset-0 bg-black/25" />
+                <div className="absolute inset-0 bg-linear-to-r from-[#100719] via-[#100719]/85 to-[#100719]/20" />
+                <div className="absolute inset-0 bg-linear-to-t from-[#100719] via-transparent to-black/20" />
+
+                {/* Decorative glow */}
+                <div className="absolute -left-40 top-1/3 size-105 rounded-full bg-purple-600/20 blur-[120px]" />
+                <div className="absolute bottom-0 right-0 size-90 rounded-full bg-violet-500/10 blur-[100px]" />
+
+                <div className="relative z-10 mx-auto flex min-h-155 max-w-7xl items-center px-5 pb-32 pt-24 sm:min-h-170 sm:px-8 lg:min-h-190 lg:px-12">
+                  <div className="max-w-3xl">
+                    <AnimatePresence mode="wait">
+                      {isActive && (
+                        <motion.div
+                          key={slide.id}
+                          initial={{ opacity: 0, y: 28 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -12 }}
+                          transition={{
+                            duration: 0.65,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
+                        >
+                          {/* Offer badge */}
+                          <motion.div
+                            initial={{ opacity: 0, x: -16 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.1 }}
+                            className="mb-6 inline-flex items-center gap-2 rounded-full border border-purple-300/20 bg-purple-300/10 px-4 py-2 text-sm font-semibold text-purple-200 backdrop-blur-md"
+                          >
+                            <Sparkles className="size-4" />
+                            {slide.offer}
+                          </motion.div>
+
+                          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-purple-300 sm:text-base">
+                            {slide.eyebrow}
+                          </p>
+
+                          <h1 className="max-w-3xl text-4xl font-bold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-7xl">
+                            {slide.title}
+                          </h1>
+
+                          <p className="mt-6 max-w-2xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">
+                            {slide.description}
+                          </p>
+
+                          {/* CTA buttons */}
+                          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                            <Link
+                              href="#products"
+                              className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#A92EDF] px-7 py-3.5 font-semibold text-white shadow-lg shadow-purple-950/30 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-purple-900/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#100719]"
+                            >
+                              Explore Plans
+                              <ArrowRight className="size-5 transition-transform duration-300 group-hover:translate-x-1" />
+                            </Link>
+
+                            <Link
+                              href="#how-it-works"
+                              className="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/15 bg-white/5 px-7 py-3.5 font-semibold text-white backdrop-blur-sm transition duration-300 hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                            >
+                              How It Works
+                            </Link>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+              </section>
+            </div>
+          );
+        })}
       </Slider>
+
+      {/* Carousel navigation */}
+      <div className="absolute bottom-8 left-1/2 z-30 flex w-full max-w-7xl -translate-x-1/2 items-center justify-between px-5 sm:px-8 lg:px-12">
+        <div
+          className="flex items-center gap-2"
+          role="tablist"
+          aria-label="Choose featured offer"
+        >
+          {slides.map((slide, index) => {
+            const isActive = activeSlide === index;
+
+            return (
+              <button
+                key={slide.id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-label={`Show offer ${index + 1}: ${slide.title}`}
+                onClick={() => goToSlide(index)}
+                className={`h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300 ${
+                  isActive
+                    ? "w-9 bg-purple-300"
+                    : "w-2 bg-white/30 hover:bg-white/60"
+                }`}
+              />
+            );
+          })}
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            aria-label="Show previous offer"
+            onClick={() => sliderRef.current?.slickPrev()}
+            className="grid size-11 place-items-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-md transition hover:border-white/30 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300"
+          >
+            <ArrowLeft className="size-5" />
+          </button>
+
+          <button
+            type="button"
+            aria-label="Show next offer"
+            onClick={() => sliderRef.current?.slickNext()}
+            className="grid size-11 place-items-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-md transition hover:border-white/30 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300"
+          >
+            <ArrowRight className="size-5" />
+          </button>
+        </div>
+      </div>
     </header>
   );
 };

@@ -96,7 +96,7 @@ const Features = () => {
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className="bg-[#0C1B44] rounded-xl p-6 hover:transform hover:scale-[1.02] transition-all duration-300 group flex-1 min-h-[200px]"
+                  className="bg-[#0C1B44] rounded-xl p-6 hover:transform hover:scale-[1.02] transition-all duration-300 group flex-1 min-h-50"
                 >
                   <div
                     className={`bg-linear-to-tr ${feature.color} w-fit p-3 rounded-2xl mb-4`}
